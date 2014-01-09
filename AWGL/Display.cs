@@ -10,16 +10,16 @@ using System.Linq;
 
 namespace AWGL
 {
-    public static class AWGL 
+    public class Display : GameWindow
     {
-        
-        public static void Main(string[] args)
+        private int vertexShaderID;
+        private int fragmentShaderID;
+
+        private int compiledShaderProgramID;
+
+        private void initProgram()
         {
-            using (Display display = new Display())
-            {
-                display.Run(30.0);
-            }
+            
         }
-        
     }
 }
