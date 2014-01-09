@@ -1,0 +1,3 @@
+[submodule "ObjLoader"]
+	path = ObjLoader
+	url = git@github.com:stomppah/ObjLoader.git
