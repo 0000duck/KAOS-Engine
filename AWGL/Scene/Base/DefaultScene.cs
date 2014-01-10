@@ -24,7 +24,7 @@ namespace AWGL.Scene
         {
             this.WindowState = WindowState.Fullscreen;
             Keyboard.KeyDown += Keyboard_KeyDown;
-            this.VSync = VSyncMode.Off;
+            this.VSync = VSyncMode.On;
         }   
 
         #region Private Fields
@@ -93,10 +93,12 @@ namespace AWGL.Scene
 
         #region Textures
 
-        private Bitmap bitmap = new Bitmap("Data/Textures/logo.jpg");//("Data/Textures/logo.jpg");
+        private Bitmap bitmap = new Bitmap("Data/Textures/logo.jpg");
         private int texture;
 
         #endregion
+
+        private MengerSponge sponge;
 
         #region Keyboard_KeyDown
 
@@ -133,29 +135,37 @@ namespace AWGL.Scene
             Title = "AWGL: High level OpenTK wrapper - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
 
             GL.ClearColor(.1f, 0f, .1f, 0f);
-            GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.DepthTest);
 
+            #region 3D Glasses Effect
+            GL.Enable(EnableCap.Lighting);
+            GL.Enable(EnableCap.Light0);
+
+            sponge= new MengerSponge(1.0, Shapes.MengerSponge.eSubdivisions.Two, true);
+
+            #endregion
+
+            #region Texture
             //// Set our point parameters
             //GL.PointSize(5f);
             //GL.Enable(EnableCap.PointSprite);
 
+            //GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
+            
+            //GL.GenTextures(1, out texture);
+            //GL.BindTexture(TextureTarget.Texture2D, texture);
 
-            GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
+            //GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            //GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMinFilter.Linear);
 
-            GL.GenTextures(1, out texture);
-            GL.BindTexture(TextureTarget.Texture2D, texture);
+            //BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+            //    ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMinFilter.Linear);
+            //GL.TexImage2D(TextureTarget.Texture2D, 0 ,PixelInternalFormat.Rgba, data.Width, data.Height, 0,
+            //    OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
 
-            BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-            GL.TexImage2D(TextureTarget.Texture2D, 0 ,PixelInternalFormat.Rgba, data.Width, data.Height, 0,
-                OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
-
-            bitmap.UnlockBits(data);
-
+            //bitmap.UnlockBits(data);
+            #endregion
             // set up vbo state - depreceted as of 3.0>> (?)
             #region particles
             //GL.EnableClientState(ArrayCap.ColorArray);
@@ -219,11 +229,7 @@ namespace AWGL.Scene
         {
             base.OnResize(e);
 
-            GL.Viewport(0, 0, Width, Height);
-
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(-1.0, 1.0, -1.0, 1.0, 0.0, 4.0);
+            GL.Viewport(ClientRectangle);
         }
 
         #endregion
@@ -237,7 +243,7 @@ namespace AWGL.Scene
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            //base.OnUpdateFrame(e);
+            base.OnUpdateFrame(e);
 
             #region Particles
             //// will update particles here. When using a Physics SDK, it's update rate is much higher than
@@ -264,8 +270,104 @@ namespace AWGL.Scene
             //}
             #endregion
 
+            #region 3D Lighting Effect
+            
+            #endregion
         }
 
+        #endregion
+
+        #region 3D Lighting Effect
+        struct Camera
+        {
+            public Vector3 Position, Direction, Up;
+            public double NearPlane, FarPlane;
+            public double EyeSeparation;
+            public double Aperture; // FOV in degrees
+            public double FocalLength;
+        }
+
+        enum Eye
+        {
+            left,
+            right,
+        }
+
+        void SetupCamera(Eye eye)
+        {
+            Camera camera;
+
+            camera.Position = Vector3.UnitZ;
+            camera.Up = Vector3.UnitY;
+            camera.Direction = -Vector3.UnitZ;
+            camera.NearPlane = 1.0;
+            camera.FarPlane = 5.0;
+            camera.FocalLength = 2.0;
+            camera.EyeSeparation = camera.FocalLength / 30.0;
+            camera.Aperture = 75.0;
+
+            double left, right,
+                   bottom, top;
+
+            double widthdiv2 = camera.NearPlane * Math.Tan(MathHelper.DegreesToRadians((float)(camera.Aperture / 2.0))); // aperture in radians
+            double precalc1 = ClientRectangle.Width / (double)ClientRectangle.Height * widthdiv2;
+            double precalc2 = 0.5 * camera.EyeSeparation * camera.NearPlane / camera.FocalLength;
+
+            Vector3 Right = Vector3.Cross(camera.Direction, camera.Up); // Each unit vectors
+            Right.Normalize();
+
+            Right.X *= (float)(camera.EyeSeparation / 2.0);
+            Right.Y *= (float)(camera.EyeSeparation / 2.0);
+            Right.Z *= (float)(camera.EyeSeparation / 2.0);
+
+            // Projection Matrix
+            top = widthdiv2;
+            bottom = -widthdiv2;
+            if (eye == Eye.right)
+            {
+                left = -precalc1 - precalc2;
+                right = precalc1 - precalc2;
+            }
+            else
+            {
+                left = -precalc1 + precalc2;
+                right = precalc1 + precalc2;
+            }
+
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Frustum(left, right, bottom, top, camera.NearPlane, camera.FarPlane);
+
+            // Modelview Matrix
+            Matrix4 modelview;
+            if (eye == Eye.right)
+            {
+                modelview = Matrix4.LookAt(
+                    new Vector3(camera.Position.X + Right.X, camera.Position.Y + Right.Y, camera.Position.Z + Right.Z),
+                    new Vector3(camera.Position.X + Right.X + camera.Direction.X, camera.Position.Y + Right.Y + camera.Direction.Y, camera.Position.Z + Right.Z + camera.Direction.Z),
+                    camera.Up);
+            }
+            else
+            {
+                modelview = Matrix4.LookAt(
+                    new Vector3(camera.Position.X - Right.X, camera.Position.Y - Right.Y, camera.Position.Z - Right.Z),
+                    new Vector3(camera.Position.X - Right.X + camera.Direction.X, camera.Position.Y - Right.Y + camera.Direction.Y, camera.Position.Z - Right.Z + camera.Direction.Z),
+                    camera.Up);
+            }
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            GL.MultMatrix(ref modelview);
+
+        }
+
+        float Angle;
+
+        void Draw()
+        {
+            GL.Translate(0f, 0f, -2f);
+            GL.Rotate(Angle, Vector3.UnitY);
+            sponge.Draw();
+        }
         #endregion
 
         #region OnRenderFrame
@@ -278,6 +380,7 @@ namespace AWGL.Scene
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             //base.OnRenderFrame(e);
+            Angle += (float)(e.Time * 20.0);
 
             this.Title = "AWGL: High level OpenTK wrapper - " + VisibleParticleCount + " Points. FPS: " + string.Format("{0:F}", 1.0 / e.Time);
 
@@ -300,18 +403,31 @@ namespace AWGL.Scene
             #endregion
 
             #region Textures
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            GL.BindTexture(TextureTarget.Texture2D, texture);
+            //GL.MatrixMode(MatrixMode.Modelview);
+            //GL.LoadIdentity();
+            //GL.BindTexture(TextureTarget.Texture2D, texture);
 
-            GL.Begin(BeginMode.Quads);
+            //GL.Begin(BeginMode.Quads);
 
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex2(-0.6f, -0.4f);
-            GL.TexCoord2(1.0f, 1.0f); GL.Vertex2(0.6f, -0.4f);
-            GL.TexCoord2(1.0f, 0.0f); GL.Vertex2(0.6f, 0.4f);
-            GL.TexCoord2(0.0f, 0.0f); GL.Vertex2(-0.6f, 0.4f);
+            //GL.TexCoord2(0.0f, 1.0f); GL.Vertex2(-0.6f, -0.4f);
+            //GL.TexCoord2(1.0f, 1.0f); GL.Vertex2(0.6f, -0.4f);
+            //GL.TexCoord2(1.0f, 0.0f); GL.Vertex2(0.6f, 0.4f);
+            //GL.TexCoord2(0.0f, 0.0f); GL.Vertex2(-0.6f, 0.4f);
 
-            GL.End();
+            //GL.End();
+            #endregion
+
+            #region 3D Lighting Effect
+            SetupCamera(Eye.right);
+            GL.ColorMask(true, false, false, true);
+            Draw();
+
+            GL.Clear(ClearBufferMask.DepthBufferBit); // 
+            SetupCamera(Eye.left);
+            GL.ColorMask(false, true, true, true);
+            Draw();
+
+            GL.ColorMask(true, true, true, true);
             #endregion
 
             SwapBuffers();
@@ -323,7 +439,9 @@ namespace AWGL.Scene
 
         protected override void OnUnload(EventArgs e)
         {
-            GL.DeleteBuffers(1, ref VBOHandle);
+            base.OnUnload(e);
+            //GL.DeleteBuffers(1, ref VBOHandle);
+            sponge.Dispose();
         }
 
         #endregion
