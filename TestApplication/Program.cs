@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using AWGL;
+using AWGL.Scene;
+
+using OpenTK;
 
 namespace TestApplication
 {
@@ -13,7 +16,10 @@ namespace TestApplication
         [STAThread]
         static void Main(string[] args)
         {
-            AWGL.AWGL.Main(args);
+            using (Display mainDisplay = new Display())
+            {
+                mainDisplay.Run(30.0);
+            }
         }
     }
 }

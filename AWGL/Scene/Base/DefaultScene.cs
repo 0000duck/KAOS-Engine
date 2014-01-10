@@ -32,7 +32,7 @@ namespace AWGL.Scene.Base
         private int m_Position_VBO, m_Color_VBO, m_ModelView_VBO, m_Elements_IBO;
 
         private Vector3[] m_VertexData, m_ColorData;
-        protected List<Volume> m_Objects = new List<Volume>();
+        private List<Volume> m_Objects = new List<Volume>();
         private int[] m_IndiceData;
 
         private float m_Time = 0.0f;
