@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AWGL
 {
-    abstract class Graphic
+    public abstract class Graphic
     {
     }
 }
