@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,11 +56,20 @@
     <Compile Include="Display.cs" />
     <Compile Include="Graphic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Abstract\Volume.cs" />
+    <Compile Include="Shapes\ColourCube.cs" />
+    <Compile Include="Shapes\Cube.cs" />
+    <Compile Include="Shapes\Sierpinski.cs" />
+    <Compile Include="Shapes\Tetra.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Shaders\FS.glsl" />
-    <None Include="Shaders\VS.glsl" />
+    <None Include="Shaders\FS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Shaders\VS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
