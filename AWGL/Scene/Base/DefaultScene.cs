@@ -8,6 +8,7 @@ using OpenTK.Input;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 
@@ -60,7 +61,7 @@ namespace AWGL.Scene
 
         #region Particles
 
-        private static int MaxParticleCount = 2000;
+        protected static int MaxParticleCount = 2000;
         private int VisibleParticleCount;
         private VertexC4ubV3f[] VBO = new VertexC4ubV3f[MaxParticleCount];
         private ParticleAttribut[] ParticleAttributes = new ParticleAttribut[MaxParticleCount];
@@ -89,6 +90,13 @@ namespace AWGL.Scene
         private float yPos = 0.1f;
 
         #endregion Particles
+
+        #region Textures
+
+        private Bitmap bitmap = new Bitmap("Data/Textures/logo.jpg");//("Data/Textures/logo.jpg");
+        private int texture;
+
+        #endregion
 
         #region Keyboard_KeyDown
 
@@ -125,62 +133,79 @@ namespace AWGL.Scene
             Title = "AWGL: High level OpenTK wrapper - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
 
             GL.ClearColor(.1f, 0f, .1f, 0f);
-            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.Texture2D);
 
-            // Set our point parameters
-            GL.PointSize(5f);
-            GL.Enable(EnableCap.PointSprite);
-            GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
+            //// Set our point parameters
+            //GL.PointSize(5f);
+            //GL.Enable(EnableCap.PointSprite);
 
-            // set up vbo state - depreceatd as of 3.0>> (?)
-            GL.EnableClientState(ArrayCap.ColorArray);
-            GL.EnableClientState(ArrayCap.VertexArray);
+
+            GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
+
+            GL.GenTextures(1, out texture);
+            GL.BindTexture(TextureTarget.Texture2D, texture);
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMinFilter.Linear);
+
+            BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            GL.TexImage2D(TextureTarget.Texture2D, 0 ,PixelInternalFormat.Rgba, data.Width, data.Height, 0,
+                OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+
+            bitmap.UnlockBits(data);
+
+            // set up vbo state - depreceted as of 3.0>> (?)
+            #region particles
+            //GL.EnableClientState(ArrayCap.ColorArray);
+            //GL.EnableClientState(ArrayCap.VertexArray);
 
             // Generate the buffers
-            GL.GenBuffers(1, out VBOHandle);
+            //GL.GenBuffers(1, out VBOHandle);
 
             // Set it up
-            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOHandle);
-            GL.ColorPointer(4, ColorPointerType.UnsignedByte, VertexC4ubV3f.SizeInBytes, (IntPtr)0);
-            GL.VertexPointer(3, VertexPointerType.Float, VertexC4ubV3f.SizeInBytes, (IntPtr)(4 * sizeof(byte)));
+            //GL.BindBuffer(BufferTarget.ArrayBuffer, VBOHandle);
+            //GL.ColorPointer(4, ColorPointerType.UnsignedByte, VertexC4ubV3f.SizeInBytes, (IntPtr)0);
+            //GL.VertexPointer(3, VertexPointerType.Float, VertexC4ubV3f.SizeInBytes, (IntPtr)(4 * sizeof(byte)));
 
-            Random rndNum = new Random();
-            Vector3 tmp = new Vector3();
+            //Random rndNum = new Random();
+            //Vector3 tmp = new Vector3();
 
-            // generate some random stuff for the particle system
-            for (uint i = 0; i < MaxParticleCount; i++)
-            {
-                if (xPos >= 4.0f)
-                {
-                    xPos = -4.0f;
-                }
-                if (yPos >= 4.0f)
-                {
-                    yPos = -4.0f;
-                }
-                VBO[i].R = (byte)rndNum.Next(0, 256);
-                VBO[i].G = (byte)rndNum.Next(0, 256);
-                VBO[i].B = (byte)rndNum.Next(0, 256);
-                VBO[i].A = (byte)rndNum.Next(0, 256); // isn't actually used
-                VBO[i].Position = new Vector3(xPos, yPos, -1.0f); // all particles are born at the origin
+            //// generate some random stuff for the particle system
+            //for (uint i = 0; i < MaxParticleCount; i++)
+            //{
+            //    if (xPos >= 4.0f)
+            //    {
+            //        xPos = -4.0f;
+            //    }
+            //    if (yPos >= 4.0f)
+            //    {
+            //        yPos = -4.0f;
+            //    }
+            //    VBO[i].R = (byte)rndNum.Next(0, 256);
+            //    VBO[i].G = (byte)rndNum.Next(0, 256);
+            //    VBO[i].B = (byte)rndNum.Next(0, 256);
+            //    VBO[i].A = (byte)rndNum.Next(0, 256); // isn't actually used
+            //    VBO[i].Position = new Vector3(xPos, yPos, -1.0f); // all particles are born at the origin
 
-                // generate direction vector in the range [-0.25f...+0.25f] 
-                // that's slow enough so you can see particles 'disappear' when they are respawned
-                tmp.X = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
-                tmp.Y = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
-                tmp.Z = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
-                ParticleAttributes[i].Direction = tmp; // copy 
-                ParticleAttributes[i].Age = 0;
+            //    // generate direction vector in the range [-0.25f...+0.25f] 
+            //    // that's slow enough so you can see particles 'disappear' when they are respawned
+            //    tmp.X = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
+            //    tmp.Y = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
+            //    tmp.Z = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
+            //    ParticleAttributes[i].Direction = tmp; // copy 
+            //    ParticleAttributes[i].Age = 0;
 
-                xPos = xPos + 0.0231f;
-                yPos = yPos + 0.0253f;
-            }
+            //    xPos = xPos + 0.0231f;
+            //    yPos = yPos + 0.0253f;
+            //}
 
-            VisibleParticleCount = 0;
+            //VisibleParticleCount = 0;
+            #endregion
 
         }
 
-        //private void
         #endregion
 
         #region OnResize
@@ -197,12 +222,8 @@ namespace AWGL.Scene
             GL.Viewport(0, 0, Width, Height);
 
             GL.MatrixMode(MatrixMode.Projection);
-            Matrix4 p = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Width / (float)Height, 0.1f, 50.0f);
-            GL.LoadMatrix(ref p);
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            Matrix4 mv = Matrix4.LookAt(Vector3.UnitZ, Vector3.Zero, Vector3.UnitY);
-            GL.LoadMatrix(ref mv);
+            GL.LoadIdentity();
+            GL.Ortho(-1.0, 1.0, -1.0, 1.0, 0.0, 4.0);
         }
 
         #endregion
@@ -218,28 +239,31 @@ namespace AWGL.Scene
         {
             //base.OnUpdateFrame(e);
 
-            // will update particles here. When using a Physics SDK, it's update rate is much higher than
-            // the framerate and it would be a waste of cycles copying to the VBO more often than drawing it.
-            if (VisibleParticleCount < MaxParticleCount)
-                VisibleParticleCount++;
+            #region Particles
+            //// will update particles here. When using a Physics SDK, it's update rate is much higher than
+            //// the framerate and it would be a waste of cycles copying to the VBO more often than drawing it.
+            //if (VisibleParticleCount < MaxParticleCount)
+            //    VisibleParticleCount++;
 
-            Vector3 temp;
+            //Vector3 temp;
 
-            for (int i = MaxParticleCount - VisibleParticleCount; i < MaxParticleCount; i++)
-            {
-                if (ParticleAttributes[i].Age >= MaxParticleCount)
-                {
-                    // reset particle
-                    ParticleAttributes[i].Age = 0;
-                    VBO[i].Position = Vector3.Zero;
-                }
-                else
-                {
-                    ParticleAttributes[i].Age += (uint)Math.Max(ParticleAttributes[i].Direction.LengthFast * 10, 1);
-                    Vector3.Multiply(ref ParticleAttributes[i].Direction, (float)e.Time, out temp);
-                    Vector3.Add(ref VBO[i].Position, ref temp, out VBO[i].Position);
-                }
-            }
+            //for (int i = MaxParticleCount - VisibleParticleCount; i < MaxParticleCount; i++)
+            //{
+            //    if (ParticleAttributes[i].Age >= MaxParticleCount)
+            //    {
+            //        // reset particle
+            //        ParticleAttributes[i].Age = 0;
+            //        VBO[i].Position = Vector3.Zero;
+            //    }
+            //    else
+            //    {
+            //        ParticleAttributes[i].Age += (uint)Math.Max(ParticleAttributes[i].Direction.LengthFast * 10, 1);
+            //        Vector3.Multiply(ref ParticleAttributes[i].Direction, (float)e.Time, out temp);
+            //        Vector3.Add(ref VBO[i].Position, ref temp, out VBO[i].Position);
+            //    }
+            //}
+            #endregion
+
         }
 
         #endregion
@@ -259,19 +283,36 @@ namespace AWGL.Scene
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.PushMatrix();
+            #region Particles
+            //GL.PushMatrix();
 
-            GL.Translate(0f, 0f, -5f);
+            //GL.Translate(0f, 0f, -5f);
 
-            // Tell OpenGL to discard old VBO when done drawing it and reserve memory _now_ for a new buffer.
-            // without this, GL would wait until draw operations on old VBO are complete before writing to it
-            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(VertexC4ubV3f.SizeInBytes * MaxParticleCount), IntPtr.Zero, BufferUsageHint.StreamDraw);
-            // Fill newly allocated buffer
-            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(VertexC4ubV3f.SizeInBytes * MaxParticleCount), VBO, BufferUsageHint.StreamDraw);
-            // Only draw particles that are alive
-            GL.DrawArrays(BeginMode.Points, MaxParticleCount - VisibleParticleCount, VisibleParticleCount);
+            //// Tell OpenGL to discard old VBO when done drawing it and reserve memory _now_ for a new buffer.
+            //// without this, GL would wait until draw operations on old VBO are complete before writing to it
+            //GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(VertexC4ubV3f.SizeInBytes * MaxParticleCount), IntPtr.Zero, BufferUsageHint.StreamDraw);
+            //// Fill newly allocated buffer
+            //GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(VertexC4ubV3f.SizeInBytes * MaxParticleCount), VBO, BufferUsageHint.StreamDraw);
+            //// Only draw particles that are alive
+            //GL.DrawArrays(BeginMode.Points, MaxParticleCount - VisibleParticleCount, VisibleParticleCount);
 
-            GL.PopMatrix();
+            //GL.PopMatrix();
+            #endregion
+
+            #region Textures
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            GL.BindTexture(TextureTarget.Texture2D, texture);
+
+            GL.Begin(BeginMode.Quads);
+
+            GL.TexCoord2(0.0f, 1.0f); GL.Vertex2(-0.6f, -0.4f);
+            GL.TexCoord2(1.0f, 1.0f); GL.Vertex2(0.6f, -0.4f);
+            GL.TexCoord2(1.0f, 0.0f); GL.Vertex2(0.6f, 0.4f);
+            GL.TexCoord2(0.0f, 0.0f); GL.Vertex2(-0.6f, 0.4f);
+
+            GL.End();
+            #endregion
 
             SwapBuffers();
         }
