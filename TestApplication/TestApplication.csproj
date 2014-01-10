@@ -48,6 +48,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\opentk\Source\OpenTK\OpenTK.csproj">
+      <Project>{a37a7e14-0000-0000-0000-000000000000}</Project>
+      <Name>OpenTK</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AWGL\AWGL.csproj">
       <Project>{43e7c301-7345-49d7-b8e8-f02b097f599f}</Project>
       <Name>AWGL</Name>
