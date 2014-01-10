@@ -4,13 +4,14 @@ using ObjLoader.Loader.Loaders;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 
-namespace AWGL.Scene.Base
+namespace AWGL.Scene
 {
     /// <summary>
     /// Controls Main Window functions and sets up OpenGL
@@ -20,6 +21,8 @@ namespace AWGL.Scene.Base
         public DefaultScene()
             : base(1024, 700, new GraphicsMode(32, 24, 0, 4))
         {
+            this.WindowState = WindowState.Fullscreen;
+            Keyboard.KeyDown += Keyboard_KeyDown;
         }   
 
         #region Private Fields
@@ -32,7 +35,7 @@ namespace AWGL.Scene.Base
         private int m_Position_VBO, m_Color_VBO, m_ModelView_VBO, m_Elements_IBO;
 
         private Vector3[] m_VertexData, m_ColorData;
-        private List<Volume> m_Objects = new List<Volume>();
+        private List<DrawableShape> m_Objects = new List<DrawableShape>();
         private int[] m_IndiceData;
 
         private float m_Time = 0.0f;
@@ -40,6 +43,27 @@ namespace AWGL.Scene.Base
         private Version m_Version, m_TargetLow, m_TargetHigh;
 
         #endregion Private Fields
+
+        #region Keyboard_KeyDown
+
+        /// <summary>
+        /// Occurs when a key is pressed.
+        /// </summary>
+        /// <param name="sender">The KeyboardDevice which generated this event.</param>
+        /// <param name="e">The key that was pressed.</param>
+        void Keyboard_KeyDown(object sender, KeyboardKeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                this.Exit();
+
+            if (e.Key == Key.F11)
+                if (this.WindowState == WindowState.Fullscreen)
+                    this.WindowState = WindowState.Normal;
+                else
+                    this.WindowState = WindowState.Fullscreen;
+        }
+
+        #endregion
 
         #region InitProgram
         
@@ -50,8 +74,8 @@ namespace AWGL.Scene.Base
         {
             m_ProgramObject = GL.CreateProgram();
 
-            loadShader("VS.glsl", ShaderType.VertexShader, m_ProgramObject, out m_VertexShaderObject);
-            loadShader("FS.glsl", ShaderType.FragmentShader, m_ProgramObject, out m_FragmentShaderObject);
+            LoadShader("VS.glsl", ShaderType.VertexShader, m_ProgramObject, out m_VertexShaderObject);
+            LoadShader("FS.glsl", ShaderType.FragmentShader, m_ProgramObject, out m_FragmentShaderObject);
 
             // Links shaders and output any errors
             GL.LinkProgram(m_ProgramObject);
@@ -78,17 +102,17 @@ namespace AWGL.Scene.Base
             Random rand = new Random();
 
             float xPos = -1.0f;
-            for (int i = 0; i < 2; i++)
-            {
-                Sierpinski sier = new Sierpinski();
+            //for (int i = 0; i < 2; i++)
+            //{
+                Place plane = new Plane();
 
-                sier.Position = new Vector3(xPos, 0.0f, -2.5f);
-                sier.Rotation = new Vector3(0.55f, 0.25f, 0);
-                sier.Scale = Vector3.One;
-                m_Objects.Add(sier);
+                plane.Position = new Vector3(xPos, 0.0f, -2.5f);
+                plane.Rotation = new Vector3(0.55f, 0.25f, 0);
+                plane.Scale = Vector3.One;
+                m_Objects.Add(plane);
 
                 xPos = 1.0f;
-            }
+            //}
         }
 
         #endregion
@@ -102,11 +126,12 @@ namespace AWGL.Scene.Base
         {
             base.OnLoad(e);
 
-            GetOpenGLVersion();
+            TestOpenGLVersion();
 
             InitProgram();
 
-            Title = "AWGL: High level OpenTK wrapper   -   OpenGL " + m_Version.ToString();
+            Title = "AWGL: High level OpenTK wrapper - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
+
             GL.ClearColor(Color.MidnightBlue);
             GL.PointSize(3f);
         }
@@ -185,11 +210,6 @@ namespace AWGL.Scene.Base
         {
             base.OnUpdateFrame(e);
 
-            if (Keyboard[OpenTK.Input.Key.Escape])
-            {
-                this.Exit();
-            }
-
             m_Time += (float)e.Time;
 
             List<Vector3> verts = new List<Vector3>();
@@ -255,7 +275,7 @@ namespace AWGL.Scene.Base
         /// <summary>
         /// Get OpenGL Version Information and check system meets requirements
         /// </summary>
-        private void GetOpenGLVersion()
+        private void TestOpenGLVersion()
         {
             m_Version = new Version(GL.GetString(StringName.Version).Substring(0, 3));
             m_TargetLow = new Version(3, 1);
@@ -274,7 +294,7 @@ namespace AWGL.Scene.Base
 
         #endregion
 
-        #region loadShader
+        #region LoadShader
 
         /// <summary>
         /// Helper Funtion for loading shaders
@@ -283,7 +303,7 @@ namespace AWGL.Scene.Base
         /// <param name="type">Type of GLSL Shader to load</param>
         /// <param name="program">Program ID to add Shader too</param>
         /// <param name="address">Shader Pointer</param>
-        private void loadShader(String filename, ShaderType type, int program, out int address)
+        private void LoadShader(String filename, ShaderType type, int program, out int address)
         {
             address = GL.CreateShader(type);
             using (StreamReader sr = new StreamReader("Shaders/" + filename))
@@ -296,6 +316,41 @@ namespace AWGL.Scene.Base
         }
 
         #endregion
+
+        #region LoadVBO<TVertex> (TVertex[] vertices, short[] elements) where TVertex : struct
+
+        Vbo LoadVBO<TVertex>(TVertex[] vertices, short[] elements) where TVertex : struct
+        {
+            Vbo handle = new Vbo();
+            int size;
+
+            // To create a VBO:
+            // 1) Generate the buffer handles for the vertex and element buffers.
+            // 2) Bind the vertex buffer handle and upload your vertex data. Check that the buffer was uploaded correctly.
+            // 3) Bind the element buffer handle and upload your element data. Check that the buffer was uploaded correctly.
+
+            GL.GenBuffers(1, out handle.VboID);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, handle.VboID);
+            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(vertices.Length * BlittableValueType.StrideOf(vertices)), vertices,
+                          BufferUsageHint.StaticDraw);
+            GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out size);
+            if (vertices.Length * BlittableValueType.StrideOf(vertices) != size)
+                throw new ApplicationException("Vertex data not uploaded correctly");
+
+            GL.GenBuffers(1, out handle.EboID);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, handle.EboID);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(elements.Length * sizeof(short)), elements,
+                          BufferUsageHint.StaticDraw);
+            GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out size);
+            if (elements.Length * sizeof(short) != size)
+                throw new ApplicationException("Element data not uploaded correctly");
+
+            handle.NumElements = elements.Length;
+            return handle;
+        }
+
+        #endregion
+
 
     }
 }

@@ -71,21 +71,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWGL.cs" />
+    <Compile Include="Shapes\Base\DrawableShape.cs" />
+    <Compile Include="Shapes\Base\VertexStructs.cs" />
+    <Compile Include="Shapes\Capsule.cs" />
+    <Compile Include="Shapes\ChamferCube.cs" />
+    <Compile Include="Shapes\Helpers\Chunk.cs" />
+    <Compile Include="Shapes\Helpers\MengerCube.cs" />
+    <Compile Include="Shapes\Helpers\TetrahedronFace.cs" />
+    <Compile Include="Shapes\Helpers\VboShape.cs" />
+    <Compile Include="Shapes\KochTetrahedron.cs" />
+    <Compile Include="Shapes\MengerSponge.cs" />
+    <Compile Include="Shapes\Old\Cube.cs" />
+    <Compile Include="Shapes\Old\IsoSphere.cs" />
+    <Compile Include="Shapes\Old\Plane.cs" />
+    <Compile Include="Shapes\Old\Shape.cs" />
+    <Compile Include="Shapes\Old\SierpinskiTetrahedron.cs" />
+    <Compile Include="Shapes\SlicedHose.cs" />
+    <Compile Include="Shapes\SlicedSphere.cs" />
+    <Compile Include="Shapes\TorusKnot.cs" />
+    <Compile Include="Shapes\VertexPositionColor.cs" />
+    <Compile Include="VBO.cs" />
     <Compile Include="Scene\Base\DefaultScene.cs" />
     <Compile Include="Graphic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene\Display.cs" />
-    <Compile Include="Shapes\Base\Volume.cs" />
-    <Compile Include="Shapes\ColourCube.cs" />
-    <Compile Include="Shapes\Cube.cs" />
-    <Compile Include="Shapes\Sierpinski.cs" />
-    <Compile Include="Shapes\Tetra.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
