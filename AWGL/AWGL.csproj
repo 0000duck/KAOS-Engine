@@ -97,11 +97,22 @@
     <Compile Include="Scene\Display.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\Textures\earth-cubemap.dds" />
+    <None Include="Data\Textures\swizzled-rock-diffuse-height.dds" />
+    <None Include="Data\Textures\swizzled-rock-normal-gloss.dds" />
     <None Include="Shaders\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Data\Textures\JuliaColorTable.bmp" />
+    <Content Include="Data\Textures\logo-dark.jpg" />
+    <Content Include="Data\Textures\logo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\metal.jpg" />
+    <Content Include="Data\Textures\Swizzled Textures License.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
