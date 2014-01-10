@@ -18,6 +18,12 @@ namespace AWGL.Scene
     /// </summary>
     public abstract class DefaultScene : GameWindow
     {
+        public DefaultScene()
+            : base(1024, 700, new GraphicsMode(32, 24, 0, 4))
+        {
+            this.WindowState = WindowState.Fullscreen;
+            Keyboard.KeyDown += Keyboard_KeyDown;
+        }   
 
         #region Private Fields
 
@@ -50,13 +56,6 @@ namespace AWGL.Scene
         };
 
         #endregion  
-
-        public DefaultScene()
-            : base(1024, 700, new GraphicsMode(32, 24, 0, 4))
-        {
-            this.WindowState = WindowState.Fullscreen;
-            Keyboard.KeyDown += Keyboard_KeyDown;
-        }   
 
         #region Keyboard_KeyDown
 
@@ -230,8 +229,10 @@ namespace AWGL.Scene
 
             // To create a VBO:
             // 1) Generate the buffer handles for the vertex and element buffers.
-            // 2) Bind the vertex buffer handle and upload your vertex data. Check that the buffer was uploaded correctly.
-            // 3) Bind the element buffer handle and upload your element data. Check that the buffer was uploaded correctly.
+            // 2) Bind the vertex buffer handle and upload your vertex data. 
+            //    Check that the buffer was uploaded correctly.
+            // 3) Bind the element buffer handle and upload your element data. 
+            //    Check that the buffer was uploaded correctly.
 
             GL.GenBuffers(1, out handle.VboID);
             GL.BindBuffer(BufferTarget.ArrayBuffer, handle.VboID);
@@ -255,6 +256,8 @@ namespace AWGL.Scene
 
         #endregion
 
+        #region Draw(Vbo handle)
+
         void Draw(Vbo handle)
         {
             // To draw a VBO:
@@ -276,5 +279,6 @@ namespace AWGL.Scene
             GL.DrawElements(BeginMode.Triangles, handle.NumElements, DrawElementsType.UnsignedShort, IntPtr.Zero);
         }
 
+        #endregion
     }
 }
