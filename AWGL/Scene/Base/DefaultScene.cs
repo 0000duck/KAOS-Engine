@@ -24,7 +24,7 @@ namespace AWGL.Scene
         {
             this.WindowState = WindowState.Fullscreen;
             Keyboard.KeyDown += Keyboard_KeyDown;
-            this.VSync = VSyncMode.On;
+            this.VSync = VSyncMode.Off;
         }   
 
         #region Private Fields
@@ -98,7 +98,7 @@ namespace AWGL.Scene
 
         #endregion
 
-        private MengerSponge sponge;
+        private TorusKnot obj;
 
         #region Keyboard_KeyDown
 
@@ -141,7 +141,7 @@ namespace AWGL.Scene
             GL.Enable(EnableCap.Lighting);
             GL.Enable(EnableCap.Light0);
 
-            sponge= new MengerSponge(1.0, Shapes.MengerSponge.eSubdivisions.Two, true);
+            obj = new TorusKnot(256, 32, 0.1, 3, 4, 1, true);
 
             #endregion
 
@@ -366,7 +366,7 @@ namespace AWGL.Scene
         {
             GL.Translate(0f, 0f, -2f);
             GL.Rotate(Angle, Vector3.UnitY);
-            sponge.Draw();
+            obj.Draw();
         }
         #endregion
 
@@ -441,7 +441,7 @@ namespace AWGL.Scene
         {
             base.OnUnload(e);
             //GL.DeleteBuffers(1, ref VBOHandle);
-            sponge.Dispose();
+            obj.Dispose();
         }
 
         #endregion
