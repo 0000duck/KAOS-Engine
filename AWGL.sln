@@ -3,30 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWGL", "AWGL\AWGL.csproj", "{43E7C301-7345-49D7-B8E8-F02B097F599F}"
 EndProject
+<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CjClutter.ObjLoader.Loader", "ObjLoader\source\CjClutter.ObjLoader.Loader\CjClutter.ObjLoader.Loader.csproj", "{1FD37682-98D6-442F-8E15-646247C690DC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApplication", "TestApplication\TestApplication.csproj", "{675E6232-A2CD-4AB4-9C98-C470DE796345}"
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{804F05CB-4A70-4320-BF37-4A28DD5C5CDA}"
+>>>>>>> parent of 272d9e6... Adding ObjLoader as SubModule
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Debug|Mixed Platforms = Debug|Mixed Platforms
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-		Release|Mixed Platforms = Release|Mixed Platforms
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Release|x64.ActiveCfg = Release|Any CPU
@@ -57,6 +52,12 @@ Global
 		{675E6232-A2CD-4AB4-9C98-C470DE796345}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{675E6232-A2CD-4AB4-9C98-C470DE796345}.Release|x64.ActiveCfg = Release|Any CPU
 		{675E6232-A2CD-4AB4-9C98-C470DE796345}.Release|x86.ActiveCfg = Release|Any CPU
+=======
+		{804F05CB-4A70-4320-BF37-4A28DD5C5CDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{804F05CB-4A70-4320-BF37-4A28DD5C5CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{804F05CB-4A70-4320-BF37-4A28DD5C5CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{804F05CB-4A70-4320-BF37-4A28DD5C5CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> parent of 272d9e6... Adding ObjLoader as SubModule
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
