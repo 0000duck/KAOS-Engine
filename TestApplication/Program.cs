@@ -7,19 +7,14 @@ using System.Threading.Tasks;
 using AWGL;
 using AWGL.Scene;
 
-using OpenTK;
-
 namespace TestApplication
 {
     class Program
     {
         [STAThread]
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            using (Display mainDisplay = new Display())
-            {
-                mainDisplay.Run(30.0);
-            }
+            AWGL.AWGL.Main(args);
         }
     }
 }

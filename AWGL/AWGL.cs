@@ -14,6 +14,13 @@ namespace AWGL
 {
     public static class AWGL 
     {
-        
+        [STAThread]
+        public static void Main(string[] args)
+        {
+            using (Display mainDisplay = new Display())
+            {
+                mainDisplay.Run(30.0);
+            }
+        }
     }
 }
