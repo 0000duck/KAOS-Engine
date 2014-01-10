@@ -8,6 +8,7 @@ using System;
 
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.Drawing;
 
 namespace AWGL.Shapes
 {
@@ -154,6 +155,8 @@ namespace AWGL.Shapes
                 } else
                     GL.CallList( DisplayListHandle );
         }
+
+        
 
         #region IDisposable Members
 

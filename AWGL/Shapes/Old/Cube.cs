@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 
 using OpenTK;
+using AWGL;
 
 namespace AWGL.Shapes
 {
@@ -61,15 +62,29 @@ namespace AWGL.Shapes
 
             Colors = new int[]
             {
-                Utilities.ColorToRgba32(Color.DarkRed),
-                Utilities.ColorToRgba32(Color.DarkRed),
-                Utilities.ColorToRgba32(Color.Gold),
-                Utilities.ColorToRgba32(Color.Gold),
-                Utilities.ColorToRgba32(Color.DarkRed),
-                Utilities.ColorToRgba32(Color.DarkRed),
-                Utilities.ColorToRgba32(Color.Gold),
-                Utilities.ColorToRgba32(Color.Gold),
+                ColorToRgba32(Color.DarkRed),
+                ColorToRgba32(Color.DarkRed),
+                ColorToRgba32(Color.Gold),
+                ColorToRgba32(Color.Gold),
+                ColorToRgba32(Color.DarkRed),
+                ColorToRgba32(Color.DarkRed),
+                ColorToRgba32(Color.Gold),
+                ColorToRgba32(Color.Gold),
             };
+        }
+
+        /// <summary>
+        /// Converts a Color instance into an int representation
+        /// </summary>
+        /// <param name="c">
+        /// A <see cref="Color"/> instance to be converted
+        /// </param>
+        /// <returns>
+        /// A <see cref="System.Int32"/>
+        /// </returns>
+        public static int ColorToRgba32(Color c)
+        {
+            return (int)((c.A << 24) | (c.B << 16) | (c.G << 8) | c.R);
         }
     }
 }
