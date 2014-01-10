@@ -1,5 +1,5 @@
 ﻿using OpenTK;
-using AWGL.Abstract;
+using AWGL.Shapes.Base;
 using System.Collections.Generic;
 
 namespace AWGL.Shapes

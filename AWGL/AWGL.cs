@@ -8,6 +8,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
+using AWGL.Scene;
+
 namespace AWGL
 {
     public static class AWGL 
@@ -15,9 +17,9 @@ namespace AWGL
         
         public static void Main(string[] args)
         {
-            using (Display display = new Display())
+            using (Display mainDisplay = new Display())
             {
-                display.Run(30.0);
+                mainDisplay.Run(30.0);
             }
         }
         

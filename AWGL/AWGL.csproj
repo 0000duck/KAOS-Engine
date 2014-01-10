@@ -53,10 +53,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWGL.cs" />
-    <Compile Include="Display.cs" />
+    <Compile Include="Scene\Base\DefaultScene.cs" />
     <Compile Include="Graphic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Abstract\Volume.cs" />
+    <Compile Include="Scene\Display.cs" />
+    <Compile Include="Shapes\Base\Volume.cs" />
     <Compile Include="Shapes\ColourCube.cs" />
     <Compile Include="Shapes\Cube.cs" />
     <Compile Include="Shapes\Sierpinski.cs" />
@@ -64,14 +65,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Shaders\FS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Shaders\Simple_FS.glsl" />
-    <None Include="Shaders\Simple_VS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Shaders\VS.glsl">
+    <None Include="Shaders\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
