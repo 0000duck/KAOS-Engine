@@ -23,6 +23,7 @@ namespace AWGL.Scene
         {
             this.WindowState = WindowState.Fullscreen;
             Keyboard.KeyDown += Keyboard_KeyDown;
+            this.VSync = VSyncMode.Off;
         }   
 
         #region Private Fields
@@ -57,6 +58,38 @@ namespace AWGL.Scene
 
         #endregion  
 
+        #region Particles
+
+        private static int MaxParticleCount = 2000;
+        private int VisibleParticleCount;
+        private VertexC4ubV3f[] VBO = new VertexC4ubV3f[MaxParticleCount];
+        private ParticleAttribut[] ParticleAttributes = new ParticleAttribut[MaxParticleCount];
+
+        // this struct is used for drawing
+        struct VertexC4ubV3f
+        {
+            public byte R, G, B, A;
+            public Vector3 Position;
+
+            public static int SizeInBytes = 16;
+        }
+
+        // this struct is used for updates
+        struct ParticleAttribut
+        {
+            public Vector3 Direction;
+            public uint Age;
+
+            //  more stuff could be here: Rotation, Radius, whatever
+        }
+
+        private uint VBOHandle;
+
+        private float xPos = 0.1f;
+        private float yPos = 0.1f;
+
+        #endregion Particles
+
         #region Keyboard_KeyDown
 
         /// <summary>
@@ -89,17 +122,65 @@ namespace AWGL.Scene
 
             TestOpenGLVersion();
 
-            //InitProgram();
-
             Title = "AWGL: High level OpenTK wrapper - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
 
-            GL.ClearColor(System.Drawing.Color.MidnightBlue);
+            GL.ClearColor(.1f, 0f, .1f, 0f);
             GL.Enable(EnableCap.DepthTest);
 
-            vbo[0] = LoadVBO(CubeVertices, CubeElements);
-            vbo[1] = LoadVBO(CubeVertices, CubeElements);
+            // Set our point parameters
+            GL.PointSize(5f);
+            GL.Enable(EnableCap.PointSprite);
+            GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
+
+            // set up vbo state - depreceatd as of 3.0>> (?)
+            GL.EnableClientState(ArrayCap.ColorArray);
+            GL.EnableClientState(ArrayCap.VertexArray);
+
+            // Generate the buffers
+            GL.GenBuffers(1, out VBOHandle);
+
+            // Set it up
+            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOHandle);
+            GL.ColorPointer(4, ColorPointerType.UnsignedByte, VertexC4ubV3f.SizeInBytes, (IntPtr)0);
+            GL.VertexPointer(3, VertexPointerType.Float, VertexC4ubV3f.SizeInBytes, (IntPtr)(4 * sizeof(byte)));
+
+            Random rndNum = new Random();
+            Vector3 tmp = new Vector3();
+
+            // generate some random stuff for the particle system
+            for (uint i = 0; i < MaxParticleCount; i++)
+            {
+                if (xPos >= 4.0f)
+                {
+                    xPos = -4.0f;
+                }
+                if (yPos >= 4.0f)
+                {
+                    yPos = -4.0f;
+                }
+                VBO[i].R = (byte)rndNum.Next(0, 256);
+                VBO[i].G = (byte)rndNum.Next(0, 256);
+                VBO[i].B = (byte)rndNum.Next(0, 256);
+                VBO[i].A = (byte)rndNum.Next(0, 256); // isn't actually used
+                VBO[i].Position = new Vector3(xPos, yPos, -1.0f); // all particles are born at the origin
+
+                // generate direction vector in the range [-0.25f...+0.25f] 
+                // that's slow enough so you can see particles 'disappear' when they are respawned
+                tmp.X = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
+                tmp.Y = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
+                tmp.Z = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
+                ParticleAttributes[i].Direction = tmp; // copy 
+                ParticleAttributes[i].Age = 0;
+
+                xPos = xPos + 0.0231f;
+                yPos = yPos + 0.0253f;
+            }
+
+            VisibleParticleCount = 0;
+
         }
 
+        //private void
         #endregion
 
         #region OnResize
@@ -115,10 +196,13 @@ namespace AWGL.Scene
 
             GL.Viewport(0, 0, Width, Height);
 
-            float aspect_ratio = Width / (float)Height;
-            Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
             GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref perpective);
+            Matrix4 p = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Width / (float)Height, 0.1f, 50.0f);
+            GL.LoadMatrix(ref p);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            Matrix4 mv = Matrix4.LookAt(Vector3.UnitZ, Vector3.Zero, Vector3.UnitY);
+            GL.LoadMatrix(ref mv);
         }
 
         #endregion
@@ -132,7 +216,30 @@ namespace AWGL.Scene
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            base.OnUpdateFrame(e);
+            //base.OnUpdateFrame(e);
+
+            // will update particles here. When using a Physics SDK, it's update rate is much higher than
+            // the framerate and it would be a waste of cycles copying to the VBO more often than drawing it.
+            if (VisibleParticleCount < MaxParticleCount)
+                VisibleParticleCount++;
+
+            Vector3 temp;
+
+            for (int i = MaxParticleCount - VisibleParticleCount; i < MaxParticleCount; i++)
+            {
+                if (ParticleAttributes[i].Age >= MaxParticleCount)
+                {
+                    // reset particle
+                    ParticleAttributes[i].Age = 0;
+                    VBO[i].Position = Vector3.Zero;
+                }
+                else
+                {
+                    ParticleAttributes[i].Age += (uint)Math.Max(ParticleAttributes[i].Direction.LengthFast * 10, 1);
+                    Vector3.Multiply(ref ParticleAttributes[i].Direction, (float)e.Time, out temp);
+                    Vector3.Add(ref VBO[i].Position, ref temp, out VBO[i].Position);
+                }
+            }
         }
 
         #endregion
@@ -146,18 +253,25 @@ namespace AWGL.Scene
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            base.OnRenderFrame(e);
+            //base.OnRenderFrame(e);
+
+            this.Title = "AWGL: High level OpenTK wrapper - " + VisibleParticleCount + " Points. FPS: " + string.Format("{0:F}", 1.0 / e.Time);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadMatrix(ref lookat);
+            GL.PushMatrix();
 
-            angle += rotation_speed * (float)e.Time;
-            GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
+            GL.Translate(0f, 0f, -5f);
 
-            Draw(vbo[0]);
+            // Tell OpenGL to discard old VBO when done drawing it and reserve memory _now_ for a new buffer.
+            // without this, GL would wait until draw operations on old VBO are complete before writing to it
+            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(VertexC4ubV3f.SizeInBytes * MaxParticleCount), IntPtr.Zero, BufferUsageHint.StreamDraw);
+            // Fill newly allocated buffer
+            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(VertexC4ubV3f.SizeInBytes * MaxParticleCount), VBO, BufferUsageHint.StreamDraw);
+            // Only draw particles that are alive
+            GL.DrawArrays(BeginMode.Points, MaxParticleCount - VisibleParticleCount, VisibleParticleCount);
+
+            GL.PopMatrix();
 
             SwapBuffers();
         }
@@ -168,7 +282,7 @@ namespace AWGL.Scene
 
         protected override void OnUnload(EventArgs e)
         {
-
+            GL.DeleteBuffers(1, ref VBOHandle);
         }
 
         #endregion
@@ -280,5 +394,7 @@ namespace AWGL.Scene
         }
 
         #endregion
+
+
     }
 }
