@@ -44,8 +44,8 @@ namespace AWGL
         {
             programID = GL.CreateProgram();
 
-            loadShader("VS.glsl", ShaderType.VertexShader, programID, out vertexShaderID);
-            loadShader("FS.glsl", ShaderType.FragmentShader, programID, out fragmentShaderID);
+            loadShader("Simple_VS.glsl", ShaderType.VertexShader, programID, out vertexShaderID);
+            loadShader("Simple_FS.glsl", ShaderType.FragmentShader, programID, out fragmentShaderID);
 
             // Links shaders and output any errors
             GL.LinkProgram(programID);

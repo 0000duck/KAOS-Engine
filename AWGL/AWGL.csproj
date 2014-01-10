@@ -67,6 +67,10 @@
     <None Include="Shaders\FS.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Shaders\Simple_FS.glsl" />
+    <None Include="Shaders\Simple_VS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Shaders\VS.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
