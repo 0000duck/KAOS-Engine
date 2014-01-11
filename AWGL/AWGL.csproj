@@ -132,18 +132,6 @@
     <None Include="Data\Textures\earth-cubemap.dds" />
     <None Include="Data\Textures\swizzled-rock-diffuse-height.dds" />
     <None Include="Data\Textures\swizzled-rock-normal-gloss.dds" />
-    <None Include="Shaders\FS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Shaders\Simple_FS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Shaders\Simple_VS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Shaders\VS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Textures\JuliaColorTable.bmp" />

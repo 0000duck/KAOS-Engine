@@ -83,50 +83,16 @@ namespace AWGL.Scene
             #endregion Setup VBO for drawing
 
             #region Shader
-            
+
+            ProgramObject = GL.CreateProgram();
+
             // Load&Compile Vertex Shader
-
-            using (StreamReader sr = new StreamReader("Data/Shaders/Picking_VS.glsl"))
-            {
-                VertexShaderObject = GL.CreateShader(ShaderType.VertexShader);
-                GL.ShaderSource(VertexShaderObject, sr.ReadToEnd());
-                GL.CompileShader(VertexShaderObject);
-            }
-
-            err = GL.GetError();
-            if (err != ErrorCode.NoError)
-                Trace.WriteLine("Vertex Shader: " + err);
-
-            string LogInfo;
-            GL.GetShaderInfoLog(VertexShaderObject, out LogInfo);
-            if (LogInfo.Length > 0 && !LogInfo.Contains("hardware"))
-                Trace.WriteLine("Vertex Shader failed!\nLog:\n" + LogInfo);
-            else
-                Trace.WriteLine("Vertex Shader compiled without complaint.");
+            LoadShader("Picking_VS.glsl", ShaderType.VertexShader, ProgramObject, out VertexShaderObject);
 
             // Load&Compile Fragment Shader
-
-            using (StreamReader sr = new StreamReader("Data/Shaders/Picking_FS.glsl"))
-            {
-                FragmentShaderObject = GL.CreateShader(ShaderType.FragmentShader);
-                GL.ShaderSource(FragmentShaderObject, sr.ReadToEnd());
-                GL.CompileShader(FragmentShaderObject);
-            }
-            GL.GetShaderInfoLog(FragmentShaderObject, out LogInfo);
-
-            err = GL.GetError();
-            if (err != ErrorCode.NoError)
-                Trace.WriteLine("Fragment Shader: " + err);
-
-            if (LogInfo.Length > 0 && !LogInfo.Contains("hardware"))
-                Trace.WriteLine("Fragment Shader failed!\nLog:\n" + LogInfo);
-            else
-                Trace.WriteLine("Fragment Shader compiled without complaint.");
-
+            LoadShader("Picking_FS.glsl", ShaderType.FragmentShader, ProgramObject, out FragmentShaderObject);
+            
             // Link the Shaders to a usable Program
-            ProgramObject = GL.CreateProgram();
-            GL.AttachShader(ProgramObject, VertexShaderObject);
-            GL.AttachShader(ProgramObject, FragmentShaderObject);
 
             // link it all together
             GL.LinkProgram(ProgramObject);
@@ -146,6 +112,7 @@ namespace AWGL.Scene
             GL.DeleteShader(FragmentShaderObject);
 
             int temp;
+            string LogInfo;
             GL.GetProgram(ProgramObject, ProgramParameter.LinkStatus, out temp);
             Trace.WriteLine("Linking Program (" + ProgramObject + ") " + ((temp == 1) ? "succeeded." : "FAILED!"));
             if (temp != 1)
