@@ -71,6 +71,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWGL.cs" />
+    <Compile Include="Scene\Particles.cs" />
+    <Compile Include="Scene\StereoVision.cs" />
+    <Compile Include="Scene\Texture2D.cs" />
+    <Compile Include="Scene\VBOCube.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
     <Compile Include="Shapes\Base\VertexStructs.cs" />
     <Compile Include="Shapes\Capsule.cs" />

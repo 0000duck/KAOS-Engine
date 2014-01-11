@@ -17,9 +17,9 @@ namespace AWGL
         [STAThread]
         public static void Main(string[] args)
         {
-            using (Display mainDisplay = new Display())
+            using (VBOCube particles = new VBOCube())
             {
-                mainDisplay.Run(30.0);
+                particles.Run(30.0);
             }
         }
 
