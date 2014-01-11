@@ -26,7 +26,6 @@ namespace AWGL.Scene
         }       
 
         #region Keyboard_KeyDown
-
         /// <summary>
         /// Occurs when a key is pressed.
         /// </summary>
@@ -43,11 +42,9 @@ namespace AWGL.Scene
                 else
                     this.WindowState = WindowState.Fullscreen;
         }
-
         #endregion
 
         #region OnLoad
-
         /// <summary>
         /// Setup OpenGL and load resources here.
         /// </summary>
@@ -76,29 +73,6 @@ namespace AWGL.Scene
 
             GL.Viewport(0, 0, Width, Height);
         }
-        #endregion
-        
-        #region OnUpdateFrame
-
-        /// <summary>
-        /// Add your game logic here.
-        /// </summary>
-        /// <param name="e">Contains timing information.</param>
-        /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void OnUpdateFrame(FrameEventArgs e)
-        {
-            base.OnUpdateFrame(e);
-        }
-
-        #endregion
-
-        #region OnUnload
-
-        protected override void OnUnload(EventArgs e)
-        {
-            base.OnUnload(e);
-        }
-
         #endregion
 
         #region GetOpenGLVersion

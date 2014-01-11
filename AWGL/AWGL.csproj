@@ -72,6 +72,8 @@
   <ItemGroup>
     <Compile Include="AWGL.cs" />
     <Compile Include="Scene\DynamicVBOScene.cs" />
+    <Compile Include="Scene\FBOScene.cs" />
+    <Compile Include="Scene\PickerScene.cs" />
     <Compile Include="Scene\StereoVisionScene.cs" />
     <Compile Include="Scene\Texture2DScene.cs" />
     <Compile Include="Scene\StaticVBOScene.cs" />
@@ -100,10 +102,46 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\Shaders\CubeMap_FS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\CubeMap_VS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\JuliaSet_SM2_FS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\JuliaSet_SM3_FS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\JuliaSet_VS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\Parallax_FS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\Parallax_VS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\Picking_FS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\Picking_VS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Textures\earth-cubemap.dds" />
     <None Include="Data\Textures\swizzled-rock-diffuse-height.dds" />
     <None Include="Data\Textures\swizzled-rock-normal-gloss.dds" />
-    <None Include="Shaders\*">
+    <None Include="Shaders\FS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Shaders\Simple_FS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Shaders\Simple_VS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Shaders\VS.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
