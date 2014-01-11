@@ -11,10 +11,11 @@ namespace TestApplication
 {
     class Program
     {
+
         [STAThread]
         public static void Main(string[] args)
         {
-            AWGL.AWGL.Main(args);
+            OGL.Run();
         }
     }
 }

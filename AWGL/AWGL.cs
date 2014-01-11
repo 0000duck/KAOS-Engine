@@ -12,13 +12,29 @@ using AWGL.Scene;
 
 namespace AWGL
 {
-    public static class AWGL 
+    public sealed class OGL
     {
+        private static OGL instance = new OGL();
+
+        private OGL()
+        {
+        }
+
+        public static OGL getInstance()
+        {
+            return instance;
+        }
+
+        public static void SetupScene()
+        {
+            Run();
+        }
+
         [STAThread]
-        public static void Main(string[] args)
+        public static void Run()
         {
             Int32 Selection;
-
+            
             Console.WriteLine("Please select a scene to load:");
             Console.WriteLine("");
             Console.WriteLine("1. Static VBO");
@@ -76,6 +92,6 @@ namespace AWGL
                     break;
             }
         }
-
+        
     }
 }

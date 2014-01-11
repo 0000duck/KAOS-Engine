@@ -292,6 +292,5 @@ namespace AWGL.Scene
             SwapBuffers();
         }
 
-
     }
 }

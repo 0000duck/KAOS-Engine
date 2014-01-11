@@ -108,5 +108,6 @@ namespace AWGL.Scene
             SwapBuffers();
         }
         #endregion
+
     }
 }

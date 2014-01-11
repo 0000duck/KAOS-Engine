@@ -158,6 +158,7 @@ namespace AWGL.Scene
             obj.Draw();
         }
         #endregion
+
     }
 
     #region StereoVison Structs

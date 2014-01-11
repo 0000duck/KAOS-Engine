@@ -36,7 +36,13 @@ namespace AWGL.Scene
         {
             base.OnLoad(e);
 
-            TestOpenGLVersion();
+            Console.WriteLine("");
+            Console.WriteLine("Video informations :");
+            Console.WriteLine("Graphics card vendor : {0}", GL.GetString(StringName.Vendor));
+            Console.WriteLine("Renderer : {0}", GL.GetString(StringName.Renderer));
+            Console.WriteLine("Version : {0}", GL.GetString(StringName.Version));
+            Console.WriteLine("Shading Language Version : {0}", GL.GetString(StringName.ShadingLanguageVersion));
+            //TestOpenGLVersion();
 
             Title = "AWGL: High level OpenTK wrapper - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
 
@@ -179,6 +185,11 @@ namespace AWGL.Scene
                     this.WindowState = WindowState.Fullscreen;
         }
         #endregion
+
+        public new void Run()
+        {
+            base.Run();
+        }
 
     }
 }
