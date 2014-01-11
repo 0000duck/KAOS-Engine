@@ -59,8 +59,6 @@ namespace AWGL.Scene
         {
             //base.OnRenderFrame(e);
 
-            GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
-
             Angle += (float)(e.Time * 20.0);
 
             SetupCamera(Eye.right);

@@ -66,7 +66,6 @@ namespace AWGL.Scene
         #endregion
 
         #region OnResize
-
         /// <summary>
         /// Respond to resize events here.
         /// </summary>
@@ -75,10 +74,7 @@ namespace AWGL.Scene
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-
-            GL.Viewport(ClientRectangle);
         }
-
         #endregion
         
         #region OnUpdateFrame
@@ -105,6 +101,8 @@ namespace AWGL.Scene
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
+
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
         #endregion
