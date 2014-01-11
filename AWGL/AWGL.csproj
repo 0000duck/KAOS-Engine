@@ -71,10 +71,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWGL.cs" />
-    <Compile Include="Scene\Particles.cs" />
-    <Compile Include="Scene\StereoVision.cs" />
-    <Compile Include="Scene\Texture2D.cs" />
-    <Compile Include="Scene\VBOCube.cs" />
+    <Compile Include="Scene\DynamicVBOScene.cs" />
+    <Compile Include="Scene\StereoVisionScene.cs" />
+    <Compile Include="Scene\Texture2DScene.cs" />
+    <Compile Include="Scene\StaticVBOScene.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
     <Compile Include="Shapes\Base\VertexStructs.cs" />
     <Compile Include="Shapes\Capsule.cs" />
@@ -94,11 +94,10 @@
     <Compile Include="Shapes\SlicedSphere.cs" />
     <Compile Include="Shapes\TorusKnot.cs" />
     <Compile Include="Shapes\VertexPositionColor.cs" />
-    <Compile Include="VBO.cs" />
+    <Compile Include="Data.cs" />
     <Compile Include="Scene\Base\DefaultScene.cs" />
     <Compile Include="Graphic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scene\Display.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Textures\earth-cubemap.dds" />

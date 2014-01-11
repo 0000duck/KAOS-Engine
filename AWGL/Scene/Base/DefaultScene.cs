@@ -59,8 +59,7 @@ namespace AWGL.Scene
 
             Title = "AWGL: High level OpenTK wrapper - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
 
-            GL.ClearColor(.1f, 0f, .1f, 0f);
-            
+            GL.ClearColor(.1f, 0f, .1f, 0f);         
         }
 
         #endregion
@@ -74,6 +73,8 @@ namespace AWGL.Scene
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
+
+            GL.Viewport(0, 0, Width, Height);
         }
         #endregion
         
@@ -87,22 +88,6 @@ namespace AWGL.Scene
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-        }
-
-        #endregion
-
-        #region OnRenderFrame
-
-        /// <summary>
-        /// Add your game rendering code here.
-        /// </summary>
-        /// <param name="e">Contains timing information.</param>
-        /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void OnRenderFrame(FrameEventArgs e)
-        {
-            base.OnRenderFrame(e);
-
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
         #endregion

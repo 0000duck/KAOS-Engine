@@ -13,7 +13,7 @@ using OpenTK.Input;
 
 namespace AWGL.Scene
 {
-    public class VBOCube : DefaultScene
+    public class StaticVBOScene : DefaultScene
     {
         #region Private Members
         
@@ -69,7 +69,7 @@ namespace AWGL.Scene
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnResize(EventArgs e)
         {
-            GL.Viewport(0, 0, Width, Height);
+            base.OnResize(e);
 
             float aspect_ratio = Width / (float)Height;
             Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
@@ -88,6 +88,8 @@ namespace AWGL.Scene
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
+
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);

@@ -17,7 +17,7 @@ namespace AWGL
         [STAThread]
         public static void Main(string[] args)
         {
-            using (VBOCube particles = new VBOCube())
+            using (Texture2DScene particles = new Texture2DScene())
             {
                 particles.Run(30.0);
             }

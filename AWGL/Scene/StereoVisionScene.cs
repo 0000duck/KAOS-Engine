@@ -5,9 +5,9 @@ using System;
 
 namespace AWGL.Scene
 {
-    public class StereoVision : DefaultScene
+    public class StereoVisionScene : DefaultScene
     {
-        public StereoVision()
+        public StereoVisionScene()
         {
             this.VSync = VSyncMode.On;
         }
@@ -43,8 +43,6 @@ namespace AWGL.Scene
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-
-            GL.Viewport(ClientRectangle);
         }
 
         #endregion
@@ -57,9 +55,9 @@ namespace AWGL.Scene
         /// <param name="e">Contains timing information.</param>
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            //base.OnRenderFrame(e);
-
             Angle += (float)(e.Time * 20.0);
+
+            GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
             SetupCamera(Eye.right);
             GL.ColorMask(true, false, false, true);
