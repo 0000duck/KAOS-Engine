@@ -74,6 +74,7 @@
     <Compile Include="Scene\DynamicVBOScene.cs" />
     <Compile Include="Scene\FBOScene.cs" />
     <Compile Include="Scene\PickerScene.cs" />
+    <Compile Include="Scene\StencilCSGScene.cs" />
     <Compile Include="Scene\StereoVisionScene.cs" />
     <Compile Include="Scene\Texture2DScene.cs" />
     <Compile Include="Scene\StaticVBOScene.cs" />
@@ -129,18 +130,32 @@
     <None Include="Data\Shaders\Picking_VS.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Textures\earth-cubemap.dds" />
-    <None Include="Data\Textures\swizzled-rock-diffuse-height.dds" />
-    <None Include="Data\Textures\swizzled-rock-normal-gloss.dds" />
+    <None Include="Data\Textures\earth-cubemap.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Textures\swizzled-rock-diffuse-height.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Textures\swizzled-rock-normal-gloss.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Textures\JuliaColorTable.bmp" />
-    <Content Include="Data\Textures\logo-dark.jpg" />
+    <Content Include="Data\Textures\JuliaColorTable.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\logo-dark.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Textures\logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Textures\metal.jpg" />
-    <Content Include="Data\Textures\Swizzled Textures License.txt" />
+    <Content Include="Data\Textures\metal.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\Swizzled Textures License.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
