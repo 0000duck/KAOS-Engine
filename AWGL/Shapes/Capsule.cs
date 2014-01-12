@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-
 using OpenTK;
+using System.Collections.Generic;
 
 namespace AWGL.Shapes
 {

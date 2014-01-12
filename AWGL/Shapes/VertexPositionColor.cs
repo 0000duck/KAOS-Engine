@@ -25,9 +25,9 @@
 //
 #endregion
 
+using OpenTK;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using OpenTK;
 
 namespace AWGL.Tutorial
 {

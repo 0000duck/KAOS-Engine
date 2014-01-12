@@ -1,7 +1,5 @@
-using System;
-using System.Diagnostics;
-
 using OpenTK;
+using System;
 
 namespace AWGL.Shapes
 {

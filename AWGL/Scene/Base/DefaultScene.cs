@@ -1,16 +1,8 @@
-﻿using AWGL.Shapes;
-using AWGL.Tutorial;
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
 
 namespace AWGL.Scene
 {

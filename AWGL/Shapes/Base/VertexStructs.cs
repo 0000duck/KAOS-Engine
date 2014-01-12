@@ -1,5 +1,3 @@
-using System;
-
 using OpenTK;
 
 namespace AWGL.Shapes

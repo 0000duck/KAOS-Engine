@@ -4,11 +4,9 @@
  */
 #endregion
 
-using System;
-
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System.Drawing;
+using System;
 
 namespace AWGL.Shapes
 {

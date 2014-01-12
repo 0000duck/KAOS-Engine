@@ -4,15 +4,8 @@
  */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
-
-using System.Runtime.InteropServices;
-
 using OpenTK;
-using AWGL;
+using System.Drawing;
 
 namespace AWGL.Shapes
 {
