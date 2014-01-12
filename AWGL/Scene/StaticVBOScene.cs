@@ -8,6 +8,11 @@ namespace AWGL.Scene
 {
     public class StaticVBOScene : DefaultScene
     {
+        TextRenderer renderer;
+        Font serif = new Font(FontFamily.GenericSerif, 24);
+        Font sans = new Font(FontFamily.GenericSansSerif, 24);
+        Font mono = new Font(FontFamily.GenericMonospace, 24);
+
         #region Private Members
         
         private Vbo vbo = new Vbo();
@@ -43,6 +48,17 @@ namespace AWGL.Scene
             GL.Enable(EnableCap.DepthTest);
 
             vbo = Utils.LoadVBO(CubeVertices, CubeElements, 3, 4, BufferUsageHint.StaticDraw);
+
+            renderer = new TextRenderer(Width, Height);
+            PointF position = PointF.Empty;
+
+            renderer.Clear(Color.MidnightBlue);
+            renderer.DrawString("The quick brown fox jumps over the lazy dog", serif, Brushes.White, position);
+            position.Y += serif.Height;
+            renderer.DrawString("The quick brown fox jumps over the lazy dog", sans, Brushes.White, position);
+            position.Y += sans.Height;
+            renderer.DrawString("The quick brown fox jumps over the lazy dog", mono, Brushes.White, position);
+            position.Y += mono.Height;
         }
 
         public override void Resize(EventArgs e)
@@ -75,6 +91,7 @@ namespace AWGL.Scene
             Draw(vbo);
 
             SwapBuffers();
+
         }
         #endregion
 
