@@ -70,7 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AWGL.cs" />
+    <Compile Include="OGL.cs" />
     <Compile Include="Scene\DynamicVBOScene.cs" />
     <Compile Include="Scene\FBOScene.cs" />
     <Compile Include="Scene\PickerScene.cs" />

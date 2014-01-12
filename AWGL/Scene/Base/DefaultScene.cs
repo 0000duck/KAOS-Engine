@@ -26,6 +26,8 @@ namespace AWGL.Scene
             Keyboard.KeyDown += Keyboard_KeyDown;
         }
 
+        private Color4 m_backgroundColor = new Color4(.1f, 0f, .1f, 0f);
+
         protected ErrorCode err;
 
         #region OnLoad
@@ -46,7 +48,7 @@ namespace AWGL.Scene
 
             Title = "AWGL: High level OpenTK wrapper - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
 
-            GL.ClearColor(.1f, 0f, .1f, 0f);         
+            GL.ClearColor(m_backgroundColor);         
         }
         #endregion
 

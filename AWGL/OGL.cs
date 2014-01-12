@@ -25,9 +25,8 @@ namespace AWGL
             return instance;
         }
 
-        public static void SetupScene()
+        public static void SetupScene(Color backgroundColor)
         {
-            Run();
         }
 
         [STAThread]
