@@ -27,10 +27,67 @@ namespace AWGL.Scene
         private DrawableShape Object;
         #endregion
 
-        protected override void OnLoad(EventArgs e)
+        protected override void OnUnload(EventArgs e)
         {
-            base.OnLoad(e);
+            Object.Dispose();
 
+            // Clean up what we allocated before exiting
+            if (ColorTexture != 0)
+                GL.DeleteTextures(1, ref ColorTexture);
+
+            if (DepthTexture != 0)
+                GL.DeleteTextures(1, ref DepthTexture);
+
+            if (FBOHandle != 0)
+                GL.Ext.DeleteFramebuffers(1, ref FBOHandle);
+        }
+
+        protected override void OnRenderFrame(FrameEventArgs e)
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            GL.PushMatrix();
+            {
+                // Draw the Color Texture
+                GL.Translate(-1.1f, 0f, 0f);
+                GL.BindTexture(TextureTarget.Texture2D, ColorTexture);
+                GL.Begin(BeginMode.Quads);
+                {
+                    GL.TexCoord2(0f, 1f);
+                    GL.Vertex2(-1.0f, 1.0f);
+                    GL.TexCoord2(0.0f, 0.0f);
+                    GL.Vertex2(-1.0f, -1.0f);
+                    GL.TexCoord2(1.0f, 0.0f);
+                    GL.Vertex2(1.0f, -1.0f);
+                    GL.TexCoord2(1.0f, 1.0f);
+                    GL.Vertex2(1.0f, 1.0f);
+                }
+                GL.End();
+
+                // Draw the Depth Texture
+                GL.Translate(+2.2f, 0f, 0f);
+                GL.BindTexture(TextureTarget.Texture2D, DepthTexture);
+                GL.Begin(BeginMode.Quads);
+                {
+                    GL.TexCoord2(0f, 1f);
+                    GL.Vertex2(-1.0f, 1.0f);
+                    GL.TexCoord2(0.0f, 0.0f);
+                    GL.Vertex2(-1.0f, -1.0f);
+                    GL.TexCoord2(1.0f, 0.0f);
+                    GL.Vertex2(1.0f, -1.0f);
+                    GL.TexCoord2(1.0f, 1.0f);
+                    GL.Vertex2(1.0f, 1.0f);
+                }
+                GL.End();
+            }
+            GL.PopMatrix();
+
+            SwapBuffers();
+        }
+
+
+        protected override void Setup(EventArgs e)
+        {
             if (!GL.GetString(StringName.Extensions).Contains("GL_EXT_framebuffer_object"))
             {
                 throw new NotSupportedException(
@@ -181,25 +238,8 @@ namespace AWGL.Scene
             GL.BindTexture(TextureTarget.Texture2D, 0); // bind default texture
         }
 
-        protected override void OnUnload(EventArgs e)
+        protected override void Resize(EventArgs e)
         {
-            Object.Dispose();
-
-            // Clean up what we allocated before exiting
-            if (ColorTexture != 0)
-                GL.DeleteTextures(1, ref ColorTexture);
-
-            if (DepthTexture != 0)
-                GL.DeleteTextures(1, ref DepthTexture);
-
-            if (FBOHandle != 0)
-                GL.Ext.DeleteFramebuffers(1, ref FBOHandle);
-        }
-
-        protected override void OnResize(EventArgs e)
-        {
-            GL.Viewport(0, 0, Width, Height);
-
             double aspect_ratio = Width / (double)Height;
 
             OpenTK.Matrix4 perspective = OpenTK.Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)aspect_ratio, 1, 64);
@@ -209,52 +249,6 @@ namespace AWGL.Scene
             Matrix4 lookat = Matrix4.LookAt(0, 0, 3, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookat);
-
-            base.OnResize(e);
         }
-
-        protected override void OnRenderFrame(FrameEventArgs e)
-        {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            GL.PushMatrix();
-            {
-                // Draw the Color Texture
-                GL.Translate(-1.1f, 0f, 0f);
-                GL.BindTexture(TextureTarget.Texture2D, ColorTexture);
-                GL.Begin(BeginMode.Quads);
-                {
-                    GL.TexCoord2(0f, 1f);
-                    GL.Vertex2(-1.0f, 1.0f);
-                    GL.TexCoord2(0.0f, 0.0f);
-                    GL.Vertex2(-1.0f, -1.0f);
-                    GL.TexCoord2(1.0f, 0.0f);
-                    GL.Vertex2(1.0f, -1.0f);
-                    GL.TexCoord2(1.0f, 1.0f);
-                    GL.Vertex2(1.0f, 1.0f);
-                }
-                GL.End();
-
-                // Draw the Depth Texture
-                GL.Translate(+2.2f, 0f, 0f);
-                GL.BindTexture(TextureTarget.Texture2D, DepthTexture);
-                GL.Begin(BeginMode.Quads);
-                {
-                    GL.TexCoord2(0f, 1f);
-                    GL.Vertex2(-1.0f, 1.0f);
-                    GL.TexCoord2(0.0f, 0.0f);
-                    GL.Vertex2(-1.0f, -1.0f);
-                    GL.TexCoord2(1.0f, 0.0f);
-                    GL.Vertex2(1.0f, -1.0f);
-                    GL.TexCoord2(1.0f, 1.0f);
-                    GL.Vertex2(1.0f, 1.0f);
-                }
-                GL.End();
-            }
-            GL.PopMatrix();
-
-            SwapBuffers();
-        }
-
     }
 }

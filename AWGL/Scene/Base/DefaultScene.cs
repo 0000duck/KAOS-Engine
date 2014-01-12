@@ -48,8 +48,13 @@ namespace AWGL.Scene
 
             Title = "AWGL: High level OpenTK wrapper - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
 
-            GL.ClearColor(m_backgroundColor);         
+            GL.ClearColor(m_backgroundColor);
+
+            Setup(e);
         }
+
+        protected abstract void Setup(EventArgs e);
+
         #endregion
 
         #region OnResize
@@ -61,7 +66,12 @@ namespace AWGL.Scene
         protected override void OnResize(EventArgs e)
         {
             GL.Viewport(0, 0, Width, Height);
+
+            Resize(e);
         }
+
+        protected abstract void Resize(EventArgs e);
+
         #endregion
 
         #region TestOpenGLVersion

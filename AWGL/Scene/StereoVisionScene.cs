@@ -159,6 +159,16 @@ namespace AWGL.Scene
         }
         #endregion
 
+
+        protected override void Setup(EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void Resize(EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     #region StereoVison Structs
