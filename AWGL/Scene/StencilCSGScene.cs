@@ -53,10 +53,8 @@ namespace AWGL.Scene
         }
         #endregion Window
 
-        protected override void OnLoad(EventArgs e)
+        public override void Setup(EventArgs e)
         {
-            base.OnLoad(e);
-
             #region Abort on platforms which will not be able to execute the ops properly
             /*
             if (!GL.SupportsExtension("VERSION_1_2"))
@@ -152,6 +150,11 @@ namespace AWGL.Scene
 
             OperandB = new VboShape(ref tempPrimMode, ref tempVertices, ref tempIndices, true);
             #endregion Invert Operand B's Normals
+        }
+
+        public override void Resize(EventArgs e)
+        {
+            //throw new NotImplementedException();
         }
 
         protected override void OnUnload(EventArgs e)
@@ -291,14 +294,5 @@ namespace AWGL.Scene
             SwapBuffers();
         }
 
-        public override void Setup(EventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public override void Resize(EventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
     }
 }

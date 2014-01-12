@@ -17,14 +17,8 @@ namespace AWGL.Scene
         private float Angle;
         #endregion
 
-        #region OnLoad
-        /// <summary>
-        /// Setup OpenGL and load resources here.
-        /// </summary>
-        protected override void OnLoad(EventArgs e)
+        public override void Setup(EventArgs e)
         {
-            base.OnLoad(e);
-
             GL.Enable(EnableCap.DepthTest);
 
             GL.Enable(EnableCap.Lighting);
@@ -32,20 +26,11 @@ namespace AWGL.Scene
 
             obj = new TorusKnot(256, 32, 0.1, 3, 4, 1, true);
         }
-        #endregion
 
-        #region OnResize
-
-        /// <summary>
-        /// Respond to resize events here.
-        /// </summary>
-        /// <param name="e">Contains information on the new GameWindow size.</param>
-        protected override void OnResize(EventArgs e)
+        public override void Resize(EventArgs e)
         {
-            base.OnResize(e);
+            //throw new NotImplementedException();
         }
-
-        #endregion
 
         #region OnRenderFrame
 
@@ -158,16 +143,6 @@ namespace AWGL.Scene
             obj.Draw();
         }
         #endregion
-
-        public override void Setup(EventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public override void Resize(EventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
     
     }
     #region StereoVison Structs

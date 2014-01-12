@@ -16,7 +16,6 @@ namespace AWGL.Scene
 {
     public class Texture2DScene : DefaultScene
     {
-
         #region Private Members
 
         private Bitmap bitmap = new Bitmap("Data/Textures/logo.jpg");
@@ -24,14 +23,8 @@ namespace AWGL.Scene
 
         #endregion
 
-        #region OnLoad
-        /// <summary>
-        /// Setup OpenGL and load resources here.
-        /// </summary>
-        protected override void OnLoad(EventArgs e)
+        public override void Setup(EventArgs e)
         {
-            base.OnLoad(e);
-
             GL.PointSize(5f);
             GL.Enable(EnableCap.Texture2D);
 
@@ -51,31 +44,19 @@ namespace AWGL.Scene
 
             bitmap.UnlockBits(data);
         }
-        #endregion
+
+        public override void Resize(EventArgs e)
+        {
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(-1.0, 1.0, -1.0, 1.0, 0.0, 4.0);
+        }
 
         #region OnUnload
 
         protected override void OnUnload(EventArgs e)
         {
             GL.DeleteTextures(1, ref texture);
-        }
-
-        #endregion
-
-        #region OnResize
-
-        /// <summary>
-        /// Respond to resize events here.
-        /// </summary>
-        /// <param name="e">Contains information on the new GameWindow size.</param>
-        /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void OnResize(EventArgs e)
-        {
-            base.OnResize(e);
-
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(-1.0, 1.0, -1.0, 1.0, 0.0, 4.0);
         }
 
         #endregion
@@ -109,14 +90,5 @@ namespace AWGL.Scene
         }
         #endregion
 
-        public override void Setup(EventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public override void Resize(EventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
     }
 }
