@@ -53,7 +53,6 @@ namespace AWGL.Scene
         }
         #endregion Window
 
-
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -292,15 +291,14 @@ namespace AWGL.Scene
             SwapBuffers();
         }
 
-
-        protected override void Setup(EventArgs e)
+        public override void Setup(EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        protected override void Resize(EventArgs e)
+        public override void Resize(EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

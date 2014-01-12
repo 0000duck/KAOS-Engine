@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 using AWGL.Shapes;
+using AWGL;
 using System.Drawing;
 using System.IO;
 
@@ -83,44 +84,16 @@ namespace AWGL.Scene
 
             #region Shader
 
-            ProgramObject = GL.CreateProgram();
+            //create and compile shaders
+            VertexShaderObject = Utils.BuildShader("Picking_VS.glsl", ShaderType.VertexShader);
+            FragmentShaderObject = Utils.BuildShader("Picking_FS.glsl", ShaderType.FragmentShader);
 
-            // Load&Compile Vertex Shader
-            LoadShader("Picking_VS.glsl", ShaderType.VertexShader, ProgramObject, out VertexShaderObject);
-
-            // Load&Compile Fragment Shader
-            LoadShader("Picking_FS.glsl", ShaderType.FragmentShader, ProgramObject, out FragmentShaderObject);
-            
-            // Link the Shaders to a usable Program
-
-            // link it all together
-            GL.LinkProgram(ProgramObject);
-
-            err = GL.GetError();
-            if (err != ErrorCode.NoError)
-                Trace.WriteLine("LinkProgram: " + err);
-
-            GL.UseProgram(ProgramObject);
-
-            err = GL.GetError();
-            if (err != ErrorCode.NoError)
-                Trace.WriteLine("UseProgram: " + err);
+            //create program object, attach shaders and link
+            ProgramObject = Utils.BuildProgram(VertexShaderObject, FragmentShaderObject);
 
             // flag ShaderObjects for delete when not used anymore
             GL.DeleteShader(VertexShaderObject);
             GL.DeleteShader(FragmentShaderObject);
-
-            int temp;
-            string LogInfo;
-            GL.GetProgram(ProgramObject, ProgramParameter.LinkStatus, out temp);
-            Trace.WriteLine("Linking Program (" + ProgramObject + ") " + ((temp == 1) ? "succeeded." : "FAILED!"));
-            if (temp != 1)
-            {
-                GL.GetProgramInfoLog(ProgramObject, out LogInfo);
-                Trace.WriteLine("Program Log:\n" + LogInfo);
-            }
-
-            Trace.WriteLine("End of Shader build. GL Error: " + GL.GetError());
 
             GL.UseProgram(0);
 
@@ -156,7 +129,7 @@ namespace AWGL.Scene
         }
         #endregion
 
-        #region OnRenderFrae
+        #region OnRenderFrame
         /// <summary>
         /// Called when it is time to render the next frame. Add your rendering code here.
         /// </summary>
@@ -224,14 +197,14 @@ namespace AWGL.Scene
         }
         #endregion
 
-        protected override void Setup(EventArgs e)
+        public override void Setup(EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        protected override void Resize(EventArgs e)
+        public override void Resize(EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

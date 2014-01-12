@@ -85,8 +85,7 @@ namespace AWGL.Scene
             SwapBuffers();
         }
 
-
-        protected override void Setup(EventArgs e)
+        public override void Setup(EventArgs e)
         {
             if (!GL.GetString(StringName.Extensions).Contains("GL_EXT_framebuffer_object"))
             {
@@ -238,7 +237,7 @@ namespace AWGL.Scene
             GL.BindTexture(TextureTarget.Texture2D, 0); // bind default texture
         }
 
-        protected override void Resize(EventArgs e)
+        public override void Resize(EventArgs e)
         {
             double aspect_ratio = Width / (double)Height;
 

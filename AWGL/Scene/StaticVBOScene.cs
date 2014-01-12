@@ -17,7 +17,7 @@ namespace AWGL.Scene
     {
         #region Private Members
         
-        private Vbo[] vbo = new Vbo[2];
+        private Vbo vbo = new Vbo();
 
         private const float rotation_speed = 180.0f;
         private float angle;
@@ -45,39 +45,20 @@ namespace AWGL.Scene
         };
         #endregion
 
-        #region OnLoad
-        /// <summary>
-        /// Setup OpenGL and load resources here.
-        /// </summary>
-        protected override void OnLoad(EventArgs e)
+        public override void Setup(EventArgs e)
         {
-            base.OnLoad(e);
-
             GL.Enable(EnableCap.DepthTest);
 
-            vbo[0] = LoadVBO(CubeVertices, CubeElements);
-            vbo[1] = LoadVBO(CubeVertices, CubeElements);
+            vbo = Utils.LoadVBO(CubeVertices, CubeElements, 3, 4, BufferUsageHint.StaticDraw);
         }
-        #endregion
 
-        #region OnResize
-
-        /// <summary>
-        /// Respond to resize events here.
-        /// </summary>
-        /// <param name="e">Contains information on the new GameWindow size.</param>
-        /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void OnResize(EventArgs e)
+        public override void Resize(EventArgs e)
         {
-            base.OnResize(e);
-
             float aspect_ratio = Width / (float)Height;
             Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref perpective);
         }
-
-        #endregion
 
         #region OnRenderFrame
 
@@ -98,7 +79,7 @@ namespace AWGL.Scene
             angle += rotation_speed * (float)e.Time;
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
-            Draw(vbo[0]);
+            Draw(vbo);
 
             SwapBuffers();
         }
@@ -128,16 +109,5 @@ namespace AWGL.Scene
         }
 
         #endregion
-
-
-        protected override void Setup(EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void Resize(EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

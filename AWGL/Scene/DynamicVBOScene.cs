@@ -30,71 +30,6 @@ namespace AWGL.Scene
         private float yPos = 0.1f;
         #endregion Private Members
 
-        #region OnLoad
-        /// <summary>
-        /// Setup OpenGL and load resources here.
-        /// </summary>
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-
-            GL.Enable(EnableCap.DepthTest);
-
-            // Setup parameters for Points
-            GL.PointSize(5f);
-            GL.Enable(EnableCap.PointSmooth);
-            GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
-
-            // set up vbo state - depreceted as of 3.0>> (?)
-            GL.EnableClientState(ArrayCap.ColorArray);
-            GL.EnableClientState(ArrayCap.VertexArray);
-
-            // Generate the buffers
-            GL.GenBuffers(1, out VBOHandle);
-
-            // Set it up
-            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOHandle);
-            GL.ColorPointer(4, ColorPointerType.UnsignedByte, VertexC4ubV3f.SizeInBytes, (IntPtr)0);
-            GL.VertexPointer(3, VertexPointerType.Float, VertexC4ubV3f.SizeInBytes, (IntPtr)(4 * sizeof(byte)));
-
-            Random rndNum = new Random();
-            Vector3 tmp = Vector3.Zero;
-
-            // generate some random stuff for the particle system
-            for (uint i = 0; i < m_MaxParticleCount; i++)
-            {
-                m_VBO[i].R = (byte)rndNum.Next(0, 256);
-                m_VBO[i].G = (byte)rndNum.Next(0, 256);
-                m_VBO[i].B = (byte)rndNum.Next(0, 256);
-                m_VBO[i].A = (byte)rndNum.Next(0, 256); // isn't actually used
-                m_VBO[i].Position = Vector3.Zero; // all particles are born at the origin
-
-                // generate direction vector in the range [-0.25f...+0.25f] 
-                // that's slow enough so you can see particles 'disappear' when they are respawned
-                tmp.X = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
-                tmp.Y = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
-                tmp.Z = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
-                m_ParticleAttributes[i].Direction = tmp; // copy 
-                m_ParticleAttributes[i].Age = 0;
-            }
-
-            m_VisibleParticleCount = 0;
-        }
-        #endregion
-
-        protected override void OnResize(EventArgs e)
-        {
-            base.OnResize(e);
-
-            GL.MatrixMode(MatrixMode.Projection);
-            Matrix4 p = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Width / (float)Height, 0.1f, 50.0f);
-            GL.LoadMatrix(ref p);
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            Matrix4 mv = Matrix4.LookAt(Vector3.UnitZ, Vector3.Zero, Vector3.UnitY);
-            GL.LoadMatrix(ref mv);
-        }
-
         #region OnUpdateFrame
         /// <summary>
         /// Add your game logic here.
@@ -172,19 +107,64 @@ namespace AWGL.Scene
         }
 
         #endregion        
-    
-    
-        protected override void Setup(EventArgs e)
+
+        public override void Setup(EventArgs e)
         {
-            throw new NotImplementedException();
+            GL.Enable(EnableCap.DepthTest);
+
+            // Setup parameters for Points
+            GL.PointSize(5f);
+            GL.Enable(EnableCap.PointSmooth);
+            GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
+
+            // set up vbo state - depreceted as of 3.0>> (?)
+            GL.EnableClientState(ArrayCap.ColorArray);
+            GL.EnableClientState(ArrayCap.VertexArray);
+
+            // Generate the buffers
+            GL.GenBuffers(1, out VBOHandle);
+
+            // Set it up
+            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOHandle);
+            GL.ColorPointer(4, ColorPointerType.UnsignedByte, VertexC4ubV3f.SizeInBytes, (IntPtr)0);
+            GL.VertexPointer(3, VertexPointerType.Float, VertexC4ubV3f.SizeInBytes, (IntPtr)(4 * sizeof(byte)));
+
+            Random rndNum = new Random();
+            Vector3 tmp = Vector3.Zero;
+
+            // generate some random stuff for the particle system
+            for (uint i = 0; i < m_MaxParticleCount; i++)
+            {
+                m_VBO[i].R = (byte)rndNum.Next(0, 256);
+                m_VBO[i].G = (byte)rndNum.Next(0, 256);
+                m_VBO[i].B = (byte)rndNum.Next(0, 256);
+                m_VBO[i].A = (byte)rndNum.Next(0, 256); // isn't actually used
+                m_VBO[i].Position = Vector3.Zero; // all particles are born at the origin
+
+                // generate direction vector in the range [-0.25f...+0.25f] 
+                // that's slow enough so you can see particles 'disappear' when they are respawned
+                tmp.X = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
+                tmp.Y = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
+                tmp.Z = (float)((rndNum.NextDouble() - 0.5) * 0.5f);
+                m_ParticleAttributes[i].Direction = tmp; // copy 
+                m_ParticleAttributes[i].Age = 0;
+            }
+
+            m_VisibleParticleCount = 0;
         }
 
-        protected override void Resize(EventArgs e)
+        public override void Resize(EventArgs e)
         {
-            throw new NotImplementedException();
+
+            GL.MatrixMode(MatrixMode.Projection);
+            Matrix4 p = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Width / (float)Height, 0.1f, 50.0f);
+            GL.LoadMatrix(ref p);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            Matrix4 mv = Matrix4.LookAt(Vector3.UnitZ, Vector3.Zero, Vector3.UnitY);
+            GL.LoadMatrix(ref mv);
         }
-    }
-
     
-
+    
+    } 
 }

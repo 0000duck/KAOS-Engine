@@ -109,14 +109,14 @@ namespace AWGL.Scene
         }
         #endregion
 
-        protected override void Setup(EventArgs e)
+        public override void Setup(EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        protected override void Resize(EventArgs e)
+        public override void Resize(EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

@@ -27,9 +27,7 @@ namespace AWGL.Scene
         }
 
         private Color4 m_backgroundColor = new Color4(.1f, 0f, .1f, 0f);
-
-        protected ErrorCode err;
-
+        
         #region OnLoad
         /// <summary>
         /// Setup OpenGL and load resources here.
@@ -44,7 +42,7 @@ namespace AWGL.Scene
             Console.WriteLine("Renderer : {0}", GL.GetString(StringName.Renderer));
             Console.WriteLine("Version : {0}", GL.GetString(StringName.Version));
             Console.WriteLine("Shading Language Version : {0}", GL.GetString(StringName.ShadingLanguageVersion));
-            //TestOpenGLVersion();
+            TestOpenGLVersion();
 
             Title = "AWGL: High level OpenTK wrapper - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
 
@@ -52,9 +50,6 @@ namespace AWGL.Scene
 
             Setup(e);
         }
-
-        protected abstract void Setup(EventArgs e);
-
         #endregion
 
         #region OnResize
@@ -66,13 +61,14 @@ namespace AWGL.Scene
         protected override void OnResize(EventArgs e)
         {
             GL.Viewport(0, 0, Width, Height);
-
             Resize(e);
         }
 
-        protected abstract void Resize(EventArgs e);
-
         #endregion
+
+        new public abstract void Setup(EventArgs e);
+
+        new public abstract void Resize(EventArgs e);
 
         #region TestOpenGLVersion
         /// <summary>
@@ -96,90 +92,7 @@ namespace AWGL.Scene
         }
         #endregion
 
-        #region LoadShader(String filename, ShaderType type, int program, out int address)
-        /// <summary>
-        /// Helper Funtion for loading shaders
-        /// </summary>
-        /// <param name="filename">Filename of GLSL Shader</param>
-        /// <param name="type">Type of GLSL Shader to load</param>
-        /// <param name="program">Program ID to add Shader too</param>
-        /// <param name="address">Shader Pointer</param>
-        protected void LoadShader(String filename, ShaderType type, int program, out int address)
-        {
-            address = GL.CreateShader(type);
-            string sType = "";
-
-            switch (type)
-            {
-                case ShaderType.VertexShader:
-                    sType = "Vertex ";
-                    break;
-                case ShaderType.FragmentShader:
-                    sType = "Fragment ";
-                    break;
-            }
-
-            using (StreamReader sr = new StreamReader("Data/Shaders/" + filename))
-            {
-                GL.ShaderSource(address, sr.ReadToEnd());
-                GL.CompileShader(address);
-            }
-
-            err = GL.GetError();
-            if (err != ErrorCode.NoError)
-                Trace.WriteLine(sType + "Shader: " + err);
-
-            string LogInfo;
-            GL.GetShaderInfoLog(address, out LogInfo);
-            if (LogInfo.Length > 0 && !LogInfo.Contains("hardware"))
-            {
-                Trace.WriteLine(sType + "Shader failed!\nLog:\n" + LogInfo);
-            }
-            else
-            {
-                Trace.WriteLine(sType + "Shader compiled without complaint.");
-                GL.AttachShader(program, address);
-            }
-        }
-
-        #endregion
-
-        #region LoadVBO<TVertex> (TVertex[] vertices, short[] elements) where TVertex : struct
-        protected Vbo LoadVBO<TVertex>(TVertex[] vertices, short[] elements) where TVertex : struct
-        {
-            Vbo handle = new Vbo();
-            int size;
-
-            // To create a VBO:
-            // 1) Generate the buffer handles for the vertex and element buffers.
-            // 2) Bind the vertex buffer handle and upload your vertex data. 
-            //    Check that the buffer was uploaded correctly.
-            // 3) Bind the element buffer handle and upload your element data. 
-            //    Check that the buffer was uploaded correctly.
-
-            GL.GenBuffers(1, out handle.VboID);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, handle.VboID);
-            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(vertices.Length * BlittableValueType.StrideOf(vertices)), vertices,
-                          BufferUsageHint.StaticDraw);
-            GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out size);
-            if (vertices.Length * BlittableValueType.StrideOf(vertices) != size)
-                throw new ApplicationException("Vertex data not uploaded correctly");
-
-            GL.GenBuffers(1, out handle.EboID);
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, handle.EboID);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(elements.Length * sizeof(short)), elements,
-                          BufferUsageHint.StaticDraw);
-            GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out size);
-            if (elements.Length * sizeof(short) != size)
-                throw new ApplicationException("Element data not uploaded correctly");
-
-            handle.NumElements = elements.Length;
-            return handle;
-        }
-
-        #endregion
-
-        #region Keyboard_KeyDown
+        #region Input
         /// <summary>
         /// Occurs when a key is pressed.
         /// </summary>
@@ -197,11 +110,6 @@ namespace AWGL.Scene
                     this.WindowState = WindowState.Fullscreen;
         }
         #endregion
-
-        public new void Run()
-        {
-            base.Run();
-        }
 
     }
 }
