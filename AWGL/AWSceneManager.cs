@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,6 @@ namespace AWGL
     /// </summary>
     class AWSceneManager : ISceneNode
     {
-        private List<AWNode> graphic;
+        
     }
 }

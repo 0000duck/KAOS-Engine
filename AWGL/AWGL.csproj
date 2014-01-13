@@ -70,18 +70,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BufferManager.cs" />
+    <Compile Include="AWBufferManager.cs" />
+    <Compile Include="AWPolygon.cs" />
     <Compile Include="ISceneNode.cs" />
     <Compile Include="OGL.cs" />
-    <Compile Include="SceneManager.cs" />
+    <Compile Include="AWSceneManager.cs" />
     <Compile Include="Scene\DynamicVBOScene.cs" />
     <Compile Include="Scene\FBOScene.cs" />
     <Compile Include="Scene\PickerScene.cs" />
+    <Compile Include="Scene\SceneGraphTest.cs" />
     <Compile Include="Scene\StencilCSGScene.cs" />
     <Compile Include="Scene\StereoVisionScene.cs" />
     <Compile Include="Scene\Texture2DScene.cs" />
     <Compile Include="Scene\StaticVBOScene.cs" />
-    <Compile Include="ShaderManager.cs" />
+    <Compile Include="AWShaderManager.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
     <Compile Include="Shapes\Base\VertexStructs.cs" />
     <Compile Include="Shapes\Capsule.cs" />
@@ -101,12 +103,12 @@
     <Compile Include="Shapes\SlicedSphere.cs" />
     <Compile Include="Shapes\TorusKnot.cs" />
     <Compile Include="Shapes\VertexPositionColor.cs" />
-    <Compile Include="Data.cs" />
+    <Compile Include="AWData.cs" />
     <Compile Include="Scene\Base\DefaultScene.cs" />
-    <Compile Include="Graphic.cs" />
+    <Compile Include="AWNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextRenderer.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="AWUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Shaders\CubeMap_FS.glsl">

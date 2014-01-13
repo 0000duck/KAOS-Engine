@@ -35,6 +35,7 @@ namespace AWGL
             Console.WriteLine("5. FBO");
             Console.WriteLine("6. Picker");
             Console.WriteLine("7. Stencil CSG");
+            Console.WriteLine("8. Scene Graph Test");
             Int32.TryParse(Console.ReadLine(), out Selection);
 
             switch (Selection)
@@ -77,6 +78,12 @@ namespace AWGL
                     break;
                 case 7:
                     using (StencilCSGScene scene = new StencilCSGScene())
+                    {
+                        scene.Run(30.0);
+                    }
+                    break;
+                case 8:
+                    using (SceneGraphTest scene = new SceneGraphTest())
                     {
                         scene.Run(30.0);
                     }

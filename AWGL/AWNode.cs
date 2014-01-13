@@ -8,6 +8,6 @@ namespace AWGL
 {
     public abstract class AWNode
     {
-
+        public abstract void Render();
     }
 }
