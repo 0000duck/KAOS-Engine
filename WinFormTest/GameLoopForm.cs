@@ -9,12 +9,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using AWGL;
+using AWGL.Shapes;
 
 namespace WinFormTest
 {
     public partial class GameLoopForm : Form
     {
         static float angle = 0.0f;
+        private int programObject;
+
+        private int vertex_buffer_object, color_buffer_object, element_buffer_object;
+        Shape shape = new Cube();
 
         #region --- Constructor ---
 
@@ -44,6 +50,20 @@ namespace WinFormTest
             GL.ClearColor(Color.MidnightBlue);
             GL.Enable(EnableCap.DepthTest);
 
+            CreateVBO();
+
+            // create and compile shader objects
+            int vertexShader = Utils.BuildShader("Simple_VS.glsl", ShaderType.VertexShader);
+            int fragmentShader = Utils.BuildShader("Simple_FS.glsl", ShaderType.FragmentShader);
+
+            // attach and link to main program then use
+            programObject = Utils.BuildProgram(vertexShader, fragmentShader);
+            GL.UseProgram(programObject);
+
+            // clean up
+            GL.DeleteShader(vertexShader);
+            GL.DeleteShader(fragmentShader);
+            
             Application.Idle += Application_Idle;
 
             // Ensure that the viewport and projection matrix are set correctly.
@@ -60,10 +80,61 @@ namespace WinFormTest
 
         #endregion
 
+        #region private void CreateVBO()
+
+        void CreateVBO()
+        {
+            int size;
+
+            GL.GenBuffers(1, out vertex_buffer_object);
+            GL.GenBuffers(1, out color_buffer_object);
+            GL.GenBuffers(1, out element_buffer_object);
+
+            // Upload the vertex buffer.
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vertex_buffer_object);
+            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(shape.Vertices.Length * 3 * sizeof(float)), shape.Vertices,
+                BufferUsageHint.StaticDraw);
+            GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out size);
+            if (size != shape.Vertices.Length * 3 * sizeof(Single))
+                throw new ApplicationException(String.Format(
+                    "Problem uploading vertex buffer to VBO (vertices). Tried to upload {0} bytes, uploaded {1}.",
+                    shape.Vertices.Length * 3 * sizeof(Single), size));
+
+            // Upload the color buffer.
+            GL.BindBuffer(BufferTarget.ArrayBuffer, color_buffer_object);
+            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(shape.Colors.Length * sizeof(int)), shape.Colors,
+                BufferUsageHint.StaticDraw);
+            GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out size);
+            if (size != shape.Colors.Length * sizeof(int))
+                throw new ApplicationException(String.Format(
+                    "Problem uploading vertex buffer to VBO (colors). Tried to upload {0} bytes, uploaded {1}.",
+                    shape.Colors.Length * sizeof(int), size));
+
+            // Upload the index buffer (elements inside the vertex buffer, not color indices as per the IndexPointer function!)
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, element_buffer_object);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(shape.Indices.Length * sizeof(Int32)), shape.Indices,
+                BufferUsageHint.StaticDraw);
+            GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out size);
+            if (size != shape.Indices.Length * sizeof(int))
+                throw new ApplicationException(String.Format(
+                    "Problem uploading vertex buffer to VBO (offsets). Tried to upload {0} bytes, uploaded {1}.",
+                    shape.Indices.Length * sizeof(int), size));
+        }
+
+        #endregion
+
         #region OnClosing
 
         protected override void OnClosing(CancelEventArgs e)
         {
+            if (programObject != 0)
+                GL.DeleteProgram(programObject);
+            if (vboHandle.VboID != 0)
+                GL.DeleteBuffers(1, ref vboHandle.VboID);
+            if (vboHandle.CboID != 0)
+                GL.DeleteBuffers(1, ref vboHandle.CboID);
+            if (vboHandle.EboID != 0)
+                GL.DeleteBuffers(1, ref vboHandle.EboID);
             Application.Idle -= Application_Idle;
 
             base.OnClosing(e);
@@ -127,18 +198,43 @@ namespace WinFormTest
 
         #region private void Render()
 
+        private Vbo vboHandle = new Vbo();
+        private float rotation_speed = 3.0f;
+
+
         private void Render()
         {
+            GL.Clear(ClearBufferMask.ColorBufferBit |
+         ClearBufferMask.DepthBufferBit);
+
             Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookat);
 
+            //angle += rotation_speed * (float)Time;
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
-            angle += 0.5f;
 
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.EnableClientState(ArrayCap.VertexArray);
+            GL.EnableClientState(ArrayCap.ColorArray);
 
-            DrawCube();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vertex_buffer_object);
+            GL.VertexPointer(3, VertexPointerType.Float, 0, IntPtr.Zero);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, color_buffer_object);
+            GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, element_buffer_object);
+
+            GL.DrawElements(BeginMode.Triangles, shape.Indices.Length,
+                DrawElementsType.UnsignedInt, IntPtr.Zero);
+
+            //GL.DrawArrays(GL.Enums.BeginMode.POINTS, 0, shape.Vertices.Length);
+
+            GL.DisableClientState(ArrayCap.VertexArray);
+            GL.DisableClientState(ArrayCap.ColorArray);
+
+
+            //int error = GL.GetError();
+            //if (error != 0)
+            //    Debug.Print(Glu.ErrorString(Glu.Enums.ErrorCode.INVALID_OPERATION));
 
             glControl.SwapBuffers();
         }
