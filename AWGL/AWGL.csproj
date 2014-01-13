@@ -72,6 +72,8 @@
   <ItemGroup>
     <Compile Include="AWBufferManager.cs" />
     <Compile Include="AWPolygon.cs" />
+    <Compile Include="AWGroupNode.cs" />
+    <Compile Include="IGroupNode.cs" />
     <Compile Include="ISceneNode.cs" />
     <Compile Include="OGL.cs" />
     <Compile Include="AWSceneManager.cs" />

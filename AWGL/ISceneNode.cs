@@ -1,0 +1,7 @@
+﻿
+namespace AWGL
+{
+    interface ISceneNode
+    {
+    }
+}

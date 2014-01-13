@@ -18,9 +18,9 @@ namespace AWGL.Scene
             
             poly.AddNormal(new Vector3(0.861411f, 0.269191f, 0.430706f));
 
-            poly.AddVertex(new Vector3(.0f, 4.0f, .0f));
-            poly.AddVertex(new Vector3(.0f, .0f, 2.5f));
-            poly.AddVertex(new Vector3(2.5f, .0f, -2.5f));
+            poly.AddVertex(0, new Vector3(.0f, 4.0f, .0f));
+            poly.AddVertex(1, new Vector3(.0f, .0f, 2.5f));
+            poly.AddVertex(2, new Vector3(2.5f, .0f, -2.5f));
 
             m_sceneGraph = poly;
         }
@@ -44,7 +44,7 @@ namespace AWGL.Scene
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
+            Matrix4 lookat = Matrix4.LookAt(0, 10, 10, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookat);
 
