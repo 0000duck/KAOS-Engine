@@ -79,11 +79,11 @@ namespace AWGL.Scene
             #region Shader
 
             //create and compile shaders
-            VertexShaderObject = Utils.BuildShader("Picking_VS.glsl", ShaderType.VertexShader);
-            FragmentShaderObject = Utils.BuildShader("Picking_FS.glsl", ShaderType.FragmentShader);
+            VertexShaderObject = AWUtils.BuildShader("Picking_VS.glsl", ShaderType.VertexShader);
+            FragmentShaderObject = AWUtils.BuildShader("Picking_FS.glsl", ShaderType.FragmentShader);
 
             //create program object, attach shaders and link
-            ProgramObject = Utils.BuildProgram(VertexShaderObject, FragmentShaderObject);
+            ProgramObject = AWUtils.BuildProgram(VertexShaderObject, FragmentShaderObject);
 
             // flag ShaderObjects for delete when not used anymore
             GL.DeleteShader(VertexShaderObject);

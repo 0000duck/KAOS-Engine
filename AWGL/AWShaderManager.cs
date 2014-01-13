@@ -11,7 +11,7 @@ namespace AWGL
     /// <summary>
     /// Responsible for building individual shaders and linking them to the main program.
     /// </summary>
-    class ShaderManager
+    class AWShaderManager : IDisposable
     {
         /// <summary>
         /// Shader Pointers
@@ -63,6 +63,9 @@ namespace AWGL
             return shaderHandle;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void BuildProgram() 
         {
             this.vShader = BuildShader("Simple_VS", ShaderType.VertexShader);
@@ -95,11 +98,20 @@ namespace AWGL
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int getShaderProgram() 
         {
             BuildProgram();
 
             return linkedProgram;
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

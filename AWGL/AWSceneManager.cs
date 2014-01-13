@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace AWGL
 {
-    public abstract class Graphic
+    /// <summary>
+    /// 
+    /// </summary>
+    class AWSceneManager : ISceneNode
     {
+        private List<AWNode> graphic;
     }
 }

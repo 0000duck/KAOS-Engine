@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using AWGL.Shapes;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace AWGL
     /// <summary>
     /// 
     /// </summary>
-    class BufferManager
+    class AWBufferManager : IDisposable
     {
         #region
         // To create a VBO:
@@ -46,14 +47,18 @@ namespace AWGL
 
             CheckForErrors(vbo_Size);
 
+            //Generate Buffer ID
             GL.GenBuffers(1, out vboHandle.EboID);
+
+            // Binds the buffer that is used next
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, vboHandle.EboID);
 
+            // Copy data to the VBO on the GPU.
             GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)ebo_Size, elements, bufferUsageTypeGL);
 
             CheckForErrors(ebo_Size);
 
-            return vboHandle;
+            return this.vboHandle;
         }
 
         private static void CheckForErrors(int size)
@@ -64,10 +69,15 @@ namespace AWGL
                 throw new Exception("Data not uploaded correctly");
         }
 
-
-        public Vbo getBufferObjects()
+        public Vbo getBufferObjects(DrawableShape shape)
         {
-            return new Vbo();
+            return new Vbo();//GenerateVBO(
+        }
+
+
+        void IDisposable.Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

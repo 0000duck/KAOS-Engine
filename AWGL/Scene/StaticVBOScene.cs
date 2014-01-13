@@ -47,7 +47,7 @@ namespace AWGL.Scene
         {
             GL.Enable(EnableCap.DepthTest);
 
-            vbo = Utils.LoadVBO(CubeVertices, CubeElements, 3, 4, BufferUsageHint.StaticDraw);
+            vbo = AWUtils.LoadVBO(CubeVertices, CubeElements, 3, 4, BufferUsageHint.StaticDraw);
 
             renderer = new TextRenderer(Width, Height);
             PointF position = PointF.Empty;

@@ -70,7 +70,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BufferManager.cs" />
+    <Compile Include="ISceneNode.cs" />
     <Compile Include="OGL.cs" />
+    <Compile Include="SceneManager.cs" />
     <Compile Include="Scene\DynamicVBOScene.cs" />
     <Compile Include="Scene\FBOScene.cs" />
     <Compile Include="Scene\PickerScene.cs" />
@@ -78,6 +81,7 @@
     <Compile Include="Scene\StereoVisionScene.cs" />
     <Compile Include="Scene\Texture2DScene.cs" />
     <Compile Include="Scene\StaticVBOScene.cs" />
+    <Compile Include="ShaderManager.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
     <Compile Include="Shapes\Base\VertexStructs.cs" />
     <Compile Include="Shapes\Capsule.cs" />

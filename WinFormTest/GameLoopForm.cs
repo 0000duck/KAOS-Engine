@@ -53,11 +53,11 @@ namespace WinFormTest
             CreateVBO();
 
             // create and compile shader objects
-            int vertexShader = Utils.BuildShader("Simple_VS.glsl", ShaderType.VertexShader);
-            int fragmentShader = Utils.BuildShader("Simple_FS.glsl", ShaderType.FragmentShader);
+            int vertexShader = AWUtils.BuildShader("Simple_VS.glsl", ShaderType.VertexShader);
+            int fragmentShader = AWUtils.BuildShader("Simple_FS.glsl", ShaderType.FragmentShader);
 
             // attach and link to main program then use
-            programObject = Utils.BuildProgram(vertexShader, fragmentShader);
+            programObject = AWUtils.BuildProgram(vertexShader, fragmentShader);
             GL.UseProgram(programObject);
 
             // clean up

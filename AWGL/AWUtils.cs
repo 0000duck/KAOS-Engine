@@ -8,7 +8,7 @@ namespace AWGL
     /// <summary>
     /// Utility functions
     /// </summary>
-    public class Utils
+    public class AWUtils
     {
         /// <summary>
         /// Helper Funtion for loading shaders. Returns Shader Source from file.
@@ -116,12 +116,11 @@ namespace AWGL
         {
             Vbo vboHandle = new Vbo();
 
-            vboHandle.NumElements = elements.Length;
+            //vboHandle.NumElements = elements.Length;
 
             // Determine size of Buffer
             int vbo_Size = vertices.Length * BlittableValueType.StrideOf(vertices);
             int ebo_Size = elements.Length * sizeof(short);
-
 
             #region
             // To create a VBO:

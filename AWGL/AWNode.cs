@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace AWGL
 {
-    class SceneManager
+    public abstract class AWNode
     {
+
     }
 }
