@@ -11,6 +11,8 @@ namespace AWGL.Scene
     class SceneGraphTest : DefaultScene
     {
         AWNode m_sceneGraph;
+        AWGroupNode m_hook1;
+        AWGroupNode m_hook2;
 
         public void CreateSceneGraph()
         {
@@ -19,8 +21,8 @@ namespace AWGL.Scene
             AWPolygon poly2 = new AWPolygon();
             AWPolygon poly3 = new AWPolygon();
             AWPolygon poly4 = new AWPolygon();
-            AWGroupNode root = new AWGroupNode();
-            
+            AWGroupNode rt = new AWGroupNode();
+
             Vector3 a = new Vector3(.0f, .0f, 2.5f);
             Vector3 b = new Vector3(2.5f, .0f, -2.5f);
             Vector3 c = new Vector3(-2.5f, .0f, 2.5f);
@@ -46,12 +48,28 @@ namespace AWGL.Scene
             poly4.AddVertex(1, c);
             poly4.AddVertex(2, a);
 
-            root.AddChild(poly1);
-            root.AddChild(poly2);
-            root.AddChild(poly3);
-            root.AddChild(poly4);
+            AWGroupNode root = new AWGroupNode();
+            AWGroupNode rt1 = new AWGroupNode();
+            AWGroupNode rt2 = new AWGroupNode();
+
+            root.AddChild(rt1);
+            root.AddChild(rt2);
+
+            rt1.AddChild(rt);
+            rt2.AddChild(rt);
+
+            rt1.SetTranslation(5, 0, 0);
+            rt2.SetTranslation(-5, 0, 0);
+
+            rt.AddChild(poly1);
+            rt.AddChild(poly2);
+            rt.AddChild(poly3);
+            rt.AddChild(poly4);
 
             m_sceneGraph = root;
+
+            m_hook1 = rt1;
+            m_hook2 = rt2;
         }
 
         public override void Setup(EventArgs e)
@@ -77,6 +95,9 @@ namespace AWGL.Scene
             Matrix4 lookat = Matrix4.LookAt(0, 20, 20, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookat);
+
+            m_hook1.SetRotation(20, 0, 1, 0);
+            m_hook2.SetRotation(-20, 0, 0, 1);
 
             m_sceneGraph.Render();
 
