@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,27 +11,19 @@ namespace AWGL
 {
     class AWGraphLines : AWNode
     {
-        private IList<ISceneNode> m_children = new List<ISceneNode>();
+        private int m_gridSize = 20;
 
         public override void Render()
         {
-            GL.Color3(.3d, .3f, .3f);
-            GL.Begin(PrimitiveType.Quads);
-            GL.Vertex3(.0f, -.001f, .0f);
-            GL.Vertex3(.0f, -.001f, 10.0f);
-            GL.Vertex3(10.0f, -.001f, 10.0f);
-            GL.Vertex3(10.0f, -.001f, .0f);
-            GL.End();
-
             GL.Begin(PrimitiveType.Lines);
-            for (int i = 0; i <= 10; i++)
+            for (int i = -m_gridSize; i <= m_gridSize; i++)
             {
-                if (i == 0) { GL.Color3(.6f, .3f, .3f); } else { GL.Color3(.25f, .25f, .25f); }
-                GL.Vertex3((float)i, .0f, .0f);
-                GL.Vertex3((float)i, .0f, 10.0f);
-                if (i == 0) { GL.Color3(.3f, .3f, .6f); } else { GL.Color3(.25f, .25f, .25f); }
-                GL.Vertex3(.0f, .0f, (float)i);
-                GL.Vertex3(10.0f, .0f, (float)i);
+                if (i == 0) { GL.Color3(.6f, .3f, .3f); } else { GL.Color3(Color.LightGray); }
+                GL.Vertex3((float)i, .0f, -(float)m_gridSize);
+                GL.Vertex3((float)i, .0f, (float)m_gridSize);
+                if (i == 0) { GL.Color3(.3f, .3f, .6f); } else { GL.Color3(Color.LightGray); }
+                GL.Vertex3(-(float)m_gridSize, .0f, (float)i);
+                GL.Vertex3((float)m_gridSize, .0f, (float)i);
             }
             GL.End();
         }

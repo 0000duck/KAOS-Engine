@@ -2,6 +2,7 @@
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,8 @@ namespace AWGL
         }
         public override void Render()
         {
-            GL.Begin(BeginMode.Polygon);
+            GL.Begin(PrimitiveType.Polygon);
+            GL.Color3(Color.NavajoWhite);
             for (int i = 0; i < m_Verticies.Length; i++)
             {
                 if (i < 1)

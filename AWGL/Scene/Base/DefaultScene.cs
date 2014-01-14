@@ -64,7 +64,7 @@ namespace AWGL.Scene
 
         #endregion
 
-        new public abstract void Setup(EventArgs e);
+        public abstract void Setup(EventArgs e);
 
         new public abstract void Resize(EventArgs e);
 
@@ -98,26 +98,36 @@ namespace AWGL.Scene
         /// <param name="e">The key that was pressed.</param>
         protected void Keyboard_KeyDown(object sender, KeyboardKeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-                this.Exit();
 
-            if (e.Key == Key.F11)
-                if (this.WindowState == WindowState.Fullscreen)
-                    this.WindowState = WindowState.Normal;
-                else
-                    this.WindowState = WindowState.Fullscreen;
-            if (e.Key == Key.Up)
+            switch (e.Key)
             {
-                m_eyeY += 2f;
-            }
-            if (e.Key == Key.Down)
-            {
-                m_eyeY -= 2f;
-            }
-            if (e.Key == Key.Right)
-                m_eyeX += 2f;
-            if (e.Key == Key.Left)
-                m_eyeX -= 2f;
+                #region Window Controls
+
+                case Key.Escape: this.Exit();
+                    break;
+                case Key.F11:
+                    if (this.WindowState == WindowState.Fullscreen)
+                        this.WindowState = WindowState.Normal;
+                    else
+                        this.WindowState = WindowState.Fullscreen;
+                    break;
+
+                #endregion
+
+                #region Camera Controls
+
+                case Key.Up: m_eyeY += 2f;
+                    break;
+                case Key.Down: m_eyeY += -2f;
+                    break;
+                case Key.Right: m_eyeX += 2f;
+                    break;
+                case Key.Left: m_eyeX += -2f;
+                    break;
+
+                #endregion
+
+            }   
         }
         #endregion
 
