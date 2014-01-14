@@ -14,7 +14,7 @@ namespace AWGL.Scene
         public DefaultScene()
             : base(1024, 700, new GraphicsMode(32, 24, 0, 4))
         {
-            this.WindowState = WindowState.Fullscreen;
+            //this.WindowState = WindowState.Fullscreen;
             Keyboard.KeyDown += Keyboard_KeyDown;
         }
 
