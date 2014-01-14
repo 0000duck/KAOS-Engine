@@ -14,6 +14,7 @@ namespace AWGL
         double m_tx, m_ty, m_tz;
 
         private IList<ISceneNode> m_children = new List<ISceneNode>();
+        
 
         public AWGroupNode()
         {
@@ -50,10 +51,10 @@ namespace AWGL
             {
                 GL.Rotate(m_angle, m_rx, m_ry, m_rz);
             }
-            while (GetEnumerator().Current != null)
+
+            foreach (ISceneNode child in m_children)
             {
-                GetEnumerator().Current.Render();
-                GetEnumerator().MoveNext();
+                child.Render();
             }
             GL.PopMatrix();
         }

@@ -14,16 +14,46 @@ namespace AWGL.Scene
 
         public void CreateSceneGraph()
         {
-            AWPolygon poly = new AWPolygon();
+
+            AWPolygon poly1 = new AWPolygon();
+            AWPolygon poly2 = new AWPolygon();
+            AWPolygon poly3 = new AWPolygon();
+            AWPolygon poly4 = new AWPolygon();
+            AWGroupNode root = new AWGroupNode();
             
-            poly.AddNormal(new Vector3(0.861411f, 0.269191f, 0.430706f));
+            Vector3 a = new Vector3(.0f, .0f, 2.5f);
+            Vector3 b = new Vector3(2.5f, .0f, -2.5f);
+            Vector3 c = new Vector3(-2.5f, .0f, 2.5f);
+            Vector3 d = new Vector3(.0f, 4.0f, .0f);
 
-            poly.AddVertex(0, new Vector3(.0f, 4.0f, .0f));
-            poly.AddVertex(1, new Vector3(.0f, .0f, 2.5f));
-            poly.AddVertex(2, new Vector3(2.5f, .0f, -2.5f));
+            poly1.AddNormal(new Vector3(.0f, -1.0f, .0f));
+            poly1.AddVertex(0, c);
+            poly1.AddVertex(1, b);
+            poly1.AddVertex(2, c);
 
-            m_sceneGraph = poly;
+            poly2.AddNormal(new Vector3(.861411f, .269191f, .430706f));
+            poly2.AddVertex(0, d);
+            poly2.AddVertex(1, a);
+            poly2.AddVertex(2, b);
+
+            poly3.AddNormal(new Vector3(.0f, .529999f, -.847998f));
+            poly3.AddVertex(0, d);
+            poly3.AddVertex(1, b);
+            poly3.AddVertex(2, c);
+
+            poly4.AddNormal(new Vector3(-.861411f, .269191f, .430706f));
+            poly4.AddVertex(0, d);
+            poly4.AddVertex(1, c);
+            poly4.AddVertex(2, a);
+
+            root.AddChild(poly1);
+            root.AddChild(poly2);
+            root.AddChild(poly3);
+            root.AddChild(poly4);
+
+            m_sceneGraph = root;
         }
+
         public override void Setup(EventArgs e)
         {
             CreateSceneGraph();
@@ -44,7 +74,7 @@ namespace AWGL.Scene
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Matrix4 lookat = Matrix4.LookAt(0, 10, 10, 0, 0, 0, 0, 1, 0);
+            Matrix4 lookat = Matrix4.LookAt(0, 20, 20, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookat);
 
