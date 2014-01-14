@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AWGL
 {
-    class AWGroupNode : AWNode, IGroupNode, IEnumerable<ISceneNode>
+    public class AWGroupNode : AWNode, IGroupNode, IEnumerable<ISceneNode>
     {
         double m_angle, m_rx, m_ry, m_rz;
         double m_tx, m_ty, m_tz;
@@ -46,6 +46,7 @@ namespace AWGL
             throw new NotImplementedException();
         }
 
+        #region IEnumerator Implementation
         public IEnumerator<ISceneNode> GetEnumerator()
         {
             return m_children.GetEnumerator();
@@ -55,10 +56,15 @@ namespace AWGL
         {
             return m_children.GetEnumerator();
         }
+        #endregion ISceneNode Implementation
+
+        #region IGroupNode Implementation
 
         public void AddChild(ISceneNode child)
         {
             m_children.Add(child);
         }
+
+        #endregion IGroupNode Implementation
     } 
 }

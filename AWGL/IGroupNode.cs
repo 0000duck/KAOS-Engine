@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AWGL
 {
-    interface IGroupNode : ISceneNode, IEnumerable<ISceneNode>
+    public interface IGroupNode : ISceneNode, IEnumerable<ISceneNode>
     {
         void AddChild(ISceneNode child);
     }
