@@ -10,8 +10,8 @@ namespace AWGL
     /// <summary>
     /// 
     /// </summary>
-    class AWSceneManager : ISceneNode
+    class AWSceneManager
     {
-        
+
     }
 }

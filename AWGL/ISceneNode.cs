@@ -7,6 +7,6 @@ namespace AWGL
 {
     public interface ISceneNode
     {
-        
+        void Render();
     }
 }

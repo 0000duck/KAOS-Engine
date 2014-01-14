@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK.Graphics.OpenGL;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,18 @@ namespace AWGL
 
         public override void Render()
         {
-            throw new NotImplementedException();
+            GL.PushMatrix();
+            GL.Translate(m_tx, m_ty, m_tz);
+            if (m_angle != 0)
+            {
+                GL.Rotate(m_angle, m_rx, m_ry, m_rz);
+            }
+            while (GetEnumerator().Current != null)
+            {
+                GetEnumerator().Current.Render();
+                GetEnumerator().MoveNext();
+            }
+            GL.PopMatrix();
         }
 
         #region IEnumerator Implementation
