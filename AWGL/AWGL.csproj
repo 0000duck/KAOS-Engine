@@ -71,6 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWBufferManager.cs" />
+    <Compile Include="AWGraphLines.cs" />
+    <Compile Include="AWMesh.cs" />
     <Compile Include="AWPolygon.cs" />
     <Compile Include="AWGroupNode.cs" />
     <Compile Include="IGroupNode.cs" />

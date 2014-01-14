@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AWGL
 {
-    public interface ISceneNode
+    public interface ISceneNode 
     {
         void Render();
     }

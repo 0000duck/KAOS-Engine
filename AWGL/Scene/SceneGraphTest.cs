@@ -10,9 +10,11 @@ namespace AWGL.Scene
 {
     class SceneGraphTest : DefaultScene
     {
-        AWNode m_sceneGraph;
-        AWGroupNode m_hook1;
-        AWGroupNode m_hook2;
+        private AWNode m_sceneGraph;
+        private AWGroupNode m_hook1, m_hook2;
+
+        private const float m_rotationspeed = 180.0f;
+        private float m_spinangle;
 
         public void CreateSceneGraph()
         {
@@ -49,11 +51,11 @@ namespace AWGL.Scene
             poly4.AddVertex(2, a);
 
             AWGroupNode root = new AWGroupNode();
+            AWGraphLines graph = new AWGraphLines();
             AWGroupNode rt1 = new AWGroupNode();
             AWGroupNode rt2 = new AWGroupNode();
 
-            root.AddChild(rt1);
-            root.AddChild(rt2);
+            root.AddChild(graph);
 
             rt1.AddChild(rt);
             rt2.AddChild(rt);
@@ -90,14 +92,16 @@ namespace AWGL.Scene
         {
             base.OnRenderFrame(e);
 
+            m_spinangle += m_rotationspeed * (float)e.Time;
+
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             Matrix4 lookat = Matrix4.LookAt(0, 20, 20, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookat);
 
-            m_hook1.SetRotation(20, 0, 1, 0);
-            m_hook2.SetRotation(-20, 0, 0, 1);
+            m_hook1.SetRotation(m_spinangle, 0, 1, 0);
+            m_hook2.SetRotation(-m_spinangle, 0, 0, 1);
 
             m_sceneGraph.Render();
 
