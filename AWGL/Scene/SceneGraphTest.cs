@@ -56,6 +56,8 @@ namespace AWGL.Scene
             AWGroupNode rt2 = new AWGroupNode();
 
             root.AddChild(graph);
+            root.AddChild(rt1);
+            root.AddChild(rt2);
 
             rt1.AddChild(rt);
             rt2.AddChild(rt);
