@@ -10,8 +10,10 @@ namespace AWGL.Scene
 {
     class SceneGraphTest : DefaultScene
     {
+        #region SceneGraph
         private AWNode m_sceneGraph;
         private AWGroupNode m_hook1, m_hook2;
+        #endregion
 
         private const float m_rotationspeed = 180.0f;
         private float m_spinangle;
@@ -98,7 +100,7 @@ namespace AWGL.Scene
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Matrix4 lookat = Matrix4.LookAt(0, 20, 20, 0, 0, 0, 0, 1, 0);
+            Matrix4 lookat = Matrix4.LookAt(m_eyeX, m_eyeY, m_eyeZ, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookat);
 

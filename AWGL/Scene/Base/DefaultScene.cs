@@ -19,7 +19,13 @@ namespace AWGL.Scene
         }
 
         private Color4 m_backgroundColor = new Color4(.1f, 0f, .1f, 0f);
-        
+
+        #region Camera
+        protected float m_eyeX = .0f;
+        protected float m_eyeY = 10.0f;
+        protected float m_eyeZ = 10.0f;
+        #endregion
+
         #region OnLoad
         /// <summary>
         /// Setup OpenGL and load resources here.
@@ -38,7 +44,7 @@ namespace AWGL.Scene
 
             Title = "AWGL: High level OpenTK wrapper - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
 
-            GL.ClearColor(m_backgroundColor);
+            GL.ClearColor(Color4.Gray);
 
             Setup(e);
         }
@@ -100,6 +106,18 @@ namespace AWGL.Scene
                     this.WindowState = WindowState.Normal;
                 else
                     this.WindowState = WindowState.Fullscreen;
+            if (e.Key == Key.Up)
+            {
+                m_eyeY += 2f;
+            }
+            if (e.Key == Key.Down)
+            {
+                m_eyeY -= 2f;
+            }
+            if (e.Key == Key.Right)
+                m_eyeX += 2f;
+            if (e.Key == Key.Left)
+                m_eyeX -= 2f;
         }
         #endregion
 
