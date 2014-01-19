@@ -15,7 +15,6 @@ namespace AWGL
 
         private IList<ISceneNode> m_children = new List<ISceneNode>();
         
-
         public AWGroupNode()
         {
             this.m_angle = 0;
@@ -49,7 +48,7 @@ namespace AWGL
             GL.Translate(m_tx, m_ty, m_tz);
             if (m_angle != 0)
             {
-                GL.Rotate(m_angle, m_rx, m_ry, m_rz);
+                //GL.Rotate(m_angle, m_rx, m_ry, m_rz);
             }
 
             foreach (ISceneNode child in m_children)

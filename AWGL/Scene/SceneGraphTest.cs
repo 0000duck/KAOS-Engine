@@ -13,13 +13,12 @@ namespace AWGL.Scene
         #region SceneGraph
         private AWNode m_sceneGraph;
 
-        AWGroupNode root, rt1, rt2, rt, rtt;
-        AWGraphLines graph;
+        private AWGroupNode worldRoot, landRoot;
+        private AWGraphLines graph;
 
-        AWCube cube;
-        AWParticles particles;
+        private AWCube cube;
 
-        private AWGroupNode m_hook1, m_hook2;
+        private AWGroupNode m_hook1;
         #endregion
 
         private const float m_rotationspeed = 180.0f;
@@ -29,37 +28,24 @@ namespace AWGL.Scene
         {
             InitialiseNodes();
 
-            root.AddChild(graph);
+            worldRoot.AddChild(graph);
+            worldRoot.AddChild(landRoot);
 
-            root.AddChild(rt1);
-            root.AddChild(rt2);
+            landRoot.SetTranslation(0, 0, -10);
+            landRoot.AddChild(cube);
 
-            rt1.AddChild(rt);
-            rt2.AddChild(rtt);
+            m_sceneGraph = worldRoot;
 
-            rt1.SetTranslation(5, 0, 0);
-            rt2.SetTranslation(-10, 2, 0);
-
-            rt.AddChild(cube);
-            //rt.AddChild(particles);
-
-            m_sceneGraph = root;
-
-            m_hook1 = rt1;
-            m_hook2 = rt2;
+            m_hook1 = landRoot;
         }
 
         private void InitialiseNodes()
         {
-            root = new AWGroupNode();
-            rt1 = new AWGroupNode();
-            rt2 = new AWGroupNode();
-            rt = new AWGroupNode();
-            rtt = new AWGroupNode();
+            worldRoot = new AWGroupNode();
+            landRoot = new AWGroupNode();
 
             graph = new AWGraphLines(); ;
             cube = new AWCube();
-            particles = new AWParticles(); ;
         }
 
         public override void Setup(EventArgs e)
@@ -80,9 +66,6 @@ namespace AWGL.Scene
         {
             base.OnRenderFrame(e);
 
-            Title = "AWGL: High level OpenTK wrapper - " + particles.m_VisibleParticleCount + " Points. FPS: " + string.Format("{0:F}", 1.0 / e.Time);
-
-
             m_spinangle += m_rotationspeed * (float)e.Time;
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -92,7 +75,6 @@ namespace AWGL.Scene
             GL.LoadMatrix(ref lookat);
 
             m_hook1.SetRotation(m_spinangle, 0, 1, 0);
-            m_hook2.SetRotation(-m_spinangle, 0, 0, 1);
 
             m_sceneGraph.Render();
 
