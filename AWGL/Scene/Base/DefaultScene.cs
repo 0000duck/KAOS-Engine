@@ -3,6 +3,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace AWGL.Scene
@@ -15,12 +16,13 @@ namespace AWGL.Scene
         public DefaultScene()
             : base(1024, 700, new GraphicsMode(32, 24, 0, 4))
         {
-            this.WindowState = WindowState.Fullscreen;
+            //this.WindowState = WindowState.Fullscreen;
         }
 
         private Color4 m_backgroundColor = new Color4(.1f, 0f, .1f, 0f);
 
         protected AWCamera camera;
+        private List<Key> keyList;
 
         #region OnLoad
         /// <summary>
@@ -43,9 +45,69 @@ namespace AWGL.Scene
             GL.ClearColor(Color4.Gray);
 
             camera = new AWCamera();
+            keyList = new List<Key>();
+            Keyboard.KeyDown += HandleKeyDown;
+            Keyboard.KeyUp += HandleKeyUp;
             Setup(e);
         }
         #endregion
+
+        void HandleKeyDown(object sender, KeyboardKeyEventArgs e)
+        {
+            keyList.Add(e.Key);
+        }
+
+        void HandleKeyUp(object sender, KeyboardKeyEventArgs e)
+        {
+            for (int count = 0; count < keyList.Count; count++)
+            {
+                if (keyList[count] == e.Key)
+                {
+                    keyList.Remove(keyList[count]);
+                }
+            }
+        }
+
+        private void MoveCamera()
+        {
+            foreach (OpenTK.Input.Key key in keyList)
+            {
+
+                switch (key)
+                {
+                    case OpenTK.Input.Key.Escape:
+                        Exit();
+                        break;
+
+                    case OpenTK.Input.Key.W:
+                        camera.Move(0f, 0.1f, 0f);
+                        break;
+
+                    case OpenTK.Input.Key.A:
+                        camera.Move(-0.1f, 0f, 0f);
+                        break;
+
+                    case OpenTK.Input.Key.S:
+                        camera.Move(0f, -0.1f, 0f);
+                        break;
+
+                    case OpenTK.Input.Key.D:
+                        camera.Move(0.1f, 0f, 0f);
+                        break;
+
+                    case OpenTK.Input.Key.Q:
+                        camera.Move(0f, 0f, 0.1f);
+                        break;
+
+                    case OpenTK.Input.Key.E:
+                        camera.Move(0f, 0f, -0.1f);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
 
         #region OnResize
         /// <summary>
@@ -64,9 +126,11 @@ namespace AWGL.Scene
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
  	         base.OnUpdateFrame(e);
-
+             
              if (Focused)
              {
+                 MoveCamera();
+
                  Point center = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
                  Point delta = new Point(center.X - System.Windows.Forms.Cursor.Position.X, center.Y - System.Windows.Forms.Cursor.Position.Y);
 
@@ -107,40 +171,6 @@ namespace AWGL.Scene
             {
                 throw new NotSupportedException(String.Format(
                     "OpenGL {0} is required (you only have {1}).", m_TargetHigh, m_Version));
-            }
-        }
-        #endregion
-
-        #region Input
-        protected override void OnKeyPress(KeyPressEventArgs e)
-        {
-            base.OnKeyPress(e);
-
-            if (e.KeyChar == 27)
-            {
-                Exit();
-            }
-
-            switch (e.KeyChar)
-            {
-                case 'w':
-                    camera.Move(0f, 0.1f, 0f);
-                    break;
-                case 'a':
-                    camera.Move(-0.1f, 0f, 0f);
-                    break;
-                case 's':
-                    camera.Move(0f, -0.1f, 0f);
-                    break;
-                case 'd':
-                    camera.Move(0.1f, 0f, 0f);
-                    break;
-                case 'q':
-                    camera.Move(0f, 0f, 0.1f);
-                    break;
-                case 'e':
-                    camera.Move(0f, 0f, -0.1f);
-                    break;
             }
         }
         #endregion
