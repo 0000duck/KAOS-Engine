@@ -20,14 +20,14 @@ namespace AWGL
 
         private VertexPositionColor[] CubeVertices = new VertexPositionColor[]
         {
-                new VertexPositionColor(-1.0f, -1.0f,  1.0f, Color.DarkRed),
+                new VertexPositionColor(-1.0f, -1.0f,  1.0f, Color.Khaki),
                 new VertexPositionColor( 1.0f, -1.0f,  1.0f, Color.DarkRed),
-                new VertexPositionColor( 1.0f,  1.0f,  1.0f, Color.Gold),
-                new VertexPositionColor(-1.0f,  1.0f,  1.0f, Color.Gold),
+                new VertexPositionColor( 1.0f,  1.0f,  1.0f, Color.Black),
+                new VertexPositionColor(-1.0f,  1.0f,  1.0f, Color.Black),
                 new VertexPositionColor(-1.0f, -1.0f, -1.0f, Color.DarkRed),
-                new VertexPositionColor( 1.0f, -1.0f, -1.0f, Color.DarkRed), 
-                new VertexPositionColor( 1.0f,  1.0f, -1.0f, Color.Gold),
-                new VertexPositionColor(-1.0f,  1.0f, -1.0f, Color.Gold) 
+                new VertexPositionColor( 1.0f, -1.0f, -1.0f, Color.Khaki), 
+                new VertexPositionColor( 1.0f,  1.0f, -1.0f, Color.Black),
+                new VertexPositionColor(-1.0f,  1.0f, -1.0f, Color.Black) 
         };
 
         private readonly short[] CubeElements = new short[]
