@@ -5,9 +5,7 @@ namespace AWGL
 {
     public struct Vbo
     {
-        public int VboID, CboID ,EboID;
-
-        public int NumElements { get; set; }
+        public int VboID, EboID, NumElements;
     }
 
     #region Particles
