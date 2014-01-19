@@ -65,7 +65,7 @@ namespace AWGL
             GL.VertexPointer(3, VertexPointerType.Float, BlittableValueType.StrideOf(CubeVertices), new IntPtr(0));
             GL.ColorPointer(4, ColorPointerType.UnsignedByte, BlittableValueType.StrideOf(CubeVertices), new IntPtr(12));
             
-            GL.DrawElements(BeginMode.Triangles, vbo.NumElements, DrawElementsType.UnsignedShort, IntPtr.Zero);
+            GL.DrawElements(PrimitiveType.Triangles, vbo.NumElements, DrawElementsType.UnsignedShort, IntPtr.Zero);
         }
     }
 }
