@@ -116,7 +116,7 @@ namespace AWGL
         {
             Vbo vboHandle = new Vbo();
 
-            //vboHandle.NumElements = elements.Length;
+            vboHandle.NumElements = elements.Length;
 
             // Determine size of Buffer
             int vbo_Size = vertices.Length * BlittableValueType.StrideOf(vertices);
