@@ -3,6 +3,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System;
+using System.Drawing;
 
 namespace AWGL.Scene
 {
@@ -15,15 +16,12 @@ namespace AWGL.Scene
             : base(1024, 700, new GraphicsMode(32, 24, 0, 4))
         {
             //this.WindowState = WindowState.Fullscreen;
-            Keyboard.KeyDown += Keyboard_KeyDown;
         }
 
         private Color4 m_backgroundColor = new Color4(.1f, 0f, .1f, 0f);
 
         #region Camera
-        protected float m_eyeX = .0f;
-        protected float m_eyeY = 10.0f;
-        protected float m_eyeZ = 10.0f;
+        protected AWCamera camera;
         #endregion
 
         #region OnLoad
@@ -46,6 +44,7 @@ namespace AWGL.Scene
 
             GL.ClearColor(Color4.Gray);
 
+            camera = new AWCamera();
             Setup(e);
         }
         #endregion
@@ -63,6 +62,30 @@ namespace AWGL.Scene
         }
 
         #endregion
+
+        protected override void OnUpdateFrame(FrameEventArgs e)
+        {
+ 	         base.OnUpdateFrame(e);
+
+             if (Focused)
+             {
+                 Point center = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
+                 Point delta = new Point(center.X - OpenTK.Input.Mouse.GetState().X, center.Y - OpenTK.Input.Mouse.GetState().Y);
+
+                 camera.AddRotation(delta.X, delta.Y);
+                 ResetCursor();
+             }
+        }
+
+        protected override void OnFocusedChanged(EventArgs e)
+        {
+            base.OnFocusedChanged(e);
+
+            if (Focused)
+            {
+                ResetCursor();
+            }
+        }
 
         public abstract void Setup(EventArgs e);
 
@@ -91,45 +114,48 @@ namespace AWGL.Scene
         #endregion
 
         #region Input
-        /// <summary>
-        /// Occurs when a key is pressed.
-        /// </summary>
-        /// <param name="sender">The KeyboardDevice which generated this event.</param>
-        /// <param name="e">The key that was pressed.</param>
-        protected void Keyboard_KeyDown(object sender, KeyboardKeyEventArgs e)
+        protected override void OnKeyPress(KeyPressEventArgs e)
         {
+            base.OnKeyPress(e);
 
-            switch (e.Key)
+            if (e.KeyChar == 27)
             {
-                #region Window Controls
+                Exit();
+            }
 
-                case Key.Escape: this.Exit();
+            switch (e.KeyChar)
+            {
+                case 'w':
+                    camera.Move(0f, 0.1f, 0f);
                     break;
-                case Key.F11:
+                case 'a':
+                    camera.Move(-0.1f, 0f, 0f);
+                    break;
+                case 's':
+                    camera.Move(0f, -0.1f, 0f);
+                    break;
+                case 'd':
+                    camera.Move(0.1f, 0f, 0f);
+                    break;
+                case 'q':
+                    camera.Move(0f, 0f, 0.1f);
+                    break;
+                case 'e':
+                    camera.Move(0f, 0f, -0.1f);
+                    break;
+                case 'f':
                     if (this.WindowState == WindowState.Fullscreen)
                         this.WindowState = WindowState.Normal;
                     else
                         this.WindowState = WindowState.Fullscreen;
                     break;
-
-                #endregion
-
-                #region Camera Controls
-
-                case Key.Up: m_eyeY += 2f;
-                    break;
-                case Key.Down: m_eyeY += -2f;
-                    break;
-                case Key.Right: m_eyeX += 2f;
-                    break;
-                case Key.Left: m_eyeX += -2f;
-                    break;
-
-                #endregion
-
-            }   
+            }
         }
         #endregion
 
+        void ResetCursor()
+        {
+            OpenTK.Input.Mouse.SetPosition(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
+        }
     }
 }

@@ -57,7 +57,7 @@ namespace AWGL.Scene
         public override void Resize(EventArgs e)
         {
             float aspect_ratio = Width / (float)Height;
-            Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
+            Matrix4 perpective = camera.GetViewMatrix() * Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref perpective);
         }
@@ -70,7 +70,7 @@ namespace AWGL.Scene
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Matrix4 lookat = Matrix4.LookAt(m_eyeX, m_eyeY, m_eyeZ, 0, 0, 0, 0, 1, 0);
+            Matrix4 lookat = camera.GetViewMatrix();
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookat);
 
