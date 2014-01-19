@@ -15,14 +15,12 @@ namespace AWGL.Scene
         public DefaultScene()
             : base(1024, 700, new GraphicsMode(32, 24, 0, 4))
         {
-            //this.WindowState = WindowState.Fullscreen;
+            this.WindowState = WindowState.Fullscreen;
         }
 
         private Color4 m_backgroundColor = new Color4(.1f, 0f, .1f, 0f);
 
-        #region Camera
         protected AWCamera camera;
-        #endregion
 
         #region OnLoad
         /// <summary>
@@ -70,7 +68,7 @@ namespace AWGL.Scene
              if (Focused)
              {
                  Point center = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
-                 Point delta = new Point(center.X - OpenTK.Input.Mouse.GetState().X, center.Y - OpenTK.Input.Mouse.GetState().Y);
+                 Point delta = new Point(center.X - System.Windows.Forms.Cursor.Position.X, center.Y - System.Windows.Forms.Cursor.Position.Y);
 
                  camera.AddRotation(delta.X, delta.Y);
                  ResetCursor();
@@ -143,19 +141,13 @@ namespace AWGL.Scene
                 case 'e':
                     camera.Move(0f, 0f, -0.1f);
                     break;
-                case 'f':
-                    if (this.WindowState == WindowState.Fullscreen)
-                        this.WindowState = WindowState.Normal;
-                    else
-                        this.WindowState = WindowState.Fullscreen;
-                    break;
             }
         }
         #endregion
 
         void ResetCursor()
         {
-            OpenTK.Input.Mouse.SetPosition(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
+            System.Windows.Forms.Cursor.Position = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
         }
     }
 }
