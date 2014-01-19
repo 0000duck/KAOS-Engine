@@ -156,7 +156,28 @@ namespace AWGL
 
             return vboHandle;
         }
-    
+
+        #region TestOpenGLVersion
+        /// <summary>
+        /// Get OpenGL Version Information and check system meets requirements
+        /// </summary>
+        public static void TestOpenGLVersion()
+        {
+            Version m_Version = new Version(GL.GetString(StringName.Version).Substring(0, 3));
+            Version m_TargetLow = new Version(3, 1);
+            Version m_TargetHigh = new Version(4, 1);
+            if (m_Version < m_TargetLow)
+            {
+                throw new NotSupportedException(String.Format(
+                    "OpenGL {0} is required (you only have {1}).", m_TargetLow, m_Version));
+            }
+            else if (m_Version > m_TargetHigh)
+            {
+                throw new NotSupportedException(String.Format(
+                    "OpenGL {0} is required (you only have {1}).", m_TargetHigh, m_Version));
+            }
+        }
+        #endregion
     
     }
 }
