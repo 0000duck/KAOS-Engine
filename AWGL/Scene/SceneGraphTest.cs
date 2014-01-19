@@ -20,44 +20,17 @@ namespace AWGL.Scene
 
         public void CreateSceneGraph()
         {
-
-            AWPolygon poly1 = new AWPolygon();
-            AWPolygon poly2 = new AWPolygon();
-            AWPolygon poly3 = new AWPolygon();
-            AWPolygon poly4 = new AWPolygon();
-            AWGroupNode rt = new AWGroupNode();
-
-            Vector3 a = new Vector3(.0f, .0f, 2.5f);
-            Vector3 b = new Vector3(2.5f, .0f, -2.5f);
-            Vector3 c = new Vector3(-2.5f, .0f, 2.5f);
-            Vector3 d = new Vector3(.0f, 4.0f, .0f);
-
-            poly1.AddNormal(new Vector3(.0f, -1.0f, .0f));
-            poly1.AddVertex(0, c);
-            poly1.AddVertex(1, b);
-            poly1.AddVertex(2, c);
-
-            poly2.AddNormal(new Vector3(.861411f, .269191f, .430706f));
-            poly2.AddVertex(0, d);
-            poly2.AddVertex(1, a);
-            poly2.AddVertex(2, b);
-
-            poly3.AddNormal(new Vector3(.0f, .529999f, -.847998f));
-            poly3.AddVertex(0, d);
-            poly3.AddVertex(1, b);
-            poly3.AddVertex(2, c);
-
-            poly4.AddNormal(new Vector3(-.861411f, .269191f, .430706f));
-            poly4.AddVertex(0, d);
-            poly4.AddVertex(1, c);
-            poly4.AddVertex(2, a);
-
             AWGroupNode root = new AWGroupNode();
             AWGraphLines graph = new AWGraphLines();
+
             AWGroupNode rt1 = new AWGroupNode();
             AWGroupNode rt2 = new AWGroupNode();
 
+            AWGroupNode rt = new AWGroupNode();
+            AWCube cube = new AWCube();
+
             root.AddChild(graph);
+
             root.AddChild(rt1);
             root.AddChild(rt2);
 
@@ -65,12 +38,9 @@ namespace AWGL.Scene
             rt2.AddChild(rt);
 
             rt1.SetTranslation(5, 0, 0);
-            rt2.SetTranslation(-5, 0, 0);
+            rt2.SetTranslation(-10, 2, 0);
 
-            rt.AddChild(poly1);
-            rt.AddChild(poly2);
-            rt.AddChild(poly3);
-            rt.AddChild(poly4);
+            rt.AddChild(cube);
 
             m_sceneGraph = root;
 
