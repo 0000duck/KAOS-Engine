@@ -8,5 +8,6 @@ namespace AWGL
     public interface IGroupNode : ISceneNode, IEnumerable<ISceneNode>
     {
         void AddChild(ISceneNode child);
+        void RemoveChild(ISceneNode child);
     }
 }

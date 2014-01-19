@@ -78,6 +78,13 @@ namespace AWGL
             m_children.Add(child);
         }
 
+        public void RemoveChild(ISceneNode child)
+        {
+            m_children.Remove(child);
+        }
+
         #endregion IGroupNode Implementation
+
+
     } 
 }
