@@ -12,6 +12,13 @@ namespace AWGL.Scene
     {
         #region SceneGraph
         private AWNode m_sceneGraph;
+
+        AWGroupNode root, rt1, rt2, rt, rtt;
+        AWGraphLines graph;
+
+        AWCube cube;
+        AWParticles particles;
+
         private AWGroupNode m_hook1, m_hook2;
         #endregion
 
@@ -20,14 +27,7 @@ namespace AWGL.Scene
 
         public void CreateSceneGraph()
         {
-            AWGroupNode root = new AWGroupNode();
-            AWGraphLines graph = new AWGraphLines();
-
-            AWGroupNode rt1 = new AWGroupNode();
-            AWGroupNode rt2 = new AWGroupNode();
-
-            AWGroupNode rt = new AWGroupNode();
-            AWCube cube = new AWCube();
+            InitialiseNodes();
 
             root.AddChild(graph);
 
@@ -35,17 +35,31 @@ namespace AWGL.Scene
             root.AddChild(rt2);
 
             rt1.AddChild(rt);
-            rt2.AddChild(rt);
+            rt2.AddChild(rtt);
 
             rt1.SetTranslation(5, 0, 0);
             rt2.SetTranslation(-10, 2, 0);
 
             rt.AddChild(cube);
+            //rt.AddChild(particles);
 
             m_sceneGraph = root;
 
             m_hook1 = rt1;
             m_hook2 = rt2;
+        }
+
+        private void InitialiseNodes()
+        {
+            root = new AWGroupNode();
+            rt1 = new AWGroupNode();
+            rt2 = new AWGroupNode();
+            rt = new AWGroupNode();
+            rtt = new AWGroupNode();
+
+            graph = new AWGraphLines(); ;
+            cube = new AWCube();
+            particles = new AWParticles(); ;
         }
 
         public override void Setup(EventArgs e)
@@ -65,6 +79,9 @@ namespace AWGL.Scene
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
+
+            Title = "AWGL: High level OpenTK wrapper - " + particles.m_VisibleParticleCount + " Points. FPS: " + string.Format("{0:F}", 1.0 / e.Time);
+
 
             m_spinangle += m_rotationspeed * (float)e.Time;
 
