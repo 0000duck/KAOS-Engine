@@ -26,63 +26,50 @@ namespace AWGL
         {
             Int32 Selection;
             
-            Console.WriteLine("Please select a scene to load:");
-            Console.WriteLine("");
-            Console.WriteLine("1. Static VBO");
-            Console.WriteLine("2. Dynamic VBO");
-            Console.WriteLine("3. Texture 2D");
-            Console.WriteLine("4. Anaylgraph Stereo");
-            Console.WriteLine("5. FBO");
-            Console.WriteLine("6. Picker");
-            Console.WriteLine("7. Stencil CSG");
-            Console.WriteLine("8. Scene Graph Test");
+            Console.WriteLine("Please select a scene to load:\n");
+
+            Console.WriteLine("1. Dynamic VBO");
+            Console.WriteLine("2. Texture 2D");
+            Console.WriteLine("3. Anaylgraph Stereo");
+            Console.WriteLine("4. FBO");
+            Console.WriteLine("5. Picker");
+            Console.WriteLine("6. Stencil CSG");
+            Console.WriteLine("7. Scene Graph Test\n");
             Int32.TryParse(Console.ReadLine(), out Selection);
 
             switch (Selection)
             {
-                case 1:
-                    using (StaticVBOScene scene = new StaticVBOScene())
-                    {
-                        scene.Run(30.0);
-                    }
-                    break;
                 case 2:
-                    using (DynamicVBOScene scene = new DynamicVBOScene())
-                    {
-                        scene.Run(30.0);
-                    }
-                    break;
-                case 3:
                     using (Texture2DScene scene = new Texture2DScene())
                     {
                         scene.Run(30.0);
                     }
                     break;
-                case 4:
+                case 3:
                     using (StereoVisionScene scene = new StereoVisionScene())
                     {
                         scene.Run(30.0);
                     }
                     break;
-                case 5:
+                case 4:
                     using (FBOScene scene = new FBOScene())
                     {
                         scene.Run(30.0);
                     }
                     break;
-                case 6:
+                case 5:
                     using (PickerScene scene = new PickerScene())
                     {
                         scene.Run(30.0);
                     }
                     break;
-                case 7:
+                case 6:
                     using (StencilCSGScene scene = new StencilCSGScene())
                     {
                         scene.Run(30.0);
                     }
                     break;
-                case 8:
+                case 7:
                     using (SceneGraphTest scene = new SceneGraphTest())
                     {
                         scene.Run(30.0);
