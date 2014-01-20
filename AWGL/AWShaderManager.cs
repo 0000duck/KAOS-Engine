@@ -19,6 +19,19 @@ namespace AWGL
         private int vShader, fShader, linkedProgram;
 
         private string defaultDataPath = "Data/Shaders/";
+        private string m_vsFilePath, m_fsFilePath;
+
+        public AWShaderManager(string vs_path, string fs_path)
+        {
+            this.m_vsFilePath = vs_path;
+            this.m_fsFilePath = fs_path;
+        }
+
+        public AWShaderManager()
+        {
+            this.m_vsFilePath   = "Simple_VS";
+            this.m_fsFilePath   = "Simple_FS";
+        }
 
         /// <summary>
         /// 
@@ -68,8 +81,8 @@ namespace AWGL
         /// </summary>
         private void BuildProgram() 
         {
-            this.vShader = BuildShader("Simple_VS", ShaderType.VertexShader);
-            this.fShader = BuildShader("Simple_FS", ShaderType.FragmentShader);
+            this.vShader = BuildShader(m_vsFilePath, ShaderType.VertexShader);
+            this.fShader = BuildShader(m_fsFilePath, ShaderType.FragmentShader);
 
             this.linkedProgram = GL.CreateProgram();
             GL.AttachShader(linkedProgram, vShader);
