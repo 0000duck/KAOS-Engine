@@ -75,7 +75,7 @@ namespace AWGL
 
             // Check linker success
             int linkSuccess;
-            GL.GetProgram(programHandle, ProgramParameter.LinkStatus, out linkSuccess);
+            GL.GetProgram(programHandle, GetProgramParameterName.LinkStatus, out linkSuccess);
             if (linkSuccess == 0)
             {
                 String message;
@@ -86,7 +86,7 @@ namespace AWGL
             // Validate program
             int validateSuccess;
             GL.ValidateProgram(programHandle);
-            GL.GetProgram(programHandle, ProgramParameter.ValidateStatus, out validateSuccess);
+            GL.GetProgram(programHandle, GetProgramParameterName.ValidateStatus, out validateSuccess);
             if (validateSuccess == 0)
             {
                 String message;
@@ -192,6 +192,6 @@ namespace AWGL
 
             return "AWGL Engine Prototype      - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
         }
-    
+
     }
 }

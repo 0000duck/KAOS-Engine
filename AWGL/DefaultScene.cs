@@ -15,12 +15,13 @@ namespace AWGL.Scene
     public class DefaultScene : GameWindow
     {
         #region Constructor
-        
-        public DefaultScene()
-            : base(1024, 700, new GraphicsMode(32, 24, 0, 4))
+
+        public DefaultScene() //, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug | 
+            : base(1024, 700, new GraphicsMode(32, 24, 0, 4), "", GameWindowFlags.Default, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Debug | GraphicsContextFlags.ForwardCompatible
+            )// DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default)
         {
             //set context
-            this.WindowState = WindowState.Fullscreen;
+            //this.WindowState = WindowState.Fullscreen;
             m_backgroundColor= new Color4(.1f, 0f, .1f, 0f);
             
             //create player camera
@@ -52,8 +53,8 @@ namespace AWGL.Scene
             cubePosY = 1.5f;
             playerView.Move(0f, 0f, 0.1f);
 
-            shaderManager = new AWShaderManager();
-            GL.UseProgram(shaderManager.programID());
+            //shaderManager = new AWShaderManager();
+            //GL.UseProgram(shaderManager.ProgramID);
         }
 
         #endregion

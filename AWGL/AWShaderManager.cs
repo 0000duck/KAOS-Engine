@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace AWGL
 {
@@ -25,6 +25,7 @@ namespace AWGL
         {
             this.m_vsFilePath = vs_path;
             this.m_fsFilePath = fs_path;
+            BuildProgram();
         }
 
         public AWShaderManager()
@@ -91,7 +92,7 @@ namespace AWGL
 
             // Check linker success
             int linkSuccess;
-            GL.GetProgram(this.linkedProgram, ProgramParameter.LinkStatus, out linkSuccess); // update to use OpenGL4
+            GL.GetProgram(this.linkedProgram, GetProgramParameterName.LinkStatus, out linkSuccess); // update to use OpenGL4
             if (linkSuccess == 0)
             {
                 String message;
@@ -102,30 +103,30 @@ namespace AWGL
             // Validate program
             int validateSuccess;
             GL.ValidateProgram(this.linkedProgram);
-            GL.GetProgram(this.linkedProgram, ProgramParameter.ValidateStatus, out validateSuccess); // update to use OpenGL4
+            GL.GetProgram(this.linkedProgram, GetProgramParameterName.ValidateStatus, out validateSuccess); // update to use OpenGL4
             if (validateSuccess == 0)
             {
                 String message;
                 GL.GetProgramInfoLog(this.linkedProgram, out message);
                 Console.WriteLine("Program validation failed", message);
             }
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public int programID() 
-        {
-            if(linkedProgram == 0)
-                BuildProgram();
-
-            return linkedProgram;
+            // Delete the shaders as the program has them now
+            GL.DeleteShader(vShader);
+            GL.DeleteShader(fShader);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            GL.DeleteProgram(this.linkedProgram);
+        }
+
+        public int ProgramID
+        {
+            get
+            {
+                return this.linkedProgram;
+            }
         }
     }
 }

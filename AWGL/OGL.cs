@@ -19,7 +19,7 @@ namespace AWGL
         }
 
         [STAThread]
-        public static void Run()
+        public static void Main()
         {
             using (ShaderTutorials game = new ShaderTutorials())
             {
