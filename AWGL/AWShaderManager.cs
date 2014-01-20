@@ -117,7 +117,7 @@ namespace AWGL
         /// <returns></returns>
         public int programID() 
         {
-            if(linkedProgram == null)
+            if(linkedProgram == 0)
                 BuildProgram();
 
             return linkedProgram;
