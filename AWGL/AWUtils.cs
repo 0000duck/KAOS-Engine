@@ -1,6 +1,7 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace AWGL
@@ -52,7 +53,7 @@ namespace AWGL
             {
                 String message;
                 GL.GetShaderInfoLog(shaderHandle, out message);
-                Console.WriteLine("BuildShader failed to compile " + shaderType.ToString() + ": " + message);
+                Debug.WriteLine("BuildShader failed to compile " + shaderType.ToString() + ": " + message);
                 return -1;
             }
 
@@ -80,7 +81,7 @@ namespace AWGL
             {
                 String message;
                 GL.GetProgramInfoLog(programHandle, out message);
-                Console.WriteLine("Program link failed: " + message);
+                Debug.WriteLine("Program link failed: " + message);
             }
 
             // Validate program
@@ -91,7 +92,7 @@ namespace AWGL
             {
                 String message;
                 GL.GetProgramInfoLog(programHandle, out message);
-                Console.WriteLine("Program validation failed", message);
+                Debug.WriteLine("Program validation failed", message);
             }
 
             return programHandle;
@@ -164,7 +165,7 @@ namespace AWGL
         public static void TestOpenGLVersion()
         {
             Version m_Version = new Version(GL.GetString(StringName.Version).Substring(0, 3));
-            Version m_TargetLow = new Version(3, 1);
+            Version m_TargetLow = new Version(3, 0);
             Version m_TargetHigh = new Version(4, 1);
             if (m_Version < m_TargetLow)
             {
@@ -181,16 +182,14 @@ namespace AWGL
 
         public static string PrintOpenGLInfo()
         {
-            Console.WriteLine("");
-            Console.WriteLine("Video informations :");
-            Console.WriteLine("Graphics card vendor : {0}", GL.GetString(StringName.Vendor));
-            Console.WriteLine("Renderer : {0}", GL.GetString(StringName.Renderer));
-            Console.WriteLine("Version : {0}", GL.GetString(StringName.Version));
-            Console.WriteLine("Shading Language Version : {0}", GL.GetString(StringName.ShadingLanguageVersion));
+            Debug.WriteLine("Graphics card vendor: " + GL.GetString(StringName.Vendor));
+            Debug.WriteLine("Renderer: " + GL.GetString(StringName.Renderer));
+            Debug.WriteLine("Version: " + GL.GetString(StringName.Version));
+            Debug.WriteLine("Shading Language Version: " + GL.GetString(StringName.ShadingLanguageVersion));
             
             TestOpenGLVersion();
 
-            return "AWGL Engine Prototype      - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
+            return "AWGL Engine Prototype - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
         }
 
     }

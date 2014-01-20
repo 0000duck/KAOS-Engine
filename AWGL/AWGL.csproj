@@ -120,6 +120,12 @@
     <None Include="Data\Shaders\CH02_FS.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Shaders\opentk-fs.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\opentk-vs.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Shaders\Simple_FS.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

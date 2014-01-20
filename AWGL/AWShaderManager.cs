@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using OpenTK.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL;
+using System.Diagnostics;
 
 namespace AWGL
 {
@@ -16,7 +17,7 @@ namespace AWGL
         /// <summary>
         /// Shader Pointers
         /// </summary>
-        private int vShader, fShader, linkedProgram;
+        private int vShader, fShader, programHandle;
 
         private string defaultDataPath = "Data/Shaders/";
         private string m_vsFilePath, m_fsFilePath;
@@ -70,7 +71,7 @@ namespace AWGL
             {
                 String message;
                 GL.GetShaderInfoLog(shaderHandle, out message);
-                Console.WriteLine("BuildShader failed to compile " + shaderType.ToString() + ": " + message);
+                Debug.WriteLine("BuildShader failed to compile " + shaderType.ToString() + ": " + message);
                 return -1;
             }
 
@@ -82,34 +83,44 @@ namespace AWGL
         /// </summary>
         private void BuildProgram() 
         {
-            this.vShader = BuildShader(m_vsFilePath, ShaderType.VertexShader);
-            this.fShader = BuildShader(m_fsFilePath, ShaderType.FragmentShader);
+            vShader = BuildShader(m_vsFilePath, ShaderType.VertexShader);
+            fShader = BuildShader(m_fsFilePath, ShaderType.FragmentShader);
 
-            this.linkedProgram = GL.CreateProgram();
-            GL.AttachShader(linkedProgram, vShader);
-            GL.AttachShader(linkedProgram, fShader);
-            GL.LinkProgram(linkedProgram);
+            Debug.WriteLine(GL.GetShaderInfoLog(vShader));
+            Debug.WriteLine(GL.GetShaderInfoLog(fShader));
 
-            // Check linker success
+            programHandle = GL.CreateProgram();
+
+            GL.AttachShader(programHandle, vShader);
+            GL.AttachShader(programHandle, fShader);
+
+            GL.LinkProgram(programHandle);
+
+            #region Check linker success
+
             int linkSuccess;
-            GL.GetProgram(this.linkedProgram, GetProgramParameterName.LinkStatus, out linkSuccess); // update to use OpenGL4
+            GL.GetProgram(this.programHandle, GetProgramParameterName.LinkStatus, out linkSuccess); // update to use OpenGL4
             if (linkSuccess == 0)
             {
                 String message;
-                GL.GetProgramInfoLog(this.linkedProgram, out message);
-                Console.WriteLine("Program link failed: " + message);
+                GL.GetProgramInfoLog(this.programHandle, out message);
+                Debug.WriteLine("Program link failed: " + message);
             }
 
-            // Validate program
+            #endregion
+
+            #region Validate Program
+
             int validateSuccess;
-            GL.ValidateProgram(this.linkedProgram);
-            GL.GetProgram(this.linkedProgram, GetProgramParameterName.ValidateStatus, out validateSuccess); // update to use OpenGL4
+            GL.ValidateProgram(this.programHandle);
+            GL.GetProgram(this.programHandle, GetProgramParameterName.ValidateStatus, out validateSuccess); // update to use OpenGL4
             if (validateSuccess == 0)
             {
                 String message;
-                GL.GetProgramInfoLog(this.linkedProgram, out message);
-                Console.WriteLine("Program validation failed", message);
+                GL.GetProgramInfoLog(this.programHandle, out message);
+                Debug.WriteLine("Program validation failed", message);
             }
+            #endregion
 
             // Delete the shaders as the program has them now
             GL.DeleteShader(vShader);
@@ -118,14 +129,14 @@ namespace AWGL
 
         public void Dispose()
         {
-            GL.DeleteProgram(this.linkedProgram);
+            GL.DeleteProgram(this.programHandle);
         }
 
-        public int ProgramID
+        public int ProgramHandle
         {
             get
             {
-                return this.linkedProgram;
+                return this.programHandle;
             }
         }
     }
