@@ -21,7 +21,7 @@ namespace AWGL
         [STAThread]
         public static void Run()
         {
-            using (DefaultScene game = new DefaultScene())
+            using (ShaderTutorials game = new ShaderTutorials())
             {
                 game.Run(30,0);
             }

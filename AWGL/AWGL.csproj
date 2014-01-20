@@ -84,6 +84,7 @@
     <Compile Include="Scene\IGroupNode.cs" />
     <Compile Include="Scene\ISceneNode.cs" />
     <Compile Include="OGL.cs" />
+    <Compile Include="ShaderTutorials.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
     <Compile Include="Shapes\Base\VertexStructs.cs" />
     <Compile Include="Shapes\Capsule.cs" />
@@ -110,43 +111,13 @@
     <Compile Include="AWUtils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\Shaders\CubeMap_FS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\CubeMap_VS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\FS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\JuliaSet_SM2_FS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\JuliaSet_SM3_FS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\JuliaSet_VS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\Parallax_FS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\Parallax_VS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\Picking_FS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\Picking_VS.glsl">
+    <None Include="Data\Shaders\CH01_VS.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Shaders\Simple_FS.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Shaders\Simple_VS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\VS.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Textures\earth-cubemap.dds">
