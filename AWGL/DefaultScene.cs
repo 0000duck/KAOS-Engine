@@ -50,6 +50,7 @@ namespace AWGL.Scene
             m_hook1 = landRoot;
 
             cubePosY = 1.5f;
+            playerView.Move(0f, 0f, 0.1f);
 
             shaderManager = new AWShaderManager();
             GL.UseProgram(shaderManager.programID());
