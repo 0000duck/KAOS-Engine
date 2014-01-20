@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using AWGL.Shapes;
+using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
@@ -35,6 +36,7 @@ namespace AWGL.Scene
             landRoot = new AWGroupNode();
             graph = new AWGraphLines(); ;
             cube = new AWCube();
+            knot = new TorusKnot( 256, 32, 0.1, 3, 4, 1, true );
 
             //create scenegraph
             worldRoot.AddChild(graph);
@@ -47,7 +49,10 @@ namespace AWGL.Scene
 
             m_hook1 = landRoot;
 
-            cubePosY = 1.0f;
+            cubePosY = 1.5f;
+
+            shaderManager = new AWShaderManager();
+            GL.UseProgram(shaderManager.programID());
         }
 
         #endregion
@@ -64,10 +69,13 @@ namespace AWGL.Scene
         private AWGroupNode worldRoot, landRoot;
         private AWGraphLines graph;
         private AWCube cube;
+        private TorusKnot knot;
         private AWGroupNode m_hook1;
 
         private const float m_rotationspeed = 180.0f;
         private float m_spinangle, cubePosY;
+
+        private AWShaderManager shaderManager;
 
         #endregion
 

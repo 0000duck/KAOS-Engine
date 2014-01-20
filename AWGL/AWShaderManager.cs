@@ -102,9 +102,10 @@ namespace AWGL
         /// 
         /// </summary>
         /// <returns></returns>
-        public int getShaderProgram() 
+        public int programID() 
         {
-            BuildProgram();
+            if(linkedProgram == null)
+                BuildProgram();
 
             return linkedProgram;
         }
