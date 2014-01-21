@@ -78,11 +78,8 @@ namespace AWGL
             GL.UseProgram(shaderManager.ProgramHandle);
 
             shaderManager.SetUniforms(
-                out projectionMatrixLocation,
-                out modelviewMatrixLocation,
-                out projectionMatrix,
-                out modelviewMatrix,
-                ClientSize
+                out projectionMatrixLocation, out modelviewMatrixLocation,
+                out projectionMatrix, out modelviewMatrix, ClientSize
             );
         }
 
@@ -95,17 +92,13 @@ namespace AWGL
                 BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw);
 
             bufferManager.SetupBuffer(
-                out normalVboHandle,
-                positionVboData,
-                BufferTarget.ArrayBuffer,
-                BufferUsageHint.StaticDraw
+                out normalVboHandle, positionVboData,
+                BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
             bufferManager.SetupBuffer(
-                out eboHandle,
-                indicesVboData,  //indicesVboData, // change this!!!
-                BufferTarget.ElementArrayBuffer,
-                BufferUsageHint.StaticDraw
+                out eboHandle, indicesVboData, 
+                BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
@@ -120,21 +113,13 @@ namespace AWGL
             // stored in the VAO so we simply need to bind the correct VAO.
             bufferManager.GenerateVaoBuffer(out vaoHandle);
             bufferManager.SetupVaoBuffer(
-                BufferTarget.ArrayBuffer, 
-                positionVboHandle,
-                shaderManager.ProgramHandle,
-                "in_position",
-                VertexAttribPointerType.Float,
-                0, 3
+                positionVboHandle, shaderManager.ProgramHandle, 0, 3,"in_position",
+                BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
                 );
 
             bufferManager.SetupVaoBuffer(
-                BufferTarget.ArrayBuffer, 
-                normalVboHandle, 
-                shaderManager.ProgramHandle, 
-                "in_normal", 
-                VertexAttribPointerType.Float, 
-                1, 3
+                normalVboHandle, shaderManager.ProgramHandle, 1, 3, "in_normal",
+                BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
                 );
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);

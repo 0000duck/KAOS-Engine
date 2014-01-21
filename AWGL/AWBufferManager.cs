@@ -33,10 +33,12 @@ namespace AWGL
                 );
         }
 
-        internal void SetupVaoBuffer(BufferTarget bufferTarget, int positionVboHandle, int ProgramHandle, string attributeName, VertexAttribPointerType vertexAttribPointerType, int index, int size)
+        internal void SetupVaoBuffer(
+            int bufferHandle, int ProgramHandle, int index, int size, string attributeName, 
+            BufferTarget bufferTarget, VertexAttribPointerType vertexAttribPointerType)
         {
             GL.EnableVertexAttribArray(index);
-            GL.BindBuffer(bufferTarget, positionVboHandle);
+            GL.BindBuffer(bufferTarget, bufferHandle);
             GL.VertexAttribPointer(
                 index, size, vertexAttribPointerType, 
                 true, Vector3.SizeInBytes, 0);
