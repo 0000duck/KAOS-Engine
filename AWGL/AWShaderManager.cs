@@ -16,83 +16,77 @@ namespace AWGL
     /// </summary>
     class AWShaderManager : IDisposable
     {
-        /// <summary>
-        /// Shader Pointers
-        /// </summary>
-        private int vShader, fShader, programHandle;
+        #region Private Members
+
+        // Handles
+        private int m_vertexShaderHandle, m_fragmentShaderHandle, m_programHandle;
 
         private string defaultDataPath = "Data/Shaders/";
-        private string m_vsFilePath, m_fsFilePath;
+        private string m_vertexShaderPath = "Simple_VS";
+        private string m_fragmentShaderPath = "Simple_FS";
+        
+        #endregion
 
-        public AWShaderManager(string vs_path, string fs_path)
-        {
-            this.m_vsFilePath = vs_path;
-            this.m_fsFilePath = fs_path;
-            BuildProgram();
+        #region Contructors
+
+        public AWShaderManager() 
+        { 
+            m_programHandle = BuildProgram(); 
         }
 
-        public AWShaderManager()
+        public AWShaderManager(string vertexShaderPath, string fragmentShaderPath)
         {
-            this.m_vsFilePath   = "Simple_VS";
-            this.m_fsFilePath   = "Simple_FS";
+            m_vertexShaderPath = vertexShaderPath;
+            m_fragmentShaderPath = fragmentShaderPath;
+            m_programHandle = BuildProgram();
         }
+        
+        #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="filename">Shader Filename</param>
-        /// <returns>Shader Source Code</returns>
-        private string LoadShader(string filename) 
+        #region Shader and Program Contruction Methods
+
+        internal string LoadShader(string shaderSourcePath)
         {
-            using (StreamReader sr = new StreamReader(defaultDataPath + filename + ".glsl"))
+            using (StreamReader sr = new StreamReader(defaultDataPath + shaderSourcePath + ".glsl"))
             {
                 return sr.ReadToEnd();
             }
         }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="shaderType"></param>
-        /// <returns></returns>
-        private int BuildShader(string filename, ShaderType shaderType)
+
+        internal int BuildShader(string shaderSourcePath, ShaderType shaderType)
         {
             // Create space in memory for the shader
             int shaderHandle = GL.CreateShader(shaderType);
-            GL.ShaderSource(shaderHandle, LoadShader(filename));
+            GL.ShaderSource(shaderHandle, LoadShader(shaderSourcePath));
 
             // Compile
             GL.CompileShader(shaderHandle);
 
             AWLogger.ShaderInfo(shaderHandle);
-            
+
             return shaderHandle;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private void BuildProgram() 
+        internal int BuildProgram()
         {
-            vShader = BuildShader(m_vsFilePath, ShaderType.VertexShader);
-            fShader = BuildShader(m_fsFilePath, ShaderType.FragmentShader);
+            m_vertexShaderHandle = BuildShader(m_vertexShaderPath, ShaderType.VertexShader);
+            m_fragmentShaderHandle = BuildShader(m_fragmentShaderPath, ShaderType.FragmentShader);
 
-            programHandle = GL.CreateProgram();
+            int programHandle = GL.CreateProgram();
 
-            GL.AttachShader(programHandle, vShader);
-            GL.AttachShader(programHandle, fShader);
+            GL.AttachShader(programHandle, m_vertexShaderHandle);
+            GL.AttachShader(programHandle, m_fragmentShaderHandle);
 
             GL.LinkProgram(programHandle);
 
             #region Check linker success
 
             int linkSuccess;
-            GL.GetProgram(this.programHandle, GetProgramParameterName.LinkStatus, out linkSuccess); // update to use OpenGL4
+            GL.GetProgram(programHandle, GetProgramParameterName.LinkStatus, out linkSuccess); // update to use OpenGL4
             if (linkSuccess == 0)
             {
                 String message;
-                GL.GetProgramInfoLog(this.programHandle, out message);
+                GL.GetProgramInfoLog(programHandle, out message);
                 Debug.WriteLine("Program link failed: " + message);
             }
 
@@ -101,38 +95,51 @@ namespace AWGL
             #region Validate Program
 
             int validateSuccess;
-            GL.ValidateProgram(this.programHandle);
-            GL.GetProgram(this.programHandle, GetProgramParameterName.ValidateStatus, out validateSuccess); // update to use OpenGL4
+            GL.ValidateProgram(programHandle);
+            GL.GetProgram(programHandle, GetProgramParameterName.ValidateStatus, out validateSuccess); // update to use OpenGL4
             if (validateSuccess == 0)
             {
                 String message;
-                GL.GetProgramInfoLog(this.programHandle, out message);
+                GL.GetProgramInfoLog(programHandle, out message);
                 Debug.WriteLine("Program validation failed", message);
             }
             #endregion
 
             // Delete the shaders as the program has them now
-            GL.DeleteShader(vShader);
-            GL.DeleteShader(fShader);
+            GL.DeleteShader(m_vertexShaderHandle);
+            GL.DeleteShader(m_fragmentShaderHandle);
+
+            return programHandle;
         }
+        
+        #endregion
+
+        #region IDisposable
 
         public void Dispose()
         {
-            GL.DeleteProgram(this.programHandle);
+            GL.DeleteProgram(m_programHandle);
         }
+        
+        #endregion
 
-        public int Program
+        #region Public Methods
+
+        public int ProgramHandle
         {
             get
             {
-                return this.programHandle;
+                return m_programHandle;
             }
         }
 
-        internal void SetUniforms(out int projMatrixHandle, out int mvMatrixHandle, out Matrix4 projMatrix, out Matrix4 mvMatrix, Size dimensions)
+        public void SetUniforms(
+            out int projMatrixHandle, out int mvMatrixHandle,
+            out Matrix4 projMatrix, out Matrix4 mvMatrix,
+            Size dimensions)
         {
-            projMatrixHandle = GL.GetUniformLocation(this.Program, "projection_matrix");
-            mvMatrixHandle = GL.GetUniformLocation(this.Program, "modelview_matrix");
+            projMatrixHandle = GL.GetUniformLocation(this.ProgramHandle, "projection_matrix");
+            mvMatrixHandle = GL.GetUniformLocation(this.ProgramHandle, "modelview_matrix");
 
             float aspectRatio = dimensions.Width / (float)(dimensions.Height);
             Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 1, 100, out projMatrix);
@@ -140,6 +147,7 @@ namespace AWGL
 
             GL.UniformMatrix4(projMatrixHandle, false, ref projMatrix);
             GL.UniformMatrix4(mvMatrixHandle, false, ref mvMatrix);
-        }
+        } 
+        #endregion
     }
 }

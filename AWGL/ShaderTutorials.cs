@@ -73,7 +73,7 @@ namespace AWGL
         {
             shaderManager = new AWShaderManager("opentk-vs", "opentk-fs");
 
-            GL.UseProgram(shaderManager.Program);
+            GL.UseProgram(shaderManager.ProgramHandle);
 
             shaderManager.SetUniforms
             (
@@ -121,12 +121,12 @@ namespace AWGL
             GL.EnableVertexAttribArray(0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
-            GL.BindAttribLocation(shaderManager.Program, 0, "in_position");
+            GL.BindAttribLocation(shaderManager.ProgramHandle, 0, "in_position");
 
             GL.EnableVertexAttribArray(1);
             GL.BindBuffer(BufferTarget.ArrayBuffer, normalVboHandle);
             GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
-            GL.BindAttribLocation(shaderManager.Program, 1, "in_normal");
+            GL.BindAttribLocation(shaderManager.ProgramHandle, 1, "in_normal");
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
 
