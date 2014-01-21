@@ -22,34 +22,14 @@ namespace AWGL
             normalVboHandle,
             eboHandle;
 
-        Vector3[] positionVboData = new Vector3[]{
-            new Vector3(-1.0f, -1.0f,  1.0f),
-            new Vector3( 1.0f, -1.0f,  1.0f),
-            new Vector3( 1.0f,  1.0f,  1.0f),
-            new Vector3(-1.0f,  1.0f,  1.0f),
-            new Vector3(-1.0f, -1.0f, -1.0f),
-            new Vector3( 1.0f, -1.0f, -1.0f), 
-            new Vector3( 1.0f,  1.0f, -1.0f),
-            new Vector3(-1.0f,  1.0f, -1.0f) };
-
-        int[] indicesVboData = new int[]{
-             // front face
-                0, 1, 2, 2, 3, 0,
-                // top face
-                3, 2, 6, 6, 7, 3,
-                // back face
-                7, 6, 5, 5, 4, 7,
-                // left face
-                4, 0, 3, 3, 7, 4,
-                // bottom face
-                0, 1, 5, 5, 4, 0,
-                // right face
-                1, 5, 6, 6, 2, 1, };
-
         Matrix4 projectionMatrix, modelviewMatrix;
 
         AWShaderManager shaderManager;
-        AWBufferManager bufferManager;
+
+        AWNode m_sceneGraph;
+        AWGroupNode root;
+        AWGroupNode group;
+        AWCube cube;
 
         public ShaderTutorials()
             : base(800, 600,
@@ -61,6 +41,10 @@ namespace AWGL
         protected override void OnLoad (System.EventArgs e)
         {
             VSync = VSyncMode.On;
+
+            root = new AWGroupNode();
+            group = new AWGroupNode();
+            cube = new AWCube();
 
             CreateShaders();
             CreateVBOs();
@@ -85,18 +69,17 @@ namespace AWGL
 
         void CreateVBOs()
         {
-            bufferManager = new AWBufferManager();
-
-            bufferManager.SetupBuffer(
+            
+            AWBufferManager.SetupBuffer(
                 out positionVboHandle, positionVboData, 
                 BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw);
 
-            bufferManager.SetupBuffer(
+            AWBufferManager.SetupBuffer(
                 out normalVboHandle, positionVboData,
                 BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
-            bufferManager.SetupBuffer(
+            AWBufferManager.SetupBuffer(
                 out eboHandle, indicesVboData, 
                 BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw
                 );
@@ -111,13 +94,13 @@ namespace AWGL
             // This means we do not have to re-issue VertexAttribPointer calls
             // every time we try to use a different vertex layout - these calls are
             // stored in the VAO so we simply need to bind the correct VAO.
-            bufferManager.GenerateVaoBuffer(out vaoHandle);
-            bufferManager.SetupVaoBuffer(
+            vaoHandle = AWBufferManager.GenerateVaoBuffer();
+            AWBufferManager.SetupVaoBuffer(
                 positionVboHandle, shaderManager.ProgramHandle, 0, 3,"in_position",
                 BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
                 );
 
-            bufferManager.SetupVaoBuffer(
+            AWBufferManager.SetupVaoBuffer(
                 normalVboHandle, shaderManager.ProgramHandle, 1, 3, "in_normal",
                 BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
                 );

@@ -7,33 +7,57 @@ using OpenTK.Graphics.OpenGL;
 
 namespace AWGL
 {
-    class AWBufferManager
+    public sealed class AWBufferManager
     {
-        internal void SetupBuffer(
-            out int handle, Vector3[] data, 
-            BufferTarget bufferTarget, BufferUsageHint bufferUsageHint)
+        private static volatile AWBufferManager instance = new AWBufferManager();
+        private static object syncRoot = new Object();
+
+        private AWBufferManager() { }
+
+        public static AWBufferManager Instance
         {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (syncRoot)
+                    {
+                        if (instance == null)
+                            instance = new AWBufferManager();
+                    }
+                }
+
+                return instance;
+            }
+        }
+
+        internal static int SetupBuffer(
+            Vector3[] data, BufferTarget bufferTarget, BufferUsageHint bufferUsageHint)
+        {
+            int handle;
             GL.GenBuffers(1, out handle);
             GL.BindBuffer(bufferTarget, handle);
             GL.BufferData<Vector3>(
                 bufferTarget, new IntPtr(data.Length * Vector3.SizeInBytes),
                 data, bufferUsageHint
                 );
+            return handle;
         }
 
-        internal void SetupBuffer(
-            out int handle, int[] data, 
-            BufferTarget bufferTarget, BufferUsageHint bufferUsageHint)
+        internal static int SetupBuffer(
+            int[] data, BufferTarget bufferTarget, BufferUsageHint bufferUsageHint)
         {
+            int handle;
             GL.GenBuffers(1, out handle);
             GL.BindBuffer(bufferTarget, handle);
             GL.BufferData(
                 bufferTarget, new IntPtr(sizeof(uint) * data.Length),
                 data, bufferUsageHint
                 );
+            return handle;
         }
 
-        internal void SetupVaoBuffer(
+        internal static void SetupVaoBuffer(
             int bufferHandle, int ProgramHandle, int index, int size, string attributeName, 
             BufferTarget bufferTarget, VertexAttribPointerType vertexAttribPointerType)
         {
@@ -45,10 +69,12 @@ namespace AWGL
             GL.BindAttribLocation(ProgramHandle, 0, attributeName);
         }
 
-        internal void GenerateVaoBuffer(out int handle)
+        internal static int GenerateVaoBuffer()
         {
+            int handle;
             GL.GenVertexArrays(1, out handle);
             GL.BindVertexArray(handle);
+            return handle;
         }
     }
 }
