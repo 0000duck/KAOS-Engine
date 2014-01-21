@@ -44,7 +44,7 @@ namespace AWGL
         public AWCube()
         {
             vbo = new Vbo();
-            vbo = AWUtils.LoadVBO(CubeVertices, CubeElements, 3, 4, BufferUsageHint.StaticDraw);
+            //vbo = AWUtils.LoadVBO(CubeVertices, CubeElements, 3, 4, BufferUsageHint.StaticDraw);
         }
 
         public override void Render()

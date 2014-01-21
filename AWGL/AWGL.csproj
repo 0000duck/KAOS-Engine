@@ -57,6 +57,7 @@
     <Compile Include="AWShaderManager.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AWLogger.cs" />
     <Compile Include="Scene\AWCube.cs" />
     <Compile Include="Scene\AWGraphLines.cs" />
     <Compile Include="Scene\AWMesh.cs" />
@@ -65,7 +66,7 @@
     <Compile Include="Scene\AWGroupNode.cs" />
     <Compile Include="Scene\IGroupNode.cs" />
     <Compile Include="Scene\ISceneNode.cs" />
-    <Compile Include="OGL.cs" />
+    <Compile Include="AWEngine.cs" />
     <Compile Include="ShaderTutorials.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
     <Compile Include="Shapes\Base\VertexStructs.cs" />
@@ -90,7 +91,6 @@
     <Compile Include="DefaultScene.cs" />
     <Compile Include="Scene\AWNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AWUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -28,7 +28,7 @@ namespace AWGL
             : base(800, 600, new GraphicsMode(), "", 0,
             DisplayDevice.Default, 3, 0, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         {
-            
+            AWLogger.PlatformInfo();
         }
 
         private Vector3[] vertex_positions = new Vector3[]
@@ -110,7 +110,7 @@ namespace AWGL
 
             GL.ClearColor(System.Drawing.Color.MidnightBlue);
 
-            Title = AWUtils.PrintOpenGLInfo();
+            Title = AWEngine.AppName + " Prototype - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
         }
 
         private void CreateShaders()
@@ -118,8 +118,8 @@ namespace AWGL
             shaderManager = new AWShaderManager("opentk-vs", "opentk-fs");
 
             // Set uniforms
-            mv_location = GL.GetUniformLocation(shaderManager.ProgramHandle, "projection_matrix");
-            proj_location = GL.GetUniformLocation(shaderManager.ProgramHandle, "modelview_matrix");
+            mv_location = GL.GetUniformLocation(shaderManager.Program, "projection_matrix");
+            proj_location = GL.GetUniformLocation(shaderManager.Program, "modelview_matrix");
 
             //aspectRatio = ClientSize.Width / (float)(ClientSize.Height);
             //Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 1, 100, out proj_matrix);
@@ -127,10 +127,6 @@ namespace AWGL
 
             //GL.UniformMatrix4(projectionMatrixLocation, false, ref proj_matrix);
             //GL.UniformMatrix4(modelviewMatrixLocation, false, ref mv_matrix);
-
-            int attachedShaders;
-            GL.GetProgram(shaderManager.ProgramHandle, GetProgramParameterName.AttachedShaders, out attachedShaders);
-            Debug.WriteLine("/nAttached Shaders: " + attachedShaders);
         }
 
         protected override void OnResize(EventArgs e)
@@ -160,7 +156,7 @@ namespace AWGL
             GL.ClearBuffer(ClearBuffer.Color, 0, green);
             GL.ClearBuffer(ClearBuffer.Depth, 0, ref one);
 
-            GL.UseProgram(shaderManager.ProgramHandle);
+            GL.UseProgram(shaderManager.Program);
 
             GL.UniformMatrix4(proj_location, false, ref proj_matrix);   //(proj_location, 1, false, proj_matrix); ??
 

@@ -89,7 +89,7 @@ namespace AWGL.Scene
         {
             base.OnLoad(e);
 
-            Title = AWUtils.PrintOpenGLInfo();
+            //Title = AWUtils.PrintOpenGLInfo();
 
             GL.ClearColor(m_backgroundColor);
 

@@ -63,18 +63,8 @@ namespace AWGL
             // Compile
             GL.CompileShader(shaderHandle);
 
-            // Check compile success
-            int compileStatus;
-            GL.GetShader(shaderHandle, ShaderParameter.CompileStatus, out compileStatus);
-
-            if (compileStatus == 0)
-            {
-                String message;
-                GL.GetShaderInfoLog(shaderHandle, out message);
-                Debug.WriteLine("BuildShader failed to compile " + shaderType.ToString() + ": " + message);
-                return -1;
-            }
-
+            AWLogger.ShaderInfo(shaderHandle);
+            
             return shaderHandle;
         }
 
@@ -85,9 +75,6 @@ namespace AWGL
         {
             vShader = BuildShader(m_vsFilePath, ShaderType.VertexShader);
             fShader = BuildShader(m_fsFilePath, ShaderType.FragmentShader);
-
-            Debug.WriteLine(GL.GetShaderInfoLog(vShader));
-            Debug.WriteLine(GL.GetShaderInfoLog(fShader));
 
             programHandle = GL.CreateProgram();
 
@@ -132,7 +119,7 @@ namespace AWGL
             GL.DeleteProgram(this.programHandle);
         }
 
-        public int ProgramHandle
+        public int Program
         {
             get
             {

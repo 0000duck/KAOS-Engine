@@ -5,15 +5,15 @@ using System.Drawing;
 
 namespace AWGL
 {
-    public sealed class OGL
+    public sealed class AWEngine
     {
-        private static OGL instance = new OGL();
+        private static AWEngine instance = new AWEngine();
 
-        private OGL()
+        private AWEngine()
         {
         }
 
-        public static OGL getInstance()
+        public static AWEngine getInstance()
         {
             return instance;
         }
@@ -26,6 +26,15 @@ namespace AWGL
                 game.Run(30,0);
             }
         }
-        
+
+
+        public static string AppName
+        {
+            get
+            {
+                return "AWEngine";
+            }
+            
+        }
     }
 }

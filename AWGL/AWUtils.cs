@@ -182,10 +182,6 @@ namespace AWGL
 
         public static string PrintOpenGLInfo()
         {
-            Debug.WriteLine("Graphics card vendor: " + GL.GetString(StringName.Vendor));
-            Debug.WriteLine("Renderer: " + GL.GetString(StringName.Renderer));
-            Debug.WriteLine("Version: " + GL.GetString(StringName.Version));
-            Debug.WriteLine("Shading Language Version: " + GL.GetString(StringName.ShadingLanguageVersion));
             
             TestOpenGLVersion();
 
