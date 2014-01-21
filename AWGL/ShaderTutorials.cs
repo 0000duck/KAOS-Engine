@@ -17,38 +17,12 @@ namespace AWGL
 
         int modelviewMatrixLocation,
             projectionMatrixLocation,
-            vaoHandle,
-            positionVboHandle,
-            normalVboHandle,
-            eboHandle;
+            buffer,
+            vao,
+            mv_location,
+            proj_location;
 
-        private Vector3[] positionVboData = new Vector3[] {
-            new Vector3(-1.0f, -1.0f,  1.0f),
-            new Vector3( 1.0f, -1.0f,  1.0f),
-            new Vector3( 1.0f,  1.0f,  1.0f),
-            new Vector3(-1.0f,  1.0f,  1.0f),
-            new Vector3(-1.0f, -1.0f, -1.0f),
-            new Vector3( 1.0f, -1.0f, -1.0f), 
-            new Vector3( 1.0f,  1.0f, -1.0f),
-            new Vector3(-1.0f,  1.0f, -1.0f)
-        };
-
-        private int[] indicesVboData = new int[]{
-             // front face
-                0, 1, 2, 2, 3, 0,
-                // top face
-                3, 2, 6, 6, 7, 3,
-                // back face
-                7, 6, 5, 5, 4, 7,
-                // left face
-                4, 0, 3, 3, 7, 4,
-                // bottom face
-                0, 1, 5, 5, 4, 0,
-                // right face
-                1, 5, 6, 6, 2, 1, 
-        };
-
-        Matrix4 projectionMatrix, modelviewMatrix;
+        Matrix4 proj_matrix, modelviewMatrix;
 
         public ShaderTutorials()
             : base(800, 600, new GraphicsMode(), "", 0,
@@ -57,6 +31,57 @@ namespace AWGL
             
         }
 
+        private Vector3[] vertex_positions = new Vector3[]
+        {
+            new Vector3(0.25f,  0.25f, -0.25f),
+            new Vector3(-0.25f, -0.25f, -0.25f),
+            new Vector3( 0.25f, -0.25f, -0.25f),
+
+            new Vector3( 0.25f, -0.25f, -0.25f),
+            new Vector3( 0.25f,  0.25f, -0.25f),
+            new Vector3(-0.25f,  0.25f, -0.25f),
+
+            new Vector3( 0.25f, -0.25f, -0.25f),
+            new Vector3( 0.25f, -0.25f,  0.25f),
+            new Vector3( 0.25f,  0.25f, -0.25f),
+
+            new Vector3( 0.25f, -0.25f,  0.25f),
+            new Vector3( 0.25f,  0.25f,  0.25f),
+            new Vector3(0.25f,  0.25f, -0.25f),
+
+            new Vector3( 0.25f, -0.25f,  0.25f),
+            new Vector3(-0.25f, -0.25f,  0.25f),
+            new Vector3( 0.25f,  0.25f,  0.25f),
+
+            new Vector3(-0.25f, -0.25f,  0.25f),
+            new Vector3(-0.25f,  0.25f,  0.25f),
+            new Vector3( 0.25f,  0.25f,  0.25f),
+
+            new Vector3(-0.25f, -0.25f,  0.25f),
+            new Vector3(-0.25f, -0.25f, -0.25f),
+            new Vector3(-0.25f,  0.25f,  0.25f),
+
+            new Vector3(-0.25f, -0.25f, -0.25f),
+            new Vector3(-0.25f,  0.25f, -0.25f),
+            new Vector3(-0.25f,  0.25f,  0.25f),
+
+            new Vector3(-0.25f, -0.25f,  0.25f),
+            new Vector3( 0.25f, -0.25f,  0.25f),
+            new Vector3( 0.25f, -0.25f, -0.25f),
+
+            new Vector3( 0.25f, -0.25f, -0.25f),
+            new Vector3(-0.25f, -0.25f, -0.25f),
+            new Vector3(-0.25f, -0.25f,  0.25f),
+
+            new Vector3(-0.25f,  0.25f, -0.25f),
+            new Vector3( 0.25f,  0.25f, -0.25f),
+            new Vector3( 0.25f,  0.25f,  0.25f),
+
+            new Vector3( 0.25f,  0.25f,  0.25f),
+            new Vector3(-0.25f,  0.25f,  0.25f),
+            new Vector3(0.25f,  0.25f, -0.25f)
+        };
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -64,11 +89,25 @@ namespace AWGL
             VSync = VSyncMode.On;
 
             CreateShaders();
-            CreateVBOs();
-            CreateVAOs();
 
-            // Other state
+            GL.GenVertexArrays(1, out vao);
+            GL.BindVertexArray(vao);
+
+            GL.GenBuffers(1, out buffer);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, buffer);
+            GL.BufferData(BufferTarget.ArrayBuffer,
+                         new IntPtr(vertex_positions.Length * Vector3.SizeInBytes),
+                         vertex_positions,
+                         BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
+            GL.EnableVertexAttribArray(0);
+
+            GL.Enable(EnableCap.CullFace);
+            GL.FrontFace(FrontFaceDirection.Cw);
+
             GL.Enable(EnableCap.DepthTest);
+            GL.DepthFunc(DepthFunction.Lequal);
+
             GL.ClearColor(System.Drawing.Color.MidnightBlue);
 
             Title = AWUtils.PrintOpenGLInfo();
@@ -85,10 +124,10 @@ namespace AWGL
             modelviewMatrixLocation = GL.GetUniformLocation(shaderManager.ProgramHandle, "modelview_matrix");
 
             float aspectRatio = ClientSize.Width / (float)(ClientSize.Height);
-            Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 1, 100, out projectionMatrix);
+            Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 1, 100, out proj_matrix);
             modelviewMatrix = Matrix4.LookAt(new Vector3(0, 3, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
 
-            GL.UniformMatrix4(projectionMatrixLocation, false, ref projectionMatrix);
+            GL.UniformMatrix4(projectionMatrixLocation, false, ref proj_matrix);
             GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
 
             int attachedShaders;
@@ -96,61 +135,9 @@ namespace AWGL
             Debug.WriteLine("/nAttached Shaders: " + attachedShaders);
         }
 
-        private void CreateVBOs()
-        {
-            GL.GenBuffers(1, out positionVboHandle);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
-            GL.BufferData<Vector3>(BufferTarget.ArrayBuffer,
-                new IntPtr(positionVboData.Length * Vector3.SizeInBytes),
-                positionVboData, BufferUsageHint.StaticDraw);
-
-            GL.GenBuffers(1, out normalVboHandle);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, normalVboHandle);
-            GL.BufferData<Vector3>(BufferTarget.ArrayBuffer,
-                new IntPtr(positionVboData.Length * Vector3.SizeInBytes),
-                positionVboData, BufferUsageHint.StaticDraw);
-
-            GL.GenBuffers(1, out eboHandle);
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
-            GL.BufferData(BufferTarget.ElementArrayBuffer,
-                new IntPtr(sizeof(uint) * indicesVboData.Length),
-                indicesVboData, BufferUsageHint.StaticDraw);
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-        }
-
-        private void CreateVAOs()
-        {
-            // GL3 allows us to store the vertex layout in a "vertex array object" (VAO).
-            // This means we do not have to re-issue VertexAttribPointer calls
-            // every time we try to use a different vertex layout - these calls are
-            // stored in the VAO so we simply need to bind the correct VAO.
-            GL.GenVertexArrays(1, out vaoHandle);
-            GL.BindVertexArray(vaoHandle);
-
-            GL.EnableVertexAttribArray(0);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
-            GL.BindAttribLocation(shaderManager.ProgramHandle, 0, "in_position");
-
-            GL.EnableVertexAttribArray(1);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, normalVboHandle);
-            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
-            GL.BindAttribLocation(shaderManager.ProgramHandle, 1, "in_normal");
-
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
-
-            GL.BindVertexArray(0);
-        }
-
-        protected override void OnUpdateFrame(FrameEventArgs e)
+       protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-
-            Matrix4 rotation = Matrix4.CreateRotationY((float)e.Time);
-            Matrix4.Mult(ref rotation, ref modelviewMatrix, out modelviewMatrix);
-            GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
 
             if (Keyboard[OpenTK.Input.Key.Escape])
                 Exit();
@@ -160,13 +147,30 @@ namespace AWGL
         {
             base.OnRenderFrame(e);
 
+            float[] green = { 0.0f, 0.25f, 0.0f, 1.0f };
+            float one = 1.0f;
+
             GL.Viewport(0, 0, Width, Height);
+            GL.ClearBuffer(ClearBuffer.Color, 0, green);
+            GL.ClearBuffer(ClearBuffer.Depth, 0, ref one);
 
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.UseProgram(shaderManager.ProgramHandle);
 
-            GL.BindVertexArray(vaoHandle);
-            GL.DrawElements(PrimitiveType.Triangles, indicesVboData.Length,
-                DrawElementsType.UnsignedInt, IntPtr.Zero);
+            GL.UniformMatrix4(proj_location, 1, false, proj_matrix);
+
+            int i;
+            for (i = 0; i < 24; i++)
+            {
+                float f = (float)i + (float)currentTime * 0.3f;
+                vmath::mat4 mv_matrix = vmath::translate(0.0f, 0.0f, -6.0f) *
+                                        vmath::rotate((float)currentTime * 45.0f, 0.0f, 1.0f, 0.0f) *
+                                        vmath::rotate((float)currentTime * 21.0f, 1.0f, 0.0f, 0.0f) *
+                                        vmath::translate(sinf(2.1f * f) * 2.0f,
+                                                         cosf(1.7f * f) * 2.0f,
+                                                         sinf(1.3f * f) * cosf(1.5f * f) * 2.0f);
+                GL.UniformMatrix4fv(mv_location, 1, GL_FALSE, mv_matrix);
+                GL.DrawArrays(GL_TRIANGLES, 0, 36);
+            }
 
             SwapBuffers();
         }
