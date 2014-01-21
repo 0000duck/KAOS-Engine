@@ -15,14 +15,14 @@ namespace AWGL
     {
         private AWShaderManager shaderManager;
 
-        int modelviewMatrixLocation,
-            projectionMatrixLocation,
-            buffer,
+        int buffer,
             vao,
             mv_location,
             proj_location;
 
-        Matrix4 proj_matrix, modelviewMatrix;
+        Matrix4 proj_matrix, mv_matrix;
+
+        float aspectRatio;
 
         public ShaderTutorials()
             : base(800, 600, new GraphicsMode(), "", 0,
@@ -117,25 +117,31 @@ namespace AWGL
         {
             shaderManager = new AWShaderManager("opentk-vs", "opentk-fs");
 
-            GL.UseProgram(shaderManager.ProgramHandle);
-
             // Set uniforms
-            projectionMatrixLocation = GL.GetUniformLocation(shaderManager.ProgramHandle, "projection_matrix");
-            modelviewMatrixLocation = GL.GetUniformLocation(shaderManager.ProgramHandle, "modelview_matrix");
+            mv_location = GL.GetUniformLocation(shaderManager.ProgramHandle, "projection_matrix");
+            proj_location = GL.GetUniformLocation(shaderManager.ProgramHandle, "modelview_matrix");
 
-            float aspectRatio = ClientSize.Width / (float)(ClientSize.Height);
-            Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 1, 100, out proj_matrix);
-            modelviewMatrix = Matrix4.LookAt(new Vector3(0, 3, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+            //aspectRatio = ClientSize.Width / (float)(ClientSize.Height);
+            //Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 1, 100, out proj_matrix);
+            //mv_matrix = Matrix4.LookAt(new Vector3(0, 3, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
 
-            GL.UniformMatrix4(projectionMatrixLocation, false, ref proj_matrix);
-            GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
+            //GL.UniformMatrix4(projectionMatrixLocation, false, ref proj_matrix);
+            //GL.UniformMatrix4(modelviewMatrixLocation, false, ref mv_matrix);
 
             int attachedShaders;
             GL.GetProgram(shaderManager.ProgramHandle, GetProgramParameterName.AttachedShaders, out attachedShaders);
             Debug.WriteLine("/nAttached Shaders: " + attachedShaders);
         }
 
-       protected override void OnUpdateFrame(FrameEventArgs e)
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            aspectRatio = ClientSize.Width / (float)(ClientSize.Height);
+            Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 0.1f, 1000.0f, out proj_matrix); 
+        }
+
+        protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
 
@@ -156,20 +162,20 @@ namespace AWGL
 
             GL.UseProgram(shaderManager.ProgramHandle);
 
-            GL.UniformMatrix4(proj_location, 1, false, proj_matrix);
+            GL.UniformMatrix4(proj_location, false, ref proj_matrix);   //(proj_location, 1, false, proj_matrix); ??
 
             int i;
             for (i = 0; i < 24; i++)
             {
-                float f = (float)i + (float)currentTime * 0.3f;
-                vmath::mat4 mv_matrix = vmath::translate(0.0f, 0.0f, -6.0f) *
-                                        vmath::rotate((float)currentTime * 45.0f, 0.0f, 1.0f, 0.0f) *
-                                        vmath::rotate((float)currentTime * 21.0f, 1.0f, 0.0f, 0.0f) *
-                                        vmath::translate(sinf(2.1f * f) * 2.0f,
-                                                         cosf(1.7f * f) * 2.0f,
-                                                         sinf(1.3f * f) * cosf(1.5f * f) * 2.0f);
-                GL.UniformMatrix4fv(mv_location, 1, GL_FALSE, mv_matrix);
-                GL.DrawArrays(GL_TRIANGLES, 0, 36);
+                float f = (float)i + (float)e.Time * 0.3f;
+                mv_matrix = Matrix4.CreateTranslation(0.0f, 0.0f, -6.0f) *
+                                        Matrix4.CreateRotationY((float)e.Time * 45.0f) *
+                                        Matrix4.CreateRotationX((float)e.Time * 21.0f) *
+                                        Matrix4.CreateTranslation((float)Math.Sin(2.1f * f) * 2.0f,
+                                                         (float)(Math.Cos(1.7f * f) * 2.0f),
+                                                         (float)(Math.Sin(1.3f * f) * (float)(Math.Cos(1.5f * f) * 2.0f)));
+                GL.UniformMatrix4(mv_location, false, ref mv_matrix);
+                GL.DrawArrays(PrimitiveType.Triangles, 0, 36);
             }
 
             SwapBuffers();
