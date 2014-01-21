@@ -31,6 +31,8 @@ namespace AWGL
             AWLogger.PlatformInfo();
         }
 
+        #region Vector3[] vertex_positions
+
         private Vector3[] vertex_positions = new Vector3[]
         {
             new Vector3(0.25f,  0.25f, -0.25f),
@@ -81,6 +83,8 @@ namespace AWGL
             new Vector3(-0.25f,  0.25f,  0.25f),
             new Vector3(0.25f,  0.25f, -0.25f)
         };
+        
+        #endregion
 
         protected override void OnLoad(EventArgs e)
         {
@@ -110,7 +114,7 @@ namespace AWGL
 
             GL.ClearColor(System.Drawing.Color.MidnightBlue);
 
-            Title = AWEngine.AppName + " Prototype - " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
+            Title = AWEngine.AppName + " Prototype: " + GL.GetString(StringName.Renderer) + " (GL " + GL.GetString(StringName.Version) + ")";
         }
 
         private void CreateShaders()
@@ -149,7 +153,7 @@ namespace AWGL
         {
             base.OnRenderFrame(e);
 
-            float[] green = { 0.0f, 0.25f, 0.0f, 1.0f };
+            float[] green = { 0.0f, 0.25f, 0.60f, 1.0f };
             float one = 1.0f;
 
             GL.Viewport(0, 0, Width, Height);
@@ -161,7 +165,7 @@ namespace AWGL
             GL.UniformMatrix4(proj_location, false, ref proj_matrix);   //(proj_location, 1, false, proj_matrix); ??
 
             int i;
-            for (i = 0; i < 24; i++)
+            for (i = 0; i < 2; i++)
             {
                 float f = (float)i + (float)e.Time * 0.3f;
                 mv_matrix = Matrix4.CreateTranslation(0.0f, 0.0f, -6.0f) *
