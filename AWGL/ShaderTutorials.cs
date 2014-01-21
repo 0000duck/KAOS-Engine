@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿
+using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System;
@@ -48,6 +49,7 @@ namespace AWGL
         Matrix4 projectionMatrix, modelviewMatrix;
 
         AWShaderManager shaderManager;
+        AWBufferManager bufferManager;
 
         public ShaderTutorials()
             : base(800, 600,
@@ -75,8 +77,7 @@ namespace AWGL
 
             GL.UseProgram(shaderManager.ProgramHandle);
 
-            shaderManager.SetUniforms
-            (
+            shaderManager.SetUniforms(
                 out projectionMatrixLocation,
                 out modelviewMatrixLocation,
                 out projectionMatrix,
@@ -87,23 +88,25 @@ namespace AWGL
 
         void CreateVBOs()
         {
-            GL.GenBuffers(1, out positionVboHandle);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
-            GL.BufferData<Vector3>(BufferTarget.ArrayBuffer,
-                new IntPtr(positionVboData.Length * Vector3.SizeInBytes),
-                positionVboData, BufferUsageHint.StaticDraw);
+            bufferManager = new AWBufferManager();
 
-            GL.GenBuffers(1, out normalVboHandle);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, normalVboHandle);
-            GL.BufferData<Vector3>(BufferTarget.ArrayBuffer,
-                new IntPtr(positionVboData.Length * Vector3.SizeInBytes),
-                positionVboData, BufferUsageHint.StaticDraw);
+            bufferManager.SetupBuffer(
+                out positionVboHandle, positionVboData, 
+                BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw);
 
-            GL.GenBuffers(1, out eboHandle);
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
-            GL.BufferData(BufferTarget.ElementArrayBuffer,
-                new IntPtr(sizeof(uint) * indicesVboData.Length),
-                indicesVboData, BufferUsageHint.StaticDraw);
+            bufferManager.SetupBuffer(
+                out normalVboHandle,
+                positionVboData,
+                BufferTarget.ArrayBuffer,
+                BufferUsageHint.StaticDraw
+                );
+
+            bufferManager.SetupBuffer(
+                out eboHandle,
+                indicesVboData,  //indicesVboData, // change this!!!
+                BufferTarget.ElementArrayBuffer,
+                BufferUsageHint.StaticDraw
+                );
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
@@ -115,18 +118,24 @@ namespace AWGL
             // This means we do not have to re-issue VertexAttribPointer calls
             // every time we try to use a different vertex layout - these calls are
             // stored in the VAO so we simply need to bind the correct VAO.
-            GL.GenVertexArrays(1, out vaoHandle);
-            GL.BindVertexArray(vaoHandle);
+            bufferManager.GenerateVaoBuffer(out vaoHandle);
+            bufferManager.SetupVaoBuffer(
+                BufferTarget.ArrayBuffer, 
+                positionVboHandle,
+                shaderManager.ProgramHandle,
+                "in_position",
+                VertexAttribPointerType.Float,
+                0, 3
+                );
 
-            GL.EnableVertexAttribArray(0);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
-            GL.BindAttribLocation(shaderManager.ProgramHandle, 0, "in_position");
-
-            GL.EnableVertexAttribArray(1);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, normalVboHandle);
-            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
-            GL.BindAttribLocation(shaderManager.ProgramHandle, 1, "in_normal");
+            bufferManager.SetupVaoBuffer(
+                BufferTarget.ArrayBuffer, 
+                normalVboHandle, 
+                shaderManager.ProgramHandle, 
+                "in_normal", 
+                VertexAttribPointerType.Float, 
+                1, 3
+                );
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
 
@@ -150,8 +159,10 @@ namespace AWGL
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.BindVertexArray(vaoHandle);
-            GL.DrawElements(BeginMode.Triangles, indicesVboData.Length,
-                DrawElementsType.UnsignedInt, IntPtr.Zero);
+            GL.DrawElements(
+                PrimitiveType.Triangles, indicesVboData.Length,
+                DrawElementsType.UnsignedInt, IntPtr.Zero
+                );
 
             SwapBuffers();
         }

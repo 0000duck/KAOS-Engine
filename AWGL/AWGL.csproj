@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AWBufferManager_2.cs" />
     <Compile Include="AWCamera.cs" />
     <Compile Include="AWShaderManager.cs">
       <SubType>Code</SubType>
