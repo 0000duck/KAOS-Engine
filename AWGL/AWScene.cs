@@ -4,6 +4,7 @@ using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace AWGL
 {
     public class AWScene : GameWindow, IDisposable
     {
-
+        #region Members
         int modelviewMatrixLocation,
             projectionMatrixLocation,
             vaoHandle,
@@ -28,16 +29,16 @@ namespace AWGL
         AWNode m_sceneGraph;
         AWGroupNode root;
         AWGroupNode group;
-        AWCube cube;
+        AWCube cube; 
+        #endregion
 
         public AWScene()
-            : base(1366, 768,
-            new GraphicsMode(), AWEngine.AppName, 0,
-            DisplayDevice.Default, 3, 0,
-            GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
+            : base(1366, 768, new GraphicsMode(32, 24, 0, 4), AWEngine.AppName, GameWindowFlags.Fullscreen, 
+            DisplayDevice.Default, 3, 0, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         { }
-        
-        protected override void OnLoad (System.EventArgs e)
+
+        #region OpenGL Setup
+        protected override void OnLoad(System.EventArgs e)
         {
             VSync = VSyncMode.On;
 
@@ -51,11 +52,11 @@ namespace AWGL
 
             // Other state
             GL.Enable(EnableCap.DepthTest);
-            GL.ClearColor(System.Drawing.Color.MidnightBlue);
+            GL.ClearColor(Color.CornflowerBlue);
 
-            #if Debug
+#if Debug
             AWLogger.WriteLine("...Exiting OnLoad"); 
-            #endif
+#endif
         }
 
         #region Create Shaders
@@ -69,7 +70,7 @@ namespace AWGL
                 out projectionMatrixLocation, out modelviewMatrixLocation,
                 out projectionMatrix, out modelviewMatrix, ClientSize
             );
-        } 
+        }
         #endregion
 
         #region Create VBOs
@@ -90,7 +91,7 @@ namespace AWGL
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-        } 
+        }
         #endregion
 
         #region Create VAOs
@@ -109,13 +110,13 @@ namespace AWGL
 
             #region add matrix transform uniforms
 
-            AWBufferManager.SetupVaoBuffer( positionVboHandle, 
-                
+            AWBufferManager.SetupVaoBuffer(positionVboHandle,
+
                 shaderManager.ProgramHandle, 0, 3, "in_position",
                 BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
                 );
-            AWBufferManager.SetupVaoBuffer( normalVboHandle, 
-                
+            AWBufferManager.SetupVaoBuffer(normalVboHandle,
+
                 shaderManager.ProgramHandle, 1, 3, "in_normal",
                 BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
                 );
@@ -125,7 +126,8 @@ namespace AWGL
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
 
             GL.BindVertexArray(0);
-        } 
+        }
+        #endregion 
         #endregion
 
         #region MAIN LOOP
@@ -155,11 +157,13 @@ namespace AWGL
         } 
         #endregion
 
+        #region GameWindow.Dispose
         public override void Dispose()
         {
- 	        base.Dispose();
+            base.Dispose();
             shaderManager.Dispose();
-        }
+        } 
+        #endregion
 
     }
 }
