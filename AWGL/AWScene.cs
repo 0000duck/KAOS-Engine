@@ -2,6 +2,7 @@
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -33,6 +34,7 @@ namespace AWGL
         AWCube cube;
         AWGraphLines graph;
         AWCamera camera;
+        List<Key> keyList;
         #endregion
 
         public AWScene()
@@ -44,7 +46,13 @@ namespace AWGL
         protected override void OnLoad(System.EventArgs e)
         {
             VSync = VSyncMode.On;
+            
             camera = new AWCamera();
+            keyList = new List<Key>();
+
+            Keyboard.KeyDown += HandleKeyDown;
+            Keyboard.KeyUp += HandleKeyUp;
+            
             root = new AWGroupNode();
             group = new AWGroupNode();
             cube = new AWCube();
@@ -145,6 +153,7 @@ namespace AWGL
                 ResetCursor();
             }
 
+            MoveCamera();
 
             Matrix4 lookat = camera.GetViewMatrix();
             GL.UniformMatrix4(modelviewMatrixLocation, false, ref lookat);
@@ -175,46 +184,65 @@ namespace AWGL
         } 
         #endregion
 
-        protected override void OnKeyPress(KeyPressEventArgs e)
+        #region Input Control
+        private void HandleKeyDown(object sender, KeyboardKeyEventArgs e)
         {
-            base.OnKeyPress(e);
+            keyList.Add(e.Key);
+        }
 
-            if (e.KeyChar == 27)
+        private void HandleKeyUp(object sender, KeyboardKeyEventArgs e)
+        {
+            for (int count = 0; count < keyList.Count; count++)
             {
-                Exit();
-            }
-
-            switch (e.KeyChar)
-            {
-                case 'w':
-                    camera.Move(0f, 0.1f, 0f);
-                    break;
-                case 'a':
-                    camera.Move(-0.1f, 0f, 0f);
-                    break;
-                case 's':
-                    camera.Move(0f, -0.1f, 0f);
-                    break;
-                case 'd':
-                    camera.Move(0.1f, 0f, 0f);
-                    break;
-                case 'q':
-                    camera.Move(0f, 0f, 0.1f);
-                    break;
-                case 'e':
-                    camera.Move(0f, 0f, -0.1f);
-                    break;
-                case 'f':
-                    this.WindowState = (this.WindowState != WindowState.Fullscreen) 
-                        ? WindowState.Fullscreen: WindowState.Normal;
-                    break;
-                case 'x':
-                    Exit();
-                    break;
+                if (keyList[count] == e.Key)
+                {
+                    keyList.Remove(keyList[count]);
+                }
             }
         }
 
-        void ResetCursor()
+        private void MoveCamera()
+        {
+            foreach (Key key in keyList)
+            {
+
+                switch (key)
+                {
+                    case OpenTK.Input.Key.Escape:
+                        Exit();
+                        break;
+
+                    case Key.W:
+                        camera.Move(0f, 0.1f, 0f);
+                        break;
+
+                    case Key.A:
+                        camera.Move(-0.1f, 0f, 0f);
+                        break;
+
+                    case Key.S:
+                        camera.Move(0f, -0.1f, 0f);
+                        break;
+
+                    case Key.D:
+                        camera.Move(0.1f, 0f, 0f);
+                        break;
+
+                    case Key.Q:
+                        camera.Move(0f, 0f, 0.1f);
+                        break;
+
+                    case Key.E:
+                        camera.Move(0f, 0f, -0.1f);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void ResetCursor()
         {
             System.Windows.Forms.Cursor.Position = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
         }
@@ -227,7 +255,8 @@ namespace AWGL
             {
                 ResetCursor();
             }
-        }
+        } 
+        #endregion
 
     }
 }
