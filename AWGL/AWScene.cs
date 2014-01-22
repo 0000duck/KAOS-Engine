@@ -1,5 +1,4 @@
-﻿
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System;
@@ -156,9 +155,11 @@ namespace AWGL
         } 
         #endregion
 
-        void IDisposable.Dispose()
+        public override void Dispose()
         {
-            throw new NotImplementedException();
+ 	        base.Dispose();
+            shaderManager.Dispose();
         }
+
     }
 }

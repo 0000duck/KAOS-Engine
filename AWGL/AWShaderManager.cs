@@ -17,18 +17,15 @@ namespace AWGL
     class AWShaderManager : IDisposable
     {
         #region Private Members
-
         // Handles
         private int m_vertexShaderHandle, m_fragmentShaderHandle, m_programHandle;
 
         private string defaultDataPath = "Data/Shaders/";
         private string m_vertexShaderPath = "Simple_VS";
         private string m_fragmentShaderPath = "Simple_FS";
-        
         #endregion
 
         #region Contructors
-
         public AWShaderManager() 
         { 
             m_programHandle = BuildProgram(); 
@@ -40,11 +37,9 @@ namespace AWGL
             m_fragmentShaderPath = fragmentShaderPath;
             m_programHandle = BuildProgram();
         }
-        
         #endregion
 
         #region Shader and Program Contruction Methods
-
         internal string LoadShader(string shaderSourcePath)
         {
             using (StreamReader sr = new StreamReader(defaultDataPath + shaderSourcePath + ".glsl"))
@@ -111,17 +106,13 @@ namespace AWGL
 
             return programHandle;
         }
-        
         #endregion
 
         #region IDisposable
-
-        void IDisposable.Dispose()
+        public void Dispose()
         {
-            throw new NotImplementedException();
-            //GL.DeleteProgram(m_programHandle);
+            GL.DeleteProgram(m_programHandle);
         }
-        
         #endregion
 
         #region Public Methods
@@ -150,5 +141,6 @@ namespace AWGL
             GL.UniformMatrix4(mvMatrixHandle, false, ref mvMatrix);
         } 
         #endregion
+
     }
 }
