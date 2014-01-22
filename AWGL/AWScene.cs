@@ -87,18 +87,21 @@ namespace AWGL
         #region Create VBOs
         void CreateVBOs()
         {
+            Vector3[] aggregateVerts = new Vector3[graph.Vertices.Length + cube.Vertices.Length];
+            System.Array.Copy(graph.Vertices, aggregateVerts, graph.Vertices.Length);
+            System.Array.Copy(cube.Vertices, 0, aggregateVerts, graph.Vertices.Length, cube.Vertices.Length);
 
             positionVboHandle = AWBufferManager.SetupBuffer(
-                graph.Vertices, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
+                aggregateVerts, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
             normalVboHandle = AWBufferManager.SetupBuffer(
-                graph.Vertices, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
+                aggregateVerts, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
-            //eboHandle = AWBufferManager.SetupBuffer(
-            //    cube.Indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw
-            //    );
+            eboHandle = AWBufferManager.SetupBuffer(
+                cube.Indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw
+                );
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
@@ -134,7 +137,7 @@ namespace AWGL
 
             #endregion
 
-            //GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
 
             GL.BindVertexArray(0);
         }
@@ -167,7 +170,7 @@ namespace AWGL
 
             GL.BindVertexArray(vaoHandle);
             GL.DrawArrays(PrimitiveType.Lines, 0, 20);
-                //Elements(
+            GL.DrawArrays(PrimitiveType.Triangles, 20, cube.Indices.Length);
                 //PrimitiveType.Lines, cube.Indices.Length,
                 //DrawElementsType.UnsignedInt, IntPtr.Zero
                 //);
