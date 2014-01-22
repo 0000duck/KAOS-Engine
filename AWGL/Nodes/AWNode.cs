@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AWGL.Nodes
 {
-    public abstract class AWNode : ISceneNode
+    public abstract class AWNode
     {
         protected AWBufferManager m_BufferManager;
 

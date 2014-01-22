@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AWGL.Nodes
 {
-    public class AWGroupNode : AWNode, IGroupNode, IEnumerable<ISceneNode>
+    public class AWGroupNode : AWNode, ISceneNode, IGroupNode, IEnumerable<ISceneNode>
     {
         double m_angle, m_rx, m_ry, m_rz;
         double m_tx, m_ty, m_tz;
@@ -85,5 +85,15 @@ namespace AWGL.Nodes
         #endregion IGroupNode Implementation
 
 
+
+        public OpenTK.Vector3[] Vertices
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public int[] Indices
+        {
+            get { throw new NotImplementedException(); }
+        }
     } 
 }

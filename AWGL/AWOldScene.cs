@@ -36,7 +36,7 @@ namespace AWGL
             //InitialiseNodes
             worldRoot = new AWGroupNode();
             landRoot = new AWGroupNode();
-            graph = new AWGraphLines(); ;
+            graph = new AWGraphLines(20); ;
             cube = new AWCube();
             knot = new TorusKnot( 256, 32, 0.1, 3, 4, 1, true );
 

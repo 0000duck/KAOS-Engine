@@ -14,7 +14,7 @@ namespace AWGL.Nodes
     /// <summary>
     /// Cube Node
     /// </summary>
-    class AWCube : AWNode
+    public class AWCube : AWNode, ISceneNode
     {
         #region Private Members
         
@@ -46,12 +46,12 @@ namespace AWGL.Nodes
 
         #endregion
 
-        public static Vector3[] Vertices 
+        public Vector3[] Vertices
         {
             get { return CubeVertices; }
         }
 
-        public static int[] Indices
+        public int[] Indices
         {
             get { return CubeElements; }
         }
@@ -64,5 +64,6 @@ namespace AWGL.Nodes
         {
             throw new NotImplementedException();
         }
+
     }
 }

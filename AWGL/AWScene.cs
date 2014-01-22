@@ -30,7 +30,8 @@ namespace AWGL
         AWNode m_sceneGraph;
         AWGroupNode root;
         AWGroupNode group;
-        AWCube cube; 
+        AWCube cube;
+        AWGraphLines graph;
         #endregion
 
         public AWScene()
@@ -46,7 +47,7 @@ namespace AWGL
             root = new AWGroupNode();
             group = new AWGroupNode();
             cube = new AWCube();
-
+            graph = new AWGraphLines(20);
             CreateShaders();
             CreateVBOs();
             CreateVAOs();
@@ -79,15 +80,15 @@ namespace AWGL
         {
 
             positionVboHandle = AWBufferManager.SetupBuffer(
-                AWCube.Vertices, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
+                cube.Vertices, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
             normalVboHandle = AWBufferManager.SetupBuffer(
-                AWCube.Vertices, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
+                cube.Vertices, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
             eboHandle = AWBufferManager.SetupBuffer(
-                AWCube.Indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw
+                cube.Indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
@@ -150,7 +151,7 @@ namespace AWGL
 
             GL.BindVertexArray(vaoHandle);
             GL.DrawElements(
-                PrimitiveType.Triangles, AWCube.Indices.Length,
+                PrimitiveType.Triangles, cube.Indices.Length,
                 DrawElementsType.UnsignedInt, IntPtr.Zero
                 );
 
