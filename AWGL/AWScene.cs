@@ -80,16 +80,16 @@ namespace AWGL
         {
 
             positionVboHandle = AWBufferManager.SetupBuffer(
-                cube.Vertices, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
+                graph.Vertices, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
             normalVboHandle = AWBufferManager.SetupBuffer(
-                cube.Vertices, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
+                graph.Vertices, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
-            eboHandle = AWBufferManager.SetupBuffer(
-                cube.Indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw
-                );
+            //eboHandle = AWBufferManager.SetupBuffer(
+            //    cube.Indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw
+            //    );
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
@@ -125,7 +125,7 @@ namespace AWGL
 
             #endregion
 
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
+            //GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
 
             GL.BindVertexArray(0);
         }
@@ -135,9 +135,10 @@ namespace AWGL
         #region MAIN LOOP
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            Matrix4 rotation = Matrix4.CreateRotationY((float)e.Time);
-            Matrix4.Mult(ref rotation, ref modelviewMatrix, out modelviewMatrix);
-            GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
+            
+            //Matrix4 rotation = Matrix4.CreateRotationY((float)e.Time);
+            //Matrix4.Mult(ref rotation, ref modelviewMatrix, out modelviewMatrix);
+            //GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
 
             if (Keyboard[OpenTK.Input.Key.Escape])
                 Exit();
@@ -150,10 +151,11 @@ namespace AWGL
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.BindVertexArray(vaoHandle);
-            GL.DrawElements(
-                PrimitiveType.Triangles, cube.Indices.Length,
-                DrawElementsType.UnsignedInt, IntPtr.Zero
-                );
+            GL.DrawArrays(PrimitiveType.Lines, 0, 20);
+                //Elements(
+                //PrimitiveType.Lines, cube.Indices.Length,
+                //DrawElementsType.UnsignedInt, IntPtr.Zero
+                //);
 
             SwapBuffers();
         } 
