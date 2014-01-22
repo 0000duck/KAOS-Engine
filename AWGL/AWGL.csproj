@@ -59,14 +59,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AWLogger.cs" />
-    <Compile Include="AWCube.cs" />
-    <Compile Include="Scene\AWGraphLines.cs" />
-    <Compile Include="Scene\AWMesh.cs" />
-    <Compile Include="Scene\AWParticles.cs" />
-    <Compile Include="Scene\AWPolygon.cs" />
-    <Compile Include="Scene\AWGroupNode.cs" />
-    <Compile Include="Scene\IGroupNode.cs" />
-    <Compile Include="Scene\ISceneNode.cs" />
+    <Compile Include="Nodes\AWCube.cs" />
+    <Compile Include="Nodes\AWGraphLines.cs" />
+    <Compile Include="Nodes\AWMesh.cs" />
+    <Compile Include="Nodes\AWParticles.cs" />
+    <Compile Include="Nodes\AWPolygon.cs" />
+    <Compile Include="Nodes\AWGroupNode.cs" />
+    <Compile Include="Nodes\IGroupNode.cs" />
+    <Compile Include="Nodes\ISceneNode.cs" />
     <Compile Include="AWEngine.cs" />
     <Compile Include="AWScene.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
@@ -89,8 +89,8 @@
     <Compile Include="Shapes\TorusKnot.cs" />
     <Compile Include="Shapes\VertexPositionColor.cs" />
     <Compile Include="AWData.cs" />
-    <Compile Include="DefaultScene.cs" />
-    <Compile Include="Scene\AWNode.cs" />
+    <Compile Include="AWOldScene.cs" />
+    <Compile Include="Nodes\AWNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +139,9 @@
     <Content Include="Data\Textures\Swizzled Textures License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scene\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

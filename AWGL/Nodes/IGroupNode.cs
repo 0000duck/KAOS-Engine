@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AWGL
+namespace AWGL.Nodes
 {
     public interface IGroupNode : ISceneNode, IEnumerable<ISceneNode>
     {

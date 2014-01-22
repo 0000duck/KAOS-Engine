@@ -1,5 +1,4 @@
-﻿using AWGL.Scene;
-using OpenTK;
+﻿using OpenTK;
 using System;
 using System.Drawing;
 

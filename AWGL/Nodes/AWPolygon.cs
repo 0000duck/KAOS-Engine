@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AWGL
+namespace AWGL.Nodes
 {
     public class AWPolygon : AWNode
     {

@@ -1,4 +1,5 @@
-﻿using AWGL.Shapes;
+﻿using AWGL.Nodes;
+using AWGL.Shapes;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -7,16 +8,16 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace AWGL.Scene
+namespace AWGL
 {
     /// <summary>
     /// Controls Main Window functions and sets up OpenGL
     /// </summary>
-    public class DefaultScene : GameWindow
+    public class AWOldScene : GameWindow
     {
         #region Constructor
 
-        public DefaultScene() //, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug | 
+        public AWOldScene() //, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug | 
             : base(1024, 700, new GraphicsMode(32, 24, 0, 4), "", GameWindowFlags.Default, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Debug | GraphicsContextFlags.ForwardCompatible
             )// DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default)
         {
