@@ -127,15 +127,14 @@ namespace AWGL
 
         public void SetUniforms(
             out int projMatrixHandle, out int mvMatrixHandle,
-            out Matrix4 projMatrix, out Matrix4 mvMatrix,
-            Size dimensions)
+            out Matrix4 projMatrix, Matrix4 mvMatrix,
+            Size dimensions, ref AWCamera camera)
         {
             projMatrixHandle = GL.GetUniformLocation(this.ProgramHandle, "projection_matrix");
             mvMatrixHandle = GL.GetUniformLocation(this.ProgramHandle, "modelview_matrix");
 
             float aspectRatio = dimensions.Width / (float)(dimensions.Height);
             Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 1, 100, out projMatrix);
-            mvMatrix = Matrix4.LookAt(new Vector3(0, 3, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
 
             GL.UniformMatrix4(projMatrixHandle, false, ref projMatrix);
             GL.UniformMatrix4(mvMatrixHandle, false, ref mvMatrix);

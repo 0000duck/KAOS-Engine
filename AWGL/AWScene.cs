@@ -32,10 +32,11 @@ namespace AWGL
         AWGroupNode group;
         AWCube cube;
         AWGraphLines graph;
+        AWCamera camera;
         #endregion
 
         public AWScene()
-            : base(1366, 768, new GraphicsMode(32, 24, 0, 4), AWEngine.AppName, GameWindowFlags.Fullscreen, 
+            : base(1024, 680, new GraphicsMode(32, 24, 0, 4), AWEngine.AppName, GameWindowFlags.Default, 
             DisplayDevice.Default, 3, 0, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         { }
 
@@ -43,7 +44,7 @@ namespace AWGL
         protected override void OnLoad(System.EventArgs e)
         {
             VSync = VSyncMode.On;
-
+            camera = new AWCamera();
             root = new AWGroupNode();
             group = new AWGroupNode();
             cube = new AWCube();
@@ -70,7 +71,7 @@ namespace AWGL
 
             shaderManager.SetUniforms(
                 out projectionMatrixLocation, out modelviewMatrixLocation,
-                out projectionMatrix, out modelviewMatrix, ClientSize
+                out projectionMatrix, modelviewMatrix, ClientSize, ref camera
             );
         }
         #endregion
@@ -135,13 +136,18 @@ namespace AWGL
         #region MAIN LOOP
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            
-            //Matrix4 rotation = Matrix4.CreateRotationY((float)e.Time);
-            //Matrix4.Mult(ref rotation, ref modelviewMatrix, out modelviewMatrix);
-            //GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
+            if (Focused)
+            {
+                Point center = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
+                Point delta = new Point(center.X - System.Windows.Forms.Cursor.Position.X, center.Y - System.Windows.Forms.Cursor.Position.Y);
 
-            if (Keyboard[OpenTK.Input.Key.Escape])
-                Exit();
+                camera.AddRotation(delta.X, delta.Y);
+                ResetCursor();
+            }
+
+
+            Matrix4 lookat = camera.GetViewMatrix();
+            GL.UniformMatrix4(modelviewMatrixLocation, false, ref lookat);
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -168,6 +174,60 @@ namespace AWGL
             shaderManager.Dispose();
         } 
         #endregion
+
+        protected override void OnKeyPress(KeyPressEventArgs e)
+        {
+            base.OnKeyPress(e);
+
+            if (e.KeyChar == 27)
+            {
+                Exit();
+            }
+
+            switch (e.KeyChar)
+            {
+                case 'w':
+                    camera.Move(0f, 0.1f, 0f);
+                    break;
+                case 'a':
+                    camera.Move(-0.1f, 0f, 0f);
+                    break;
+                case 's':
+                    camera.Move(0f, -0.1f, 0f);
+                    break;
+                case 'd':
+                    camera.Move(0.1f, 0f, 0f);
+                    break;
+                case 'q':
+                    camera.Move(0f, 0f, 0.1f);
+                    break;
+                case 'e':
+                    camera.Move(0f, 0f, -0.1f);
+                    break;
+                case 'f':
+                    this.WindowState = (this.WindowState != WindowState.Fullscreen) 
+                        ? WindowState.Fullscreen: WindowState.Normal;
+                    break;
+                case 'x':
+                    Exit();
+                    break;
+            }
+        }
+
+        void ResetCursor()
+        {
+            System.Windows.Forms.Cursor.Position = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
+        }
+
+        protected override void OnFocusedChanged(EventArgs e)
+        {
+            base.OnFocusedChanged(e);
+
+            if (Focused)
+            {
+                ResetCursor();
+            }
+        }
 
     }
 }

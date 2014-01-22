@@ -17,6 +17,13 @@ namespace AWGL
         public float MoveSpeed = 0.2f;
         public float MouseSensitivity = 0.01f;
 
+        public Matrix4 LookAtMatrix
+        {
+            get
+            {
+                return GetViewMatrix();
+            }
+        }
         public Matrix4 GetViewMatrix()
         {
             Vector3 lookat = new Vector3();
