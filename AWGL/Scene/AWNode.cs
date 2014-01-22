@@ -8,6 +8,13 @@ namespace AWGL
 {
     public abstract class AWNode : ISceneNode
     {
+        protected AWBufferManager m_BufferManager;
+
+        protected AWNode()
+        {
+            //m_BufferManager = new AWBufferManager();
+        }
+
         public abstract void Render();
     }
 

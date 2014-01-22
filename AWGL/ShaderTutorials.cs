@@ -53,8 +53,13 @@ namespace AWGL
             // Other state
             GL.Enable(EnableCap.DepthTest);
             GL.ClearColor(System.Drawing.Color.MidnightBlue);
+
+            #if Debug
+            AWLogger.WriteLine("...Exiting OnLoad"); 
+            #endif
         }
 
+        #region Create Shaders
         void CreateShaders()
         {
             shaderManager = new AWShaderManager("opentk-vs", "opentk-fs");
@@ -65,50 +70,64 @@ namespace AWGL
                 out projectionMatrixLocation, out modelviewMatrixLocation,
                 out projectionMatrix, out modelviewMatrix, ClientSize
             );
-        }
+        } 
+        #endregion
 
+        #region Create VBOs
         void CreateVBOs()
         {
-            
-            AWBufferManager.SetupBuffer(
-                out positionVboHandle, positionVboData, 
-                BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw);
 
-            AWBufferManager.SetupBuffer(
-                out normalVboHandle, positionVboData,
-                BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
+            positionVboHandle = AWBufferManager.SetupBuffer(
+                AWCube.Vertices, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
-            AWBufferManager.SetupBuffer(
-                out eboHandle, indicesVboData, 
-                BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw
+            normalVboHandle = AWBufferManager.SetupBuffer(
+                AWCube.Vertices, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
+                );
+
+            eboHandle = AWBufferManager.SetupBuffer(
+                AWCube.Indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-        }
+        } 
+        #endregion
 
+        #region Create VAOs
         void CreateVAOs()
         {
+            #region ---
             // GL3 allows us to store the vertex layout in a "vertex array object" (VAO).
             // This means we do not have to re-issue VertexAttribPointer calls
             // every time we try to use a different vertex layout - these calls are
             // stored in the VAO so we simply need to bind the correct VAO.
+
+            #endregion
+
+            // generate
             vaoHandle = AWBufferManager.GenerateVaoBuffer();
-            AWBufferManager.SetupVaoBuffer(
-                positionVboHandle, shaderManager.ProgramHandle, 0, 3,"in_position",
+
+            #region add matrix transform uniforms
+
+            AWBufferManager.SetupVaoBuffer( positionVboHandle, 
+                
+                shaderManager.ProgramHandle, 0, 3, "in_position",
+                BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
+                );
+            AWBufferManager.SetupVaoBuffer( normalVboHandle, 
+                
+                shaderManager.ProgramHandle, 1, 3, "in_normal",
                 BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
                 );
 
-            AWBufferManager.SetupVaoBuffer(
-                normalVboHandle, shaderManager.ProgramHandle, 1, 3, "in_normal",
-                BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
-                );
+            #endregion
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
 
             GL.BindVertexArray(0);
-        }
+        } 
+        #endregion
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
@@ -128,7 +147,7 @@ namespace AWGL
 
             GL.BindVertexArray(vaoHandle);
             GL.DrawElements(
-                PrimitiveType.Triangles, indicesVboData.Length,
+                PrimitiveType.Triangles, AWCube.Indices.Length,
                 DrawElementsType.UnsignedInt, IntPtr.Zero
                 );
 

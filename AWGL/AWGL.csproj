@@ -59,7 +59,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AWLogger.cs" />
-    <Compile Include="Scene\AWCube.cs" />
+    <Compile Include="AWCube.cs" />
     <Compile Include="Scene\AWGraphLines.cs" />
     <Compile Include="Scene\AWMesh.cs" />
     <Compile Include="Scene\AWParticles.cs" />

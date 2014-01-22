@@ -57,6 +57,16 @@ namespace AWGL
             return handle;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bufferHandle"></param>
+        /// <param name="ProgramHandle"></param>
+        /// <param name="index"></param>
+        /// <param name="size"></param>
+        /// <param name="attributeName"></param>
+        /// <param name="bufferTarget"></param>
+        /// <param name="vertexAttribPointerType"></param>
         internal static void SetupVaoBuffer(
             int bufferHandle, int ProgramHandle, int index, int size, string attributeName, 
             BufferTarget bufferTarget, VertexAttribPointerType vertexAttribPointerType)
