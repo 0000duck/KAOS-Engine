@@ -7,6 +7,9 @@ using System.Text;
 
 namespace AWGL
 {
+    /// <summary>
+    /// AWLogger
+    /// </summary>
     internal static class AWLogger
     {
        
@@ -39,7 +42,6 @@ namespace AWGL
             WriteLine(infoLog);
             ShadersAttached(programHandle);
         }
-
 
         internal static void ShadersAttached(int programHandle)
         {

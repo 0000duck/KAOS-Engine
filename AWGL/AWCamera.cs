@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace AWGL
 {
+    /// <summary>
+    /// Camera
+    /// </summary>
     public class AWCamera
     {
         public Vector3 Position = Vector3.Zero;

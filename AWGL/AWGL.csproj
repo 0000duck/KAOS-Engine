@@ -68,7 +68,7 @@
     <Compile Include="Scene\IGroupNode.cs" />
     <Compile Include="Scene\ISceneNode.cs" />
     <Compile Include="AWEngine.cs" />
-    <Compile Include="ShaderTutorials.cs" />
+    <Compile Include="AWScene.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
     <Compile Include="Shapes\Base\VertexStructs.cs" />
     <Compile Include="Shapes\Capsule.cs" />

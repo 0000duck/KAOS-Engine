@@ -116,9 +116,10 @@ namespace AWGL
 
         #region IDisposable
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
-            GL.DeleteProgram(m_programHandle);
+            throw new NotImplementedException();
+            //GL.DeleteProgram(m_programHandle);
         }
         
         #endregion

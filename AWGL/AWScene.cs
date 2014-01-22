@@ -12,7 +12,7 @@ using System.Timers;
 
 namespace AWGL
 {
-    public class ShaderTutorials : GameWindow
+    public class AWScene : GameWindow, IDisposable
     {
 
         int modelviewMatrixLocation,
@@ -31,9 +31,9 @@ namespace AWGL
         AWGroupNode group;
         AWCube cube;
 
-        public ShaderTutorials()
-            : base(800, 600,
-            new GraphicsMode(), "OpenGL 3 Example", 0,
+        public AWScene()
+            : base(1366, 768,
+            new GraphicsMode(), AWEngine.AppName, 0,
             DisplayDevice.Default, 3, 0,
             GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         { }
@@ -129,6 +129,7 @@ namespace AWGL
         } 
         #endregion
 
+        #region MAIN LOOP
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             Matrix4 rotation = Matrix4.CreateRotationY((float)e.Time);
@@ -142,7 +143,7 @@ namespace AWGL
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             GL.Viewport(0, 0, Width, Height);
-            
+
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.BindVertexArray(vaoHandle);
@@ -152,8 +153,12 @@ namespace AWGL
                 );
 
             SwapBuffers();
+        } 
+        #endregion
+
+        void IDisposable.Dispose()
+        {
+            throw new NotImplementedException();
         }
-
-
     }
 }

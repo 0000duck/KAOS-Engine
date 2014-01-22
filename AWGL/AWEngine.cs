@@ -5,28 +5,43 @@ using System.Drawing;
 
 namespace AWGL
 {
+    /// <summary>
+    /// AWEngine Main Entry Piont
+    /// </summary>
     public sealed class AWEngine
     {
-        private static AWEngine instance = new AWEngine();
+        #region Singleton Pattern - Thread Safe
+        private static volatile AWEngine instance = new AWEngine();
+        private static object syncRoot = new Object();
 
-        private AWEngine()
-        {
-        }
+        private AWEngine() { }
 
-        public static AWEngine getInstance()
+        public static AWEngine Instance
         {
-            return instance;
-        }
+            get
+            {
+                if (instance == null)
+                {
+                    lock (syncRoot)
+                    {
+                        if (instance == null)
+                            instance = new AWEngine();
+                    }
+                }
+
+                return instance;
+            }
+        } 
+        #endregion
 
         [STAThread]
         public static void Main()
         {
-            using (ShaderTutorials game = new ShaderTutorials())
+            using (AWScene game = new AWScene())
             {
                 game.Run(30,0);
             }
         }
-
 
         public static string AppName
         {

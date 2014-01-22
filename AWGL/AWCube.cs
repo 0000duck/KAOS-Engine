@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace AWGL
 {
+    /// <summary>
+    /// Cube Node
+    /// </summary>
     class AWCube : AWNode
     {
         #region Private Members
@@ -59,7 +62,7 @@ namespace AWGL
 
         public override void Render()
         {
+            throw new NotImplementedException();
         }
-
     }
 }

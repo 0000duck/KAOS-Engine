@@ -7,8 +7,12 @@ using OpenTK.Graphics.OpenGL;
 
 namespace AWGL
 {
-    public sealed class AWBufferManager
+    /// <summary>
+    /// 
+    /// </summary>
+    public sealed class AWBufferManager : IDisposable
     {
+        #region Singleton Pattern - Thread Safe
         private static volatile AWBufferManager instance = new AWBufferManager();
         private static object syncRoot = new Object();
 
@@ -29,8 +33,17 @@ namespace AWGL
 
                 return instance;
             }
-        }
+        } 
+        #endregion
 
+        #region Set up Vertex Buffer Objects
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="bufferTarget"></param>
+        /// <param name="bufferUsageHint"></param>
+        /// <returns></returns>
         internal static int SetupBuffer(
             Vector3[] data, BufferTarget bufferTarget, BufferUsageHint bufferUsageHint)
         {
@@ -44,6 +57,13 @@ namespace AWGL
             return handle;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="bufferTarget"></param>
+        /// <param name="bufferUsageHint"></param>
+        /// <returns></returns>
         internal static int SetupBuffer(
             int[] data, BufferTarget bufferTarget, BufferUsageHint bufferUsageHint)
         {
@@ -55,8 +75,10 @@ namespace AWGL
                 data, bufferUsageHint
                 );
             return handle;
-        }
+        } 
+        #endregion
 
+        #region Set up Vertex Array Objects
         /// <summary>
         /// 
         /// </summary>
@@ -68,13 +90,13 @@ namespace AWGL
         /// <param name="bufferTarget"></param>
         /// <param name="vertexAttribPointerType"></param>
         internal static void SetupVaoBuffer(
-            int bufferHandle, int ProgramHandle, int index, int size, string attributeName, 
+            int bufferHandle, int ProgramHandle, int index, int size, string attributeName,
             BufferTarget bufferTarget, VertexAttribPointerType vertexAttribPointerType)
         {
             GL.EnableVertexAttribArray(index);
             GL.BindBuffer(bufferTarget, bufferHandle);
             GL.VertexAttribPointer(
-                index, size, vertexAttribPointerType, 
+                index, size, vertexAttribPointerType,
                 true, Vector3.SizeInBytes, 0);
             GL.BindAttribLocation(ProgramHandle, 0, attributeName);
         }
@@ -85,6 +107,12 @@ namespace AWGL
             GL.GenVertexArrays(1, out handle);
             GL.BindVertexArray(handle);
             return handle;
+        } 
+        #endregion
+
+        void IDisposable.Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
