@@ -19,6 +19,15 @@ namespace AWGL
     public class AWEngineWindow : GameWindow, IDisposable
     {
         #region Members
+
+        public static string AppName
+        {
+            get
+            {
+                return "AWEngine";
+            }
+
+        }
         int modelviewMatrixLocation,
             projectionMatrixLocation,
             vaoHandle,
@@ -273,13 +282,5 @@ namespace AWGL
             }
         }
 
-        public static string AppName
-        {
-            get
-            {
-                return "AWEngine";
-            }
-
-        }
     }
 }
