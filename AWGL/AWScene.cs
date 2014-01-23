@@ -164,6 +164,7 @@ namespace AWGL
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            this.Title = AWEngine.AppName + " - FPS: " + string.Format("{0:F}", 1.0 / e.Time);
             GL.Viewport(0, 0, Width, Height);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
