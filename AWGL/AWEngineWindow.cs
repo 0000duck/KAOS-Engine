@@ -1,4 +1,6 @@
-﻿using AWGL.Nodes;
+﻿using AWGL.Managers;
+using AWGL.Nodes;
+using AWGL.Utilities;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -14,7 +16,7 @@ using System.Timers;
 
 namespace AWGL
 {
-    public class AWScene : GameWindow, IDisposable
+    public class AWEngineWindow : GameWindow, IDisposable
     {
         #region Members
         int modelviewMatrixLocation,
@@ -26,18 +28,18 @@ namespace AWGL
 
         Matrix4 projectionMatrix, modelviewMatrix;
 
-        AWShaderManager shaderManager;
+        ShaderManager shaderManager;
 
         AWNode m_sceneGraph;
         AWGroupNode root;
         AWGroupNode group;
         AWCube cube;
         AWGraphLines graph;
-        AWCamera camera;
+        Camera camera;
         List<Key> keyList;
         #endregion
 
-        public AWScene()
+        public AWEngineWindow()
             : base(1024, 680, new GraphicsMode(32, 24, 0, 4), AWEngine.AppName, GameWindowFlags.Default, 
             DisplayDevice.Default, 3, 0, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         { }
@@ -47,7 +49,7 @@ namespace AWGL
         {
             VSync = VSyncMode.On;
             
-            camera = new AWCamera();
+            camera = new Camera();
             keyList = new List<Key>();
 
             Keyboard.KeyDown += HandleKeyDown;
@@ -73,7 +75,7 @@ namespace AWGL
         #region Create Shaders
         void CreateShaders()
         {
-            shaderManager = new AWShaderManager("opentk-vs", "opentk-fs");
+            shaderManager = new ShaderManager("opentk-vs", "opentk-fs");
 
             GL.UseProgram(shaderManager.ProgramHandle);
 
@@ -91,15 +93,15 @@ namespace AWGL
             System.Array.Copy(graph.Vertices, aggregateVerts, graph.Vertices.Length);
             System.Array.Copy(cube.Vertices, 0, aggregateVerts, graph.Vertices.Length, cube.Vertices.Length);
 
-            positionVboHandle = AWBufferManager.SetupBuffer(
+            positionVboHandle = BufferManager.SetupBuffer(
                 aggregateVerts, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
-            normalVboHandle = AWBufferManager.SetupBuffer(
+            normalVboHandle = BufferManager.SetupBuffer(
                 aggregateVerts, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
-            eboHandle = AWBufferManager.SetupBuffer(
+            eboHandle = BufferManager.SetupBuffer(
                 cube.Indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw
                 );
 
@@ -120,16 +122,16 @@ namespace AWGL
             #endregion
 
             // generate
-            vaoHandle = AWBufferManager.GenerateVaoBuffer();
+            vaoHandle = BufferManager.GenerateVaoBuffer();
 
             #region add matrix transform uniforms
 
-            AWBufferManager.SetupVaoBuffer(positionVboHandle,
+            BufferManager.SetupVaoBuffer(positionVboHandle,
 
                 shaderManager.ProgramHandle, 0, 3, "in_position",
                 BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
                 );
-            AWBufferManager.SetupVaoBuffer(normalVboHandle,
+            BufferManager.SetupVaoBuffer(normalVboHandle,
 
                 shaderManager.ProgramHandle, 1, 3, "in_normal",
                 BufferTarget.ArrayBuffer, VertexAttribPointerType.Float

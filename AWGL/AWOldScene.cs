@@ -1,5 +1,7 @@
-﻿using AWGL.Nodes;
+﻿using AWGL.Managers;
+using AWGL.Nodes;
 using AWGL.Shapes;
+using AWGL.Utilities;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -26,7 +28,7 @@ namespace AWGL
             m_backgroundColor= new Color4(.1f, 0f, .1f, 0f);
             
             //create player camera
-            playerView = new AWCamera();
+            playerView = new Camera();
 
             //register key list
             keyList = new List<Key>();
@@ -62,7 +64,7 @@ namespace AWGL
 
         #region Fields
 
-        protected AWCamera playerView;
+        protected Camera playerView;
 
         private Color4 m_backgroundColor;
         private List<Key> keyList;
@@ -78,7 +80,7 @@ namespace AWGL
         private const float m_rotationspeed = 180.0f;
         private float m_spinangle, cubePosY;
 
-        private AWShaderManager shaderManager;
+        private ShaderManager shaderManager;
 
         #endregion
 

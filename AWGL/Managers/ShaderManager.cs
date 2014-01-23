@@ -8,13 +8,14 @@ using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 using OpenTK;
 using System.Drawing;
+using AWGL.Utilities;
 
-namespace AWGL
+namespace AWGL.Managers
 {
     /// <summary>
     /// Responsible for building individual shaders and linking them to the main program.
     /// </summary>
-    class AWShaderManager : IDisposable
+    class ShaderManager : IDisposable
     {
         #region Private Members
         // Handles
@@ -26,12 +27,12 @@ namespace AWGL
         #endregion
 
         #region Contructors
-        public AWShaderManager() 
+        public ShaderManager() 
         { 
             m_programHandle = BuildProgram(); 
         }
 
-        public AWShaderManager(string vertexShaderPath, string fragmentShaderPath)
+        public ShaderManager(string vertexShaderPath, string fragmentShaderPath)
         {
             m_vertexShaderPath = vertexShaderPath;
             m_fragmentShaderPath = fragmentShaderPath;
@@ -57,7 +58,7 @@ namespace AWGL
             // Compile
             GL.CompileShader(shaderHandle);
 
-            AWLogger.ShaderInfo(shaderHandle);
+            Logger.ShaderInfo(shaderHandle);
 
             return shaderHandle;
         }
@@ -128,7 +129,7 @@ namespace AWGL
         public void SetUniforms(
             out int projMatrixHandle, out int mvMatrixHandle,
             out Matrix4 projMatrix, Matrix4 mvMatrix,
-            Size dimensions, ref AWCamera camera)
+            Size dimensions, ref Camera camera)
         {
             projMatrixHandle = GL.GetUniformLocation(this.ProgramHandle, "projection_matrix");
             mvMatrixHandle = GL.GetUniformLocation(this.ProgramHandle, "modelview_matrix");

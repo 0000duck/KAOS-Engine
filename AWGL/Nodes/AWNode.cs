@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AWGL.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace AWGL.Nodes
 {
     public abstract class AWNode
     {
-        protected AWBufferManager m_BufferManager;
+        protected BufferManager m_BufferManager;
 
         protected AWNode()
         {

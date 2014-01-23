@@ -34,6 +34,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HelixToolkit.Wpf">
+      <HintPath>OpenTK\HelixToolkit.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>OpenTK\OpenTK.dll</HintPath>
@@ -53,12 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AWBufferManager.cs" />
-    <Compile Include="AWCamera.cs" />
-    <Compile Include="AWShaderManager.cs">
+    <Compile Include="Managers\BufferManager.cs" />
+    <Compile Include="Utilities\Camera.cs" />
+    <Compile Include="Managers\ShaderManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AWLogger.cs" />
+    <Compile Include="Utilities\Logger.cs" />
     <Compile Include="Nodes\AWCube.cs" />
     <Compile Include="Nodes\AWGraphLines.cs" />
     <Compile Include="Nodes\AWMesh.cs" />
@@ -68,7 +71,7 @@
     <Compile Include="Nodes\IGroupNode.cs" />
     <Compile Include="Nodes\ISceneNode.cs" />
     <Compile Include="AWEngine.cs" />
-    <Compile Include="AWScene.cs" />
+    <Compile Include="AWEngineWindow.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
     <Compile Include="Shapes\Base\VertexStructs.cs" />
     <Compile Include="Shapes\Capsule.cs" />
@@ -88,7 +91,6 @@
     <Compile Include="Shapes\SlicedSphere.cs" />
     <Compile Include="Shapes\TorusKnot.cs" />
     <Compile Include="Shapes\VertexPositionColor.cs" />
-    <Compile Include="AWData.cs" />
     <Compile Include="AWOldScene.cs" />
     <Compile Include="Nodes\AWNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

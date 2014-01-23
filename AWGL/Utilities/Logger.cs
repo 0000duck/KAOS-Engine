@@ -5,12 +5,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace AWGL
+namespace AWGL.Utilities
 {
     /// <summary>
     /// AWLogger
     /// </summary>
-    internal static class AWLogger
+    internal static class Logger
     {
        
         internal static void WriteLine(string output)

@@ -10,6 +10,14 @@ namespace AWGL.Nodes
 {
     class AWParticles : AWNode
     {
+        public override void Render()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+}
+/*
         #region Private Members
         protected static int m_MaxParticleCount = 2000;
         public int m_VisibleParticleCount;
@@ -110,3 +118,4 @@ namespace AWGL.Nodes
         }
     }
 }
+        */

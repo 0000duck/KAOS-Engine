@@ -36,7 +36,7 @@ namespace AWGL
         [STAThread]
         public static void Main()
         {
-            using (AWScene game = new AWScene())
+            using (AWEngineWindow game = new AWEngineWindow())
             {
                 game.Run(30,0);
             }

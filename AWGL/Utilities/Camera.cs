@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AWGL
+namespace AWGL.Utilities
 {
     /// <summary>
     /// Camera
     /// </summary>
-    public class AWCamera
+    public class Camera
     {
         public Vector3 Position = new Vector3(2, 2, 2);
         public Vector3 Orientation = new Vector3((float)Math.PI, 0f, 0f);

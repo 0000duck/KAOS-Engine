@@ -5,20 +5,20 @@ using System.Text;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace AWGL
+namespace AWGL.Managers
 {
     /// <summary>
     /// 
     /// </summary>
-    public sealed class AWBufferManager : IDisposable
+    public sealed class BufferManager : IDisposable
     {
         #region Singleton Pattern - Thread Safe
-        private static volatile AWBufferManager instance = new AWBufferManager();
+        private static volatile BufferManager instance = new BufferManager();
         private static object syncRoot = new Object();
 
-        private AWBufferManager() { }
+        private BufferManager() { }
 
-        public static AWBufferManager Instance
+        public static BufferManager Instance
         {
             get
             {
@@ -27,7 +27,7 @@ namespace AWGL
                     lock (syncRoot)
                     {
                         if (instance == null)
-                            instance = new AWBufferManager();
+                            instance = new BufferManager();
                     }
                 }
 
