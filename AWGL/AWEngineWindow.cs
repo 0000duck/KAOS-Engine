@@ -48,6 +48,9 @@ namespace AWGL
         List<Key> keyList;
         #endregion
 
+        PreciseTimer m_Timer = new PreciseTimer();
+        public delegate void OnRenderFrame(double elapsedTime);
+
         public AWEngineWindow()
             : base(1024, 680, new GraphicsMode(32, 24, 0, 4), AWEngineWindow.AppName, GameWindowFlags.Default, 
             DisplayDevice.Default, 3, 0, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
@@ -278,7 +281,7 @@ namespace AWGL
         {
             using (AWEngineWindow window = new AWEngineWindow())
             {
-                window.Run();
+                window.Run(30, 60);
             }
         }
 

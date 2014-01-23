@@ -34,6 +34,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>OpenTK\OpenTK.dll</HintPath>
@@ -93,6 +96,7 @@
     <Compile Include="AWOldEngineWindow.cs" />
     <Compile Include="Nodes\AWNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\PreciseTimer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -123,6 +127,7 @@
     <None Include="Data\Textures\swizzled-rock-normal-gloss.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Textures\JuliaColorTable.bmp">
