@@ -34,9 +34,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HelixToolkit.Wpf">
-      <HintPath>OpenTK\HelixToolkit.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>OpenTK\OpenTK.dll</HintPath>
@@ -57,6 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Managers\BufferManager.cs" />
+    <Compile Include="Managers\InputManager.cs" />
+    <Compile Include="Managers\ModelManager.cs" />
+    <Compile Include="Managers\TextureManager.cs" />
     <Compile Include="Utilities\Camera.cs" />
     <Compile Include="Managers\ShaderManager.cs">
       <SubType>Code</SubType>
@@ -70,7 +70,6 @@
     <Compile Include="Nodes\AWGroupNode.cs" />
     <Compile Include="Nodes\IGroupNode.cs" />
     <Compile Include="Nodes\ISceneNode.cs" />
-    <Compile Include="AWEngine.cs" />
     <Compile Include="AWEngineWindow.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
     <Compile Include="Shapes\Base\VertexStructs.cs" />
@@ -91,7 +90,7 @@
     <Compile Include="Shapes\SlicedSphere.cs" />
     <Compile Include="Shapes\TorusKnot.cs" />
     <Compile Include="Shapes\VertexPositionColor.cs" />
-    <Compile Include="AWOldScene.cs" />
+    <Compile Include="AWOldEngineWindow.cs" />
     <Compile Include="Nodes\AWNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

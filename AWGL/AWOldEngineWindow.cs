@@ -15,11 +15,11 @@ namespace AWGL
     /// <summary>
     /// Controls Main Window functions and sets up OpenGL
     /// </summary>
-    public class AWOldScene : GameWindow
+    public class AWOldEngineWindow : GameWindow
     {
         #region Constructor
 
-        public AWOldScene() //, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug | 
+        public AWOldEngineWindow() //, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug | 
             : base(1024, 700, new GraphicsMode(32, 24, 0, 4), "", GameWindowFlags.Default, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Debug | GraphicsContextFlags.ForwardCompatible
             )// DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default)
         {

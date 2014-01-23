@@ -40,7 +40,7 @@ namespace AWGL
         #endregion
 
         public AWEngineWindow()
-            : base(1024, 680, new GraphicsMode(32, 24, 0, 4), AWEngine.AppName, GameWindowFlags.Default, 
+            : base(1024, 680, new GraphicsMode(32, 24, 0, 4), AWEngineWindow.AppName, GameWindowFlags.Default, 
             DisplayDevice.Default, 3, 0, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         { }
 
@@ -166,7 +166,7 @@ namespace AWGL
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            this.Title = AWEngine.AppName + " - FPS: " + string.Format("{0:F}", 1.0 / e.Time);
+            this.Title = AWEngineWindow.AppName + " - FPS: " + string.Format("{0:F}", 1.0 / e.Time);
             GL.Viewport(0, 0, Width, Height);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -264,5 +264,22 @@ namespace AWGL
         } 
         #endregion
 
+        [STAThread]
+        public static void Main()
+        {
+            using (AWEngineWindow window = new AWEngineWindow())
+            {
+                window.Run();
+            }
+        }
+
+        public static string AppName
+        {
+            get
+            {
+                return "AWEngine";
+            }
+
+        }
     }
 }

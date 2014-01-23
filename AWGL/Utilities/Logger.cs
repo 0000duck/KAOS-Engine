@@ -15,7 +15,7 @@ namespace AWGL.Utilities
        
         internal static void WriteLine(string output)
         {
-            Debug.WriteLine(AWEngine.AppName + " Logger: " + output.Trim());
+            Debug.WriteLine(AWEngineWindow.AppName + " Logger: " + output.Trim());
         }
 
         internal static void PlatformInfo()
