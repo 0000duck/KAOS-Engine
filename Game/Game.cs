@@ -42,7 +42,7 @@ namespace Game
 
             texManager = new TextureManager();
 
-            texManager.LoadTexture("sprite1", "Data/Textures/metal.jpg");
+            texManager.LoadTexture("sprite1", "Data/Textures/logo.jpg");
             texManager.LoadTexture("sprite2", "Data/Textures/metal.jpg");
 
             stateManager = new StateManager();
@@ -51,6 +51,7 @@ namespace Game
             stateManager.AddState("Drawing", new DrawSpriteState(stateManager, texManager));
             stateManager.AddState("TestTexture", new TestSpriteClassState(texManager));
 
+            //stateManager.ChangeState("Drawing");
             stateManager.ChangeState("TestTexture");
         }
 

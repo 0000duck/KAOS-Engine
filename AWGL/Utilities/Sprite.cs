@@ -34,7 +34,7 @@ namespace AWGL.Utilities
         public Sprite()
         {
             InitVertexPositions(new Vector3d(0, 0, 0 ), 1, 1);
-            SetColour(new Color4(1, 1, 1, 1));
+            //SetColour(new Color4(1, 1, 1, 1));
             SetUVs(new Vector2(0, 0), new Vector2(1, 1));
         }
 
@@ -54,18 +54,12 @@ namespace AWGL.Utilities
             double halfWidth = width / 2;
             double halfHeight = height / 2;
 
-            //GL.TexCoord2(new Vector2d(leftUV, topUV));
             vertexPositions[0] = new Vector3d(position.X - halfWidth, position.Y + halfHeight, position.Z); //top left
-            //GL.TexCoord2(new Vector2d(rightUV, topUV));
             vertexPositions[1] = new Vector3d(position.X + halfWidth, position.Y + halfHeight, position.Z); //top right
-            //GL.TexCoord2(new Vector2d(leftUV, bottomUV));
             vertexPositions[2] = new Vector3d(position.X - halfWidth, position.Y - halfHeight, position.Z); //bottom left
 
-            //GL.TexCoord2(new Vector2d(rightUV, topUV));
             vertexPositions[3] = new Vector3d(position.X + halfWidth, position.Y + halfHeight, position.Z); //top right
-            //GL.TexCoord2(new Vector2d(rightUV, bottomUV));
             vertexPositions[4] = new Vector3d(position.X + halfWidth, position.Y + -halfHeight, position.Z); //bottom right
-            //GL.TexCoord2(new Vector2d(leftUV, bottomUV));
             vertexPositions[5] = new Vector3d(position.X - halfWidth, position.Y - halfHeight, position.Z); //bottom left
         }
 

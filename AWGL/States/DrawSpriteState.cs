@@ -54,6 +54,7 @@ namespace AWGL.States
 
         } 
         #endregion
+
         public DrawSpriteState(StateManager stateManager, TextureManager texturManager)
         {
             m_stateManager = stateManager;
