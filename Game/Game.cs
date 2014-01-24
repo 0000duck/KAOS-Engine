@@ -15,6 +15,7 @@ namespace Game
     class Game : AWEngineWindow
     {
         public StateManager stateManager;
+        public TextureManager texManager;
 
         public Game(int width, int height) : base(width, height) { }
 
@@ -39,10 +40,14 @@ namespace Game
         {
             Setup2DGraphics(ScreenWidth, ScreenHeight);
 
+            texManager = new TextureManager();
+
+            texManager.LoadTexture("test", "Data/Textures/logo.jpg");
+
             stateManager = new StateManager();
             stateManager.AddState("Splash", new SplashScreenState(stateManager));
             stateManager.AddState("Default", new DefaultState(stateManager));
-            stateManager.AddState("Drawing", new DrawSpriteState(stateManager));
+            stateManager.AddState("Drawing", new DrawSpriteState(stateManager, texManager));
 
             stateManager.ChangeState("Drawing");
         }
