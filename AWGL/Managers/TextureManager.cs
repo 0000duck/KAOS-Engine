@@ -39,7 +39,7 @@ namespace AWGL.Managers
 
             bitmap.UnlockBits(data);
 
-            m_textureDatabase.Add(textureId, new Texture(textureGpuHandle, data.Width, data.Height);
+            m_textureDatabase.Add(textureId, new Texture(textureGpuHandle, data.Width, data.Height));
         }
 
         #region MyRegion
