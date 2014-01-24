@@ -16,7 +16,10 @@ using System.Timers;
 
 namespace AWGL
 {
-    public class AWEngineWindow : GameWindow, IDisposable
+    /// <summary>
+    /// Inherit me
+    /// </summary>
+    public abstract class AWEngineWindow : GameWindow, IDisposable
     {
         #region Members
 
@@ -47,12 +50,14 @@ namespace AWGL
         Camera camera;
         List<Key> keyList;
         #endregion
+        
+        protected PreciseTimer m_Timer = new PreciseTimer();
 
-        PreciseTimer m_Timer = new PreciseTimer();
-        public delegate void OnRenderFrame(double elapsedTime);
+        public int ScreenWidth { get { return this.ClientSize.Width; } }
+        public int ScreenHeight { get { return this.ClientSize.Height; } }
 
-        public AWEngineWindow()
-            : base(1024, 680, new GraphicsMode(32, 24, 0, 4), AWEngineWindow.AppName, GameWindowFlags.Default, 
+        public AWEngineWindow(int height, int width)
+            : base(height, width, new GraphicsMode(32, 24, 0, 4), AWEngineWindow.AppName, GameWindowFlags.Default, 
             DisplayDevice.Default, 3, 0, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         { }
 
@@ -161,6 +166,7 @@ namespace AWGL
         #region MAIN LOOP
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
+            #region Input
             if (Focused)
             {
                 Point center = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
@@ -170,14 +176,20 @@ namespace AWGL
                 ResetCursor();
             }
 
-            MoveCamera();
+            MoveCamera(); 
+            #endregion
 
             Matrix4 lookat = camera.GetViewMatrix();
             GL.UniformMatrix4(modelviewMatrixLocation, false, ref lookat);
+
+            UpdateFrame(m_Timer.GetElapsedTime());
         }
+
+        new public abstract void UpdateFrame(double elapsedTime);
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            base.OnRenderFrame(e);
             this.Title = AWEngineWindow.AppName + " - FPS: " + string.Format("{0:F}", 1.0 / e.Time);
             GL.Viewport(0, 0, Width, Height);
 
@@ -189,9 +201,17 @@ namespace AWGL
                 //PrimitiveType.Lines, cube.Indices.Length,
                 //DrawElementsType.UnsignedInt, IntPtr.Zero
                 //);
-
             SwapBuffers();
-        } 
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            GL.Viewport(0, 0, Width, Height);
+
+            Matrix4 lookat = camera.GetViewMatrix();
+            GL.UniformMatrix4(modelviewMatrixLocation, false, ref lookat);
+        }
         #endregion
 
         #region GameWindow.Dispose
@@ -275,15 +295,5 @@ namespace AWGL
             }
         } 
         #endregion
-
-        [STAThread]
-        public static void Main()
-        {
-            using (AWEngineWindow window = new AWEngineWindow())
-            {
-                window.Run(30, 60);
-            }
-        }
-
     }
 }
