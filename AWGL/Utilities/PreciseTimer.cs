@@ -25,11 +25,12 @@ namespace AWGL.Utilities
             GetElapsedTime();
         }
 
-        public double GetElapsedTime()
+        public float GetElapsedTime()
         {
             long time = 0;
             QueryPerformanceCounter(ref time);
-            double elapsedTime = (double)(time - m_previouslyElapsedTime) / (double)m_ticksPerSecond;
+
+            float elapsedTime = (float)(time - m_previouslyElapsedTime) / (float)m_ticksPerSecond;
 
             return elapsedTime;
         }

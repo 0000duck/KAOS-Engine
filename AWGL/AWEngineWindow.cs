@@ -21,8 +21,7 @@ namespace AWGL
     /// </summary>
     public abstract class AWEngineWindow : GameWindow, IDisposable
     {
-        #region Members
-
+        #region Old code
         public static string AppName
         {
             get
@@ -47,11 +46,11 @@ namespace AWGL
         AWGroupNode group;
         AWCube cube;
         AWGraphLines graph;
-        Camera camera;
-        List<Key> keyList;
         #endregion
-        
-        protected PreciseTimer m_Timer = new PreciseTimer();
+
+        protected PreciseTimer m_Timer;
+        protected Camera camera;
+        protected List<Key> keyList;
 
         public int ScreenWidth { get { return this.ClientSize.Width; } }
         public int ScreenHeight { get { return this.ClientSize.Height; } }
@@ -61,69 +60,78 @@ namespace AWGL
             DisplayDevice.Default, 3, 0, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         { }
 
-        #region OpenGL Setup
+        #region Load everything here
         protected override void OnLoad(System.EventArgs e)
         {
-            VSync = VSyncMode.On;
-            
-            camera = new Camera();
-            keyList = new List<Key>();
+            m_Timer = new PreciseTimer();
 
+            //CameraManager
+            camera = new Camera();
+            
+            // InputManager
+            keyList = new List<Key>();
             Keyboard.KeyDown += HandleKeyDown;
             Keyboard.KeyUp += HandleKeyUp;
-            
-            root = new AWGroupNode();
-            group = new AWGroupNode();
-            cube = new AWCube();
-            graph = new AWGraphLines(20);
-            CreateShaders();
-            CreateVBOs();
-            CreateVAOs();
 
-            // Other state
-            GL.Enable(EnableCap.DepthTest);
-            GL.ClearColor(Color.CornflowerBlue);
+            #region Old Code
+            //root = new AWGroupNode();
+            //group = new AWGroupNode();
+            //cube = new AWCube();
+            //graph = new AWGraphLines(20);
+            //CreateShaders();
+            //CreateVBOs();
+            //CreateVAOs();
+
+            //// Other state
+            //GL.Enable(EnableCap.DepthTest);
+            //GL.ClearColor(Color.CornflowerBlue); 
+            #endregion
 
 #if Debug
             AWLogger.WriteLine("...Exiting OnLoad"); 
-#endif
+#endif      
+            Initialise();
         }
 
+        public abstract void Initialise();
+        #endregion
+
+        #region Old Code
         #region Create Shaders
         void CreateShaders()
         {
-            shaderManager = new ShaderManager("opentk-vs", "opentk-fs");
+            //shaderManager = new ShaderManager("opentk-vs", "opentk-fs");
 
-            GL.UseProgram(shaderManager.ProgramHandle);
+            //GL.UseProgram(shaderManager.ProgramHandle);
 
-            shaderManager.SetUniforms(
-                out projectionMatrixLocation, out modelviewMatrixLocation,
-                out projectionMatrix, modelviewMatrix, ClientSize, ref camera
-            );
+            //shaderManager.SetUniforms(
+            //    out projectionMatrixLocation, out modelviewMatrixLocation,
+            //    out projectionMatrix, modelviewMatrix, ClientSize, ref camera
+            //);
         }
         #endregion
 
         #region Create VBOs
         void CreateVBOs()
         {
-            Vector3[] aggregateVerts = new Vector3[graph.Vertices.Length + cube.Vertices.Length];
-            System.Array.Copy(graph.Vertices, aggregateVerts, graph.Vertices.Length);
-            System.Array.Copy(cube.Vertices, 0, aggregateVerts, graph.Vertices.Length, cube.Vertices.Length);
+            //Vector3[] aggregateVerts = new Vector3[graph.Vertices.Length + cube.Vertices.Length];
+            //System.Array.Copy(graph.Vertices, aggregateVerts, graph.Vertices.Length);
+            //System.Array.Copy(cube.Vertices, 0, aggregateVerts, graph.Vertices.Length, cube.Vertices.Length);
 
-            positionVboHandle = BufferManager.SetupBuffer(
-                aggregateVerts, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
-                );
+            //positionVboHandle = BufferManager.SetupBuffer(
+            //    aggregateVerts, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
+            //    );
 
-            normalVboHandle = BufferManager.SetupBuffer(
-                aggregateVerts, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
-                );
+            //normalVboHandle = BufferManager.SetupBuffer(
+            //    aggregateVerts, BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw
+            //    );
 
-            eboHandle = BufferManager.SetupBuffer(
-                cube.Indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw
-                );
+            //eboHandle = BufferManager.SetupBuffer(
+            //    cube.Indices, BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw
+            //    );
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+            //GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            //GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
         }
         #endregion
 
@@ -143,74 +151,84 @@ namespace AWGL
 
             #region add matrix transform uniforms
 
-            BufferManager.SetupVaoBuffer(positionVboHandle,
+            //BufferManager.SetupVaoBuffer(positionVboHandle,
 
-                shaderManager.ProgramHandle, 0, 3, "in_position",
-                BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
-                );
-            BufferManager.SetupVaoBuffer(normalVboHandle,
+            //    shaderManager.ProgramHandle, 0, 3, "in_position",
+            //    BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
+            //    );
+            //BufferManager.SetupVaoBuffer(normalVboHandle,
 
-                shaderManager.ProgramHandle, 1, 3, "in_normal",
-                BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
-                );
+            //    shaderManager.ProgramHandle, 1, 3, "in_normal",
+            //    BufferTarget.ArrayBuffer, VertexAttribPointerType.Float
+            //    );
 
             #endregion
 
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
+            //GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
 
-            GL.BindVertexArray(0);
+            //GL.BindVertexArray(0);
         }
-        #endregion 
+        #endregion  
         #endregion
 
-        #region MAIN LOOP
+        #region Game Loop
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             #region Input
-            if (Focused)
-            {
-                Point center = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
-                Point delta = new Point(center.X - System.Windows.Forms.Cursor.Position.X, center.Y - System.Windows.Forms.Cursor.Position.Y);
+            //if (Focused)
+            //{
+            //    Point center = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
+            //    Point delta = new Point(center.X - System.Windows.Forms.Cursor.Position.X, center.Y - System.Windows.Forms.Cursor.Position.Y);
 
-                camera.AddRotation(delta.X, delta.Y);
-                ResetCursor();
-            }
+            //    camera.AddRotation(delta.X, delta.Y);
+            //    ResetCursor();
+            //}
 
             MoveCamera(); 
             #endregion
 
-            Matrix4 lookat = camera.GetViewMatrix();
-            GL.UniformMatrix4(modelviewMatrixLocation, false, ref lookat);
-
-            UpdateFrame(m_Timer.GetElapsedTime());
+            #region Old Code
+            //Matrix4 lookat = camera.GetViewMatrix();
+            //GL.UniformMatrix4(modelviewMatrixLocation, false, ref lookat); 
+            #endregion
         }
 
-        new public abstract void UpdateFrame(double elapsedTime);
+        new public abstract void UpdateFrame(float elapsedTime);
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
-            this.Title = AWEngineWindow.AppName + " - FPS: " + string.Format("{0:F}", 1.0 / e.Time);
-            GL.Viewport(0, 0, Width, Height);
 
+            Title = AWEngineWindow.AppName + " - FPS: " + string.Format("{0:F}", 1.0 / e.Time);
+            
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.BindVertexArray(vaoHandle);
-            GL.DrawArrays(PrimitiveType.Lines, 0, 20);
-            GL.DrawArrays(PrimitiveType.Triangles, 20, cube.Indices.Length);
-                //PrimitiveType.Lines, cube.Indices.Length,
-                //DrawElementsType.UnsignedInt, IntPtr.Zero
-                //);
+            #region Old Code
+            //GL.BindVertexArray(vaoHandle);
+            //GL.DrawArrays(PrimitiveType.Lines, 0, 20);
+            //GL.DrawArrays(PrimitiveType.Triangles, 20, cube.Indices.Length);
+            //PrimitiveType.Lines, cube.Indices.Length,
+            //DrawElementsType.UnsignedInt, IntPtr.Zero
+            //); 
+            #endregion
+
+            // Single call to StateRenderer to take place here.
+            RenderFrame(m_Timer.GetElapsedTime());
+
             SwapBuffers();
         }
+
+        new public abstract void RenderFrame(float elapsedTime);
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            GL.Viewport(0, 0, Width, Height);
+            GL.Viewport(0, 0, ScreenWidth, ScreenHeight);
 
-            Matrix4 lookat = camera.GetViewMatrix();
-            GL.UniformMatrix4(modelviewMatrixLocation, false, ref lookat);
+            #region Old Code
+            //Matrix4 lookat = camera.GetViewMatrix();
+            //GL.UniformMatrix4(modelviewMatrixLocation, false, ref lookat); 
+            #endregion
         }
         #endregion
 
@@ -218,7 +236,7 @@ namespace AWGL
         public override void Dispose()
         {
             base.Dispose();
-            shaderManager.Dispose();
+            //shaderManager.Dispose();
         } 
         #endregion
 
@@ -246,7 +264,7 @@ namespace AWGL
 
                 switch (key)
                 {
-                    case OpenTK.Input.Key.Escape:
+                    case Key.Escape:
                         Exit();
                         break;
 
@@ -289,10 +307,10 @@ namespace AWGL
         {
             base.OnFocusedChanged(e);
 
-            if (Focused)
-            {
-                ResetCursor();
-            }
+            //if (Focused)
+            //{
+            //    ResetCursor();
+            //}
         } 
         #endregion
     }
