@@ -42,14 +42,16 @@ namespace Game
 
             texManager = new TextureManager();
 
-            texManager.LoadTexture("test", "Data/Textures/logo.jpg");
+            texManager.LoadTexture("sprite1", "Data/Textures/metal.jpg");
+            texManager.LoadTexture("sprite2", "Data/Textures/metal.jpg");
 
             stateManager = new StateManager();
             stateManager.AddState("Splash", new SplashScreenState(stateManager));
             stateManager.AddState("Default", new DefaultState(stateManager));
             stateManager.AddState("Drawing", new DrawSpriteState(stateManager, texManager));
+            stateManager.AddState("TestTexture", new TestSpriteClassState(texManager));
 
-            stateManager.ChangeState("Drawing");
+            stateManager.ChangeState("TestTexture");
         }
 
         public override void UpdateFrame(float elapsedTime)

@@ -28,7 +28,7 @@ namespace AWGL.States
 
         public void Render()
         {
-            Texture texture = m_textureManager.Get("test");
+            Texture texture = m_textureManager.Get("sprite1");
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, texture.ID);
 
@@ -37,18 +37,18 @@ namespace AWGL.States
             GL.Begin(PrimitiveType.Triangles);
 
             GL.TexCoord2(new Vector2d(leftUV, topUV));
-            GL.Vertex3(new Vector3d(x-halfWidth, y+halfHeight, 0)); //top left
+            GL.Vertex3(new Vector3d(x - halfWidth, y + halfHeight, 0)); //top left
             GL.TexCoord2(new Vector2d(rightUV, topUV));
-            GL.Vertex3(new Vector3d(x+halfWidth, y+halfHeight, 0)); //top right
+            GL.Vertex3(new Vector3d(x + halfWidth, y + halfHeight, 0)); //top right
             GL.TexCoord2(new Vector2d(leftUV, bottomUV));
-            GL.Vertex3(new Vector3d(x-halfWidth, y-halfHeight, 0)); //bottom left
+            GL.Vertex3(new Vector3d(x - halfWidth, y - halfHeight, 0)); //bottom left
 
             GL.TexCoord2(new Vector2d(rightUV, topUV));
-            GL.Vertex3(new Vector3d(x+halfWidth, y+halfHeight, 0)); //top right
+            GL.Vertex3(new Vector3d(x + halfWidth, y + halfHeight, 0)); //top right
             GL.TexCoord2(new Vector2d(rightUV, bottomUV));
-            GL.Vertex3(new Vector3d(x+halfWidth, y+-halfHeight, 0)); //bottom right
+            GL.Vertex3(new Vector3d(x + halfWidth, y + -halfHeight, 0)); //bottom right
             GL.TexCoord2(new Vector2d(leftUV, bottomUV));
-            GL.Vertex3(new Vector3d(x-halfWidth, y-halfHeight, 0)); //bottom left
+            GL.Vertex3(new Vector3d(x - halfWidth, y - halfHeight, 0)); //bottom left
 
             GL.End();
 
