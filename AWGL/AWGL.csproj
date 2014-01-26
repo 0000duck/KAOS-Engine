@@ -58,19 +58,60 @@
   <ItemGroup>
     <Compile Include="Interfaces\IGameObject.cs" />
     <Compile Include="Managers\BufferManager.cs" />
+    <Compile Include="Managers\BufferObjectManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\ModelManager.cs" />
     <Compile Include="Managers\StateManager.cs" />
     <Compile Include="Managers\Tests\StateManagerTest.cs" />
     <Compile Include="Managers\Tests\TextureManagerTest.cs" />
     <Compile Include="Managers\TextureManager.cs" />
+    <Compile Include="Shapes\Capsule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\ChamferCube.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\KochTetrahedron.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\MengerSponge.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\Old\IsoSphere.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\Old\Plane.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\Old\Shape.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\Old\SierpinskiTetrahedron.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\SlicedHose.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\SlicedSphere.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\TorusKnot.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\VertexPositionColor.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="States\DefaultState.cs" />
     <Compile Include="States\DrawSpriteState.cs" />
     <Compile Include="States\SplashScreenState.cs" />
+    <Compile Include="States\TestSpriteClassState.cs" />
+    <Compile Include="States\VboState.cs" />
+    <Compile Include="Utilities\BufferObject.cs" />
     <Compile Include="Utilities\Camera.cs" />
     <Compile Include="Managers\ShaderManager.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Utilities\CustomVertexStruct.cs" />
     <Compile Include="Utilities\Logger.cs" />
     <Compile Include="Nodes\AWCube.cs" />
     <Compile Include="Nodes\AWGraphLines.cs" />
@@ -83,28 +124,18 @@
     <Compile Include="AWEngineWindow.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
     <Compile Include="Shapes\Base\VertexStructs.cs" />
-    <Compile Include="Shapes\Capsule.cs" />
-    <Compile Include="Shapes\ChamferCube.cs" />
     <Compile Include="Shapes\Helpers\Chunk.cs" />
     <Compile Include="Shapes\Helpers\MengerCube.cs" />
     <Compile Include="Shapes\Helpers\TetrahedronFace.cs" />
     <Compile Include="Shapes\Helpers\VboShape.cs" />
-    <Compile Include="Shapes\KochTetrahedron.cs" />
-    <Compile Include="Shapes\MengerSponge.cs" />
     <Compile Include="Shapes\Old\Cube.cs" />
-    <Compile Include="Shapes\Old\IsoSphere.cs" />
-    <Compile Include="Shapes\Old\Plane.cs" />
-    <Compile Include="Shapes\Old\Shape.cs" />
-    <Compile Include="Shapes\Old\SierpinskiTetrahedron.cs" />
-    <Compile Include="Shapes\SlicedHose.cs" />
-    <Compile Include="Shapes\SlicedSphere.cs" />
-    <Compile Include="Shapes\TorusKnot.cs" />
-    <Compile Include="Shapes\VertexPositionColor.cs" />
     <Compile Include="AWOldEngineWindow.cs" />
     <Compile Include="Nodes\AWNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Point.cs" />
     <Compile Include="Utilities\PreciseTimer.cs" />
     <Compile Include="Utilities\Renderer.cs" />
+    <Compile Include="Utilities\Sprite.cs" />
     <Compile Include="Utilities\Texture.cs" />
   </ItemGroup>
   <ItemGroup>

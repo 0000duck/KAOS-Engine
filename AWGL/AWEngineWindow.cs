@@ -37,10 +37,6 @@ namespace AWGL
             normalVboHandle,
             eboHandle;
 
-        Matrix4 projectionMatrix, modelviewMatrix;
-
-        ShaderManager shaderManager;
-
         AWNode m_sceneGraph;
         AWGroupNode root;
         AWGroupNode group;
@@ -51,13 +47,15 @@ namespace AWGL
         protected PreciseTimer m_Timer;
         protected Camera camera;
         protected List<Key> keyList;
+        protected Matrix4 projectionMatrix, modelviewMatrix;
+        protected ShaderManager shaderManager;
 
         public int ScreenWidth { get { return this.ClientSize.Width; } }
         public int ScreenHeight { get { return this.ClientSize.Height; } }
 
-        public AWEngineWindow(int height, int width)
+        public AWEngineWindow(int height, int width, int major, int minor)
             : base(height, width, new GraphicsMode(32, 24, 0, 4), AWEngineWindow.AppName, GameWindowFlags.Default, 
-            DisplayDevice.Default, 3, 0, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
+            DisplayDevice.Default, major, minor, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         { }
 
         #region Load everything here
@@ -73,12 +71,14 @@ namespace AWGL
             Keyboard.KeyDown += HandleKeyDown;
             Keyboard.KeyUp += HandleKeyUp;
 
+            CreateShaders();
+            
             #region Old Code
             //root = new AWGroupNode();
             //group = new AWGroupNode();
             //cube = new AWCube();
             //graph = new AWGraphLines(20);
-            //CreateShaders();
+            
             //CreateVBOs();
             //CreateVAOs();
 
@@ -96,21 +96,24 @@ namespace AWGL
         public abstract void Initialise();
         #endregion
 
-        #region Old Code
-        #region Create Shaders
-        void CreateShaders()
+        private void CreateShaders()
         {
-            //shaderManager = new ShaderManager("opentk-vs", "opentk-fs");
+            shaderManager = new ShaderManager("opentk-vs", "opentk-fs");
 
-            //GL.UseProgram(shaderManager.ProgramHandle);
+            GL.UseProgram(shaderManager.ProgramHandle);
 
-            //shaderManager.SetUniforms(
-            //    out projectionMatrixLocation, out modelviewMatrixLocation,
-            //    out projectionMatrix, modelviewMatrix, ClientSize, ref camera
-            //);
+            projectionMatrixLocation = GL.GetUniformLocation(shaderManager.ProgramHandle, "projection_matrix");
+            modelviewMatrixLocation = GL.GetUniformLocation(shaderManager.ProgramHandle, "modelview_matrix");
+
+            float aspectRatio = ScreenWidth / (float)(ScreenHeight);
+            Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 1, 100, out projectionMatrix);
+            modelviewMatrix = Matrix4.LookAt(new Vector3(0, 3, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));//camera.GetViewMatrix();
+
+            GL.UniformMatrix4(projectionMatrixLocation, false, ref projectionMatrix);
+            GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
         }
-        #endregion
 
+        #region Old Code
         #region Create VBOs
         void CreateVBOs()
         {
@@ -175,22 +178,24 @@ namespace AWGL
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             #region Input
-            //if (Focused)
-            //{
-            //    Point center = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
-            //    Point delta = new Point(center.X - System.Windows.Forms.Cursor.Position.X, center.Y - System.Windows.Forms.Cursor.Position.Y);
+            if (Focused)
+            {
+                Point center = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
+                Point delta = new Point(center.X - System.Windows.Forms.Cursor.Position.X, center.Y - System.Windows.Forms.Cursor.Position.Y);
 
-            //    camera.AddRotation(delta.X, delta.Y);
-            //    ResetCursor();
-            //}
+                camera.AddRotation(delta.X, delta.Y);
+                ResetCursor();
+            }
 
             MoveCamera(); 
             #endregion
 
             #region Old Code
-            //Matrix4 lookat = camera.GetViewMatrix();
-            //GL.UniformMatrix4(modelviewMatrixLocation, false, ref lookat); 
+            Matrix4 lookat = camera.GetViewMatrix();
+            GL.UniformMatrix4(modelviewMatrixLocation, false, ref lookat); 
             #endregion
+
+            UpdateFrame(m_Timer.GetElapsedTime());
         }
 
         new public abstract void UpdateFrame(float elapsedTime);
@@ -198,8 +203,14 @@ namespace AWGL
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
+            
+            GL.Viewport(0, 0, ScreenWidth, ScreenHeight);
 
-            Title = AWEngineWindow.AppName + " - FPS: " + string.Format("{0:F}", 1.0 / e.Time);
+            Title = AWEngineWindow.AppName +
+
+                " OpenGL: " + GL.GetString(StringName.Version) +
+                " GLSL: " + GL.GetString(StringName.ShadingLanguageVersion) +
+                " FPS: " + string.Format("{0:F}", 1.0 / e.Time);
             
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -226,8 +237,8 @@ namespace AWGL
             GL.Viewport(0, 0, ScreenWidth, ScreenHeight);
 
             #region Old Code
-            //Matrix4 lookat = camera.GetViewMatrix();
-            //GL.UniformMatrix4(modelviewMatrixLocation, false, ref lookat); 
+            Matrix4 lookat = camera.GetViewMatrix();
+            GL.UniformMatrix4(modelviewMatrixLocation, false, ref lookat); 
             #endregion
         }
         #endregion
@@ -307,10 +318,10 @@ namespace AWGL
         {
             base.OnFocusedChanged(e);
 
-            //if (Focused)
-            //{
-            //    ResetCursor();
-            //}
+            if (Focused)
+            {
+                ResetCursor();
+            }
         } 
         #endregion
     }

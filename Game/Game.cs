@@ -15,8 +15,9 @@ namespace Game
     class Game : AWEngineWindow
     {
         public StateManager stateManager;
+        public TextureManager texManager;
 
-        public Game(int width, int height) : base(width, height) { }
+        public Game(int width, int height, int major, int minor) : base(width, height, major, minor) { }
 
         private void Setup2DGraphics(double width, double height)
         {
@@ -29,32 +30,31 @@ namespace Game
             GL.LoadIdentity();
         }
 
-        protected override void OnResize(EventArgs e)
-        {
-            base.OnResize(e);
-            Setup2DGraphics(ScreenWidth, ScreenHeight);
-        }
-
         public override void Initialise()
         {
-            Setup2DGraphics(ScreenWidth, ScreenHeight);
+
+            texManager = new TextureManager();
+
+            texManager.LoadTexture("sprite1", "Data/Textures/logo.jpg");
+            texManager.LoadTexture("sprite2", "Data/Textures/metal.jpg");
 
             stateManager = new StateManager();
             stateManager.AddState("Splash", new SplashScreenState(stateManager));
             stateManager.AddState("Default", new DefaultState(stateManager));
-            stateManager.AddState("Drawing", new DrawSpriteState(stateManager));
+            stateManager.AddState("Drawing", new DrawSpriteState(stateManager, texManager));
+            stateManager.AddState("TestTexture", new TestSpriteClassState(texManager));
+            stateManager.AddState("VboState", new VboState(stateManager, shaderManager));
 
-            stateManager.ChangeState("Drawing");
+            stateManager.ChangeState("VboState");
         }
 
         public override void UpdateFrame(float elapsedTime)
         {
-            
+            stateManager.Update(elapsedTime);
         }
 
         public override void RenderFrame(float elapsedTime)
         {
-            stateManager.Update(elapsedTime);
             stateManager.Render();
         }
 

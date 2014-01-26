@@ -15,7 +15,7 @@ namespace AWGL.Managers
     /// <summary>
     /// Responsible for building individual shaders and linking them to the main program.
     /// </summary>
-    class ShaderManager : IDisposable
+    public class ShaderManager : IDisposable
     {
         #region Private Members
         // Handles
@@ -83,7 +83,7 @@ namespace AWGL.Managers
             {
                 String message;
                 GL.GetProgramInfoLog(programHandle, out message);
-                Debug.WriteLine("Program link failed: " + message);
+                Logger.WriteLine("Program link failed: " + message);
             }
 
             #endregion
@@ -97,7 +97,7 @@ namespace AWGL.Managers
             {
                 String message;
                 GL.GetProgramInfoLog(programHandle, out message);
-                Debug.WriteLine("Program validation failed", message);
+                Logger.WriteLine("Program validation failed" + message);
             }
             #endregion
 
