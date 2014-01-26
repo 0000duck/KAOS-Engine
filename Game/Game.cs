@@ -17,7 +17,7 @@ namespace Game
         public StateManager stateManager;
         public TextureManager texManager;
 
-        public Game(int width, int height) : base(width, height) { }
+        public Game(int width, int height, int major, int minor) : base(width, height, major, minor) { }
 
         private void Setup2DGraphics(double width, double height)
         {
@@ -30,15 +30,8 @@ namespace Game
             GL.LoadIdentity();
         }
 
-        protected override void OnResize(EventArgs e)
-        {
-            base.OnResize(e);
-            Setup2DGraphics(ScreenWidth, ScreenHeight);
-        }
-
         public override void Initialise()
         {
-            Setup2DGraphics(ScreenWidth, ScreenHeight);
 
             texManager = new TextureManager();
 
@@ -50,19 +43,18 @@ namespace Game
             stateManager.AddState("Default", new DefaultState(stateManager));
             stateManager.AddState("Drawing", new DrawSpriteState(stateManager, texManager));
             stateManager.AddState("TestTexture", new TestSpriteClassState(texManager));
+            stateManager.AddState("VboState", new VboState(stateManager, shaderManager));
 
-            //stateManager.ChangeState("Drawing");
-            stateManager.ChangeState("TestTexture");
+            stateManager.ChangeState("VboState");
         }
 
         public override void UpdateFrame(float elapsedTime)
         {
-            
+            stateManager.Update(elapsedTime);
         }
 
         public override void RenderFrame(float elapsedTime)
         {
-            stateManager.Update(elapsedTime);
             stateManager.Render();
         }
 

@@ -50,6 +50,8 @@ namespace AWGL.Utilities
             offset = Vector3.Multiply(offset, MoveSpeed);
 
             Position += offset;
+
+            Logger.WriteLine("Camera Position = " + Position);
         }
 
         public void AddRotation(float x, float y)
@@ -59,6 +61,8 @@ namespace AWGL.Utilities
 
             Orientation.X = (Orientation.X + x) % ((float)Math.PI * 2.0f);
             Orientation.Y = Math.Max(Math.Min(Orientation.Y + y, (float)Math.PI / 2.0f - 0.1f), (float)-Math.PI / 2.0f + 0.1f);
+
+            Logger.WriteLine("Camera Orientation = " + Orientation);
         }
     }
 }

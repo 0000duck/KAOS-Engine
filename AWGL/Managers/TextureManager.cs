@@ -40,7 +40,7 @@ namespace AWGL.Managers
             }
             catch (Exception e)
             {
-                Logger.WriteLine("Error loading texture.");
+                Logger.WriteLine("Error loading texture. " + e.Message);
             }
 
 
