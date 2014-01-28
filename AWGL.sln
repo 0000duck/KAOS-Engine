@@ -1,5 +1,8 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWGL", "AWGL\AWGL.csproj", "{43E7C301-7345-49D7-B8E8-F02B097F599F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{B69F70B0-3484-473F-A50B-4FA144EC0655}"
@@ -12,15 +15,35 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Net20-Debug|Any CPU = Net20-Debug|Any CPU
+		Net20-Release|Any CPU = Net20-Release|Any CPU
+		Net45-Debug|Any CPU = Net45-Debug|Any CPU
+		Net45-Release|Any CPU = Net45-Release|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Net20-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Net20-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Net20-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Net20-Release|Any CPU.Build.0 = Release|Any CPU
+		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Net45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Net45-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Net45-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Net45-Release|Any CPU.Build.0 = Release|Any CPU
 		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43E7C301-7345-49D7-B8E8-F02B097F599F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B69F70B0-3484-473F-A50B-4FA144EC0655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B69F70B0-3484-473F-A50B-4FA144EC0655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B69F70B0-3484-473F-A50B-4FA144EC0655}.Net20-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B69F70B0-3484-473F-A50B-4FA144EC0655}.Net20-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B69F70B0-3484-473F-A50B-4FA144EC0655}.Net20-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B69F70B0-3484-473F-A50B-4FA144EC0655}.Net20-Release|Any CPU.Build.0 = Release|Any CPU
+		{B69F70B0-3484-473F-A50B-4FA144EC0655}.Net45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B69F70B0-3484-473F-A50B-4FA144EC0655}.Net45-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B69F70B0-3484-473F-A50B-4FA144EC0655}.Net45-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B69F70B0-3484-473F-A50B-4FA144EC0655}.Net45-Release|Any CPU.Build.0 = Release|Any CPU
 		{B69F70B0-3484-473F-A50B-4FA144EC0655}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B69F70B0-3484-473F-A50B-4FA144EC0655}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
@@ -35,5 +58,9 @@ Global
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Source\Examples\OpenTK.Examples.csproj
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

@@ -12,8 +12,8 @@ namespace AWGL.Utilities
     /// </summary>
     public class Camera
     {
-        public Vector3 Position = new Vector3(2, 2, 2);
-        public Vector3 Orientation = new Vector3((float)Math.PI, 0f, 0f);
+        public Vector3 Position = new Vector3(0f, 5f, 5f);
+        public Vector3 Orientation = new Vector3(0f, 0f, 0f);
         public float MoveSpeed = 0.2f;
         public float MouseSensitivity = 0.01f;
 

@@ -1,14 +1,11 @@
-﻿using System;
+﻿using AWGL;
+using AWGL.Managers;
+using AWGL.States;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using AWGL;
-
-using OpenTK.Graphics.OpenGL;
-using AWGL.Managers;
-using AWGL.States;
 
 namespace Game
 {
@@ -18,17 +15,6 @@ namespace Game
         public TextureManager texManager;
 
         public Game(int width, int height, int major, int minor) : base(width, height, major, minor) { }
-
-        private void Setup2DGraphics(double width, double height)
-        {
-            double halfWidth = width / 2;
-            double halfHeight = height / 2;
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, -100, 100);
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-        }
 
         public override void Initialise()
         {
@@ -43,9 +29,11 @@ namespace Game
             stateManager.AddState("Default", new DefaultState(stateManager));
             stateManager.AddState("Drawing", new DrawSpriteState(stateManager, texManager));
             stateManager.AddState("TestTexture", new TestSpriteClassState(texManager));
-            stateManager.AddState("VboState", new VboState(stateManager, shaderManager));
+            //stateManager.AddState("VboState", new VboState(stateManager, shaderManager));
+            stateManager.AddState("Assimp-state", new AssimpImportedState(stateManager, shaderManager));
 
-            stateManager.ChangeState("VboState");
+            stateManager.ChangeState("Assimp-state");
+            //stateManager.ChangeState("VboState");
         }
 
         public override void UpdateFrame(float elapsedTime)

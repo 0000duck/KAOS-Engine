@@ -31,18 +31,14 @@ namespace AWGL.States
             cube = new Cube();
 
             CreateVBOs();
-
-            //// Other state
-            GL.Enable(EnableCap.DepthTest);
-            GL.ClearColor(Color.MidnightBlue);
         }
 
         private void CreateVBOs()
         {
             // this buffer object will take care of VAO generation temporarily - stored in bufferObject.VaoId
             BufferObject tempVBO = new BufferObject();
-            tempVBO.PositionData = cube.Vertices;//new Vector3[cube.Vertices.Length];
-            tempVBO.NormalsData = cube.Normals; // Vector3[cube.Normals.Length];
+            tempVBO.PositionData = cube.Vertices;
+            tempVBO.NormalsData = cube.Normals;
             tempVBO.IndicesData = cube.Indices;
             tempVBO.PrimitiveType = PrimitiveType.Triangles;
 
