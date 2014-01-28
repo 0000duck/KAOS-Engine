@@ -1,7 +1,6 @@
 ﻿using Assimp;
 using Assimp.Configs;
 using AWGL.Managers;
-using AWGL.Nodes;
 using AWGL.Utilities;
 using OpenTK;
 using OpenTK.Graphics;
@@ -9,15 +8,11 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+using System.Windows.Forms;
 
 namespace AWGL
 {
@@ -48,7 +43,7 @@ namespace AWGL
         private int m_texId;
         
         public AWEngineWindow(int height, int width, int major, int minor)
-            : base(height, width, new GraphicsMode(32, 24, 8, 4), AWEngineWindow.AppName, GameWindowFlags.Default, 
+            : base(height, width, new GraphicsMode(32, 24, 8, 8), AWEngineWindow.AppName, GameWindowFlags.Default, 
             DisplayDevice.Default, 0, 0, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         { }
 
@@ -66,8 +61,8 @@ namespace AWGL
             Keyboard.KeyUp += HandleKeyUp;
 
             //CreateShaders();
-
-            String fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "duck.dae");
+                                                                                                            //"Content/Models/Characters/bunny/reconstruction/bun_zipper.ply"
+            String fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Content/Models/Characters/bunny/reconstruction/bun_zipper.ply");
 
             AssimpContext importer = new AssimpContext();
             importer.SetConfig(new NormalSmoothingAngleConfig(66.0f));
@@ -76,7 +71,7 @@ namespace AWGL
 
             //// Other state
             GL.Enable(EnableCap.DepthTest);
-            GL.ClearColor(Color.Black); 
+            GL.ClearColor(.1f, 0f, .1f, 0f);
            
 
 #if Debug
@@ -97,7 +92,7 @@ namespace AWGL
 
             float aspectRatio = ScreenWidth / (float)(ScreenHeight);
             SetProjectionMatrix(Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 1, 64));
-            SetModelviewMatrix(Matrix4.CreateRotationX(0.5f) * Matrix4.CreateTranslation(0, 0, -4));
+            SetModelviewMatrix(Matrix4.CreateTranslation(0, 0, 5));
         }
 
         protected void QueryMatrixLocations()
@@ -124,16 +119,16 @@ namespace AWGL
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             #region input
-            //if (focused)
-            //{
-            //    point center = new point(bounds.left + bounds.width / 2, bounds.top + bounds.height / 2);
-            //    point delta = new point(center.x - system.windows.forms.cursor.position.x, center.y - system.windows.forms.cursor.position.y);
+            if (Focused)
+            {
+                Point center = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
+                Point delta = new Point(center.X - Cursor.Position.X, center.Y - Cursor.Position.Y);
 
-            //    camera.addrotation(delta.x, delta.y);
-            //    resetcursor();
-            //}
+                camera.AddRotation(delta.X, delta.Y);
+                ResetCursor();
+            }
 
-            //movecamera();
+            MoveCamera();
 
             //setmodelviewmatrix(matrix4.createrotationy((float)e.time) * modelviewmatrix);
             #endregion
@@ -173,16 +168,16 @@ namespace AWGL
             GL.FrontFace(FrontFaceDirection.Ccw);
 
             GL.MatrixMode(MatrixMode.Modelview);
-            Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
+            Matrix4 lookat = camera.GetViewMatrix();
             GL.LoadMatrix(ref lookat);
 
-            GL.Rotate(m_angle, 0.0f, 1.0f, 0.0f);
+            //GL.Rotate(m_angle, 0.0f, 1.0f, 0.0f);
 
             float tmp = m_sceneMax.X - m_sceneMin.X;
             tmp = Math.Max(m_sceneMax.Y - m_sceneMin.Y, tmp);
             tmp = Math.Max(m_sceneMax.Z - m_sceneMin.Z, tmp);
             tmp = 1.0f / tmp;
-            GL.Scale(tmp * 2, tmp * 2, tmp * 2);
+            GL.Scale(tmp * 20, tmp * 20, tmp * 20);
 
             GL.Translate(-m_sceneCenter);
 
@@ -243,41 +238,50 @@ namespace AWGL
 
         private void MoveCamera()
         {
-            foreach (Key key in keyList)
+            if (keyList.Count > 0) 
             {
-
-                switch (key)
+                foreach (Key key in keyList)
                 {
-                    case Key.Escape:
-                        Exit();
-                        break;
 
-                    case Key.W:
-                        camera.Move(0f, 0.1f, 0f);
-                        break;
+                    switch (key)
+                    {
+                        case Key.Escape:
+                            Exit();
+                            break;
 
-                    case Key.A:
-                        camera.Move(-0.1f, 0f, 0f);
-                        break;
+                        case Key.W:
+                            camera.Move(0f, 0.1f, 0f);
+                            break;
 
-                    case Key.S:
-                        camera.Move(0f, -0.1f, 0f);
-                        break;
+                        case Key.A:
+                            camera.Move(-0.1f, 0f, 0f);
+                            break;
 
-                    case Key.D:
-                        camera.Move(0.1f, 0f, 0f);
-                        break;
+                        case Key.S:
+                            camera.Move(0f, -0.1f, 0f);
+                            break;
 
-                    case Key.Q:
-                        camera.Move(0f, 0f, 0.1f);
-                        break;
+                        case Key.D:
+                            camera.Move(0.1f, 0f, 0f);
+                            break;
 
-                    case Key.E:
-                        camera.Move(0f, 0f, -0.1f);
-                        break;
+                        case Key.Q:
+                            camera.Move(0f, 0f, 0.1f);
+                            break;
 
-                    default:
-                        break;
+                        case Key.E:
+                            camera.Move(0f, 0f, -0.1f);
+                            break;
+
+                        case Key.F11:
+                            if (this.WindowState == OpenTK.WindowState.Normal)
+                                this.WindowState = OpenTK.WindowState.Fullscreen;
+                            else
+                                this.WindowState = OpenTK.WindowState.Normal;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
@@ -467,7 +471,7 @@ namespace AWGL
             Color4 color = new Color4(.8f, .8f, .8f, 1.0f);
             if (mat.HasColorDiffuse)
             {
-                // color = FromColor(mat.ColorDiffuse);
+                color = FromColor(mat.ColorDiffuse);
             }
             GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Diffuse, color);
 

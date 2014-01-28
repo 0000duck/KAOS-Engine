@@ -1,0 +1,57 @@
+# Max2Mtl Version 4.0 Mar 10th, 2001
+#
+newmtl 1_-_Default
+Ka  0.6 0.6 0.6
+Kd  0.6 0.6 0.6
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  0.0
+illum 2
+map_Kd diffuse.jpg
+map_Ks specular.JPG
+bump bump.jpg
+#
+newmtl 7_-_Default
+Ka  0.6 0.5 0.4
+Kd  0.6 0.5 0.4
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  0.0
+illum 2
+#
+newmtl upper_teeth
+Ka  0.6 0.6 0.6
+Kd  0.6 0.6 0.6
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  6.4
+illum 2
+map_Kd upper_teeth.JPG
+#
+newmtl lower_teeth
+Ka  0.6 0.6 0.6
+Kd  0.6 0.6 0.6
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  6.9
+illum 2
+map_Kd lower_teeth.JPG
+#
+newmtl Material__16
+Ka  0.3 0.2 0.1
+Kd  0.3 0.2 0.1
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  0.0
+illum 2
+#
+newmtl eye_ball
+Ka  0.6 0.6 0.6
+Kd  0.6 0.6 0.6
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  14.1
+illum 2
+map_Kd eye.JPG
+#
+# EOF
