@@ -273,12 +273,6 @@ namespace AWGL
                             camera.Move(0f, 0f, -0.1f);
                             break;
 
-                        case Key.F11:
-                            if (this.WindowState == OpenTK.WindowState.Normal)
-                                this.WindowState = OpenTK.WindowState.Fullscreen;
-                            else
-                                this.WindowState = OpenTK.WindowState.Normal;
-                            break;
                         default:
                             break;
                     }
