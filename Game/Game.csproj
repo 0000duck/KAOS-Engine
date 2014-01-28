@@ -320,6 +320,12 @@
     <None Include="Content\Models\Vehicles\HelicopterNormalMap.tga">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Content\Models\Vehicles\Jupiter2\jupe2\Jupiter 2 Funky.cr2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Models\Vehicles\Jupiter2\jupe2\Jupiter 2 Plus.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AWGL\AWGL.csproj">
@@ -433,6 +439,27 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Models\Vehicles\HelicopterTexture.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Models\Vehicles\Jupiter2\jupe2\Jupiter 2 Funky.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Models\Vehicles\Jupiter2\textures\CarpetGreen.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Models\Vehicles\Jupiter2\textures\CLOUD1a.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Models\Vehicles\Jupiter2\textures\Galaxy2c.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Models\Vehicles\Jupiter2\textures\Read_this.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Models\Vehicles\Jupiter2\textures\White Linear  V.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Models\Vehicles\Jupiter2\textures\White Linear H.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

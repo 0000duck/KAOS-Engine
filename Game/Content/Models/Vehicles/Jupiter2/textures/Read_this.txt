@@ -1,0 +1,47 @@
+
+
+   For all those "Lost in Space" fans out there, I ( kind of ) proudly present:
+
+
+   Jupiter 2 Spaceship in 3-D ! ! !
+  -----------------------------------
+
+  Rev. 4   11/20/05
+
+  Note: this model was done COMPLETELY FROM MEMORY and is probably inaccurate in
+ many ways, but what the heck, it's free, right ?
+ I used Anim8or to create the structures and add lots of internal content, so you can
+ use Poser to use it for a complete scene stage for your own space epic ( Like the original
+ Jupiter 2, this one has lots of camera room ! )
+
+  All you need now is a robot.
+
+  Unlike the other downloadable Jupiter 2 model to be found on the internet, this one has
+ three decks ( not one ) and is more the proper scale from the TV series, and includes 
+ the chariot, The lander, crash couches,  dining lounge, and control cockpit with computer
+ banks, not to mention the elevator and stasis tubes. Many of it's inaccuracies probably
+ stem from the need to extrapolate functions of various parts, and needing to allocate
+ room for the individual items. For instance, I enclosed the Chariot and Lander in
+ transparent "drop tubes" on the lower deck to preserve functionality. That may not be
+ authentic, but it sure looks good in rendering !
+  Also, textures can be assigned to any of the element materials, making the whole model
+ customizable for render purposes.
+
+  Bonus: Galaxy & Space background scene in JPEG format.
+    Feature: plaster it on a background, or cube bigger than the viewing scene. Also usable
+             as a "SkyDome" template.   
+
+
+
+  Rev. 4:  Fixed the landing gear, added morphs to retract the landing gear, added landing gear
+      bay doors which are closable, and added a morph to close the airlock door. Added basic
+      texturing, and re-scaled to fit poser figures. Also converted to figure state.
+
+
+  Lost in Space and Poser are trademarked respectively. No association with these
+ companies or individuals is implied.
+
+
+
+ mail to:   tiantan@prodigy.net
+

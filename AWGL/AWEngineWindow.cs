@@ -61,7 +61,7 @@ namespace AWGL
             Keyboard.KeyUp += HandleKeyUp;
 
             //CreateShaders();
-                                                                                                            //"Content/Models/Characters/bunny/reconstruction/bun_zipper.ply"
+                                                                                                            //"Content/Models/Vehicles/Jupiter2/jupe2/Jupiter 2 Plus.obj"
             String fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Content/Models/Characters/bunny/reconstruction/bun_zipper.ply");
 
             AssimpContext importer = new AssimpContext();
