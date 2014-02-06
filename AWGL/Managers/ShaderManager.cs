@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using AWGL.Utilities;
 using OpenTK.Graphics.OpenGL;
-using System.Diagnostics;
-using OpenTK;
-using System.Drawing;
-using AWGL.Utilities;
+using System.Collections.Generic;
+using System.IO;
 
 namespace AWGL.Managers
 {

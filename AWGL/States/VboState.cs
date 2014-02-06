@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AWGL.Interfaces;
+﻿using AWGL.Interfaces;
 using AWGL.Managers;
-using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
 using AWGL.Shapes;
 using AWGL.Utilities;
-using System.Drawing;
-using System.Diagnostics;
+using OpenTK.Graphics.OpenGL;
+using System;
 
 namespace AWGL.States
 {

@@ -1,9 +1,6 @@
 ﻿using AWGL.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace AWGL.Managers
 {
@@ -32,7 +29,7 @@ namespace AWGL.Managers
             stateStore.Add(stateName, state);
         }
 
-        public void SetState(string stateName)
+        public void ChangeState(string stateName)
         {
             Debug.Assert( Exists(stateName) );
             currentState = stateStore[stateName];

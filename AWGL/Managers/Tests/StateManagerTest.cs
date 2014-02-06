@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using NUnit.Framework;
+﻿
 using AWGL.States;
+using NUnit.Framework;
 
 namespace AWGL.Managers.Tests
 {

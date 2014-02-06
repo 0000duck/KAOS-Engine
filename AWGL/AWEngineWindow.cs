@@ -37,7 +37,7 @@ namespace AWGL
         int modelviewMatrixLocation, projectionMatrixLocation;
 
         protected Matrix4 projectionMatrix, modelviewMatrix;
-        protected PreciseTimer m_Timer;
+        protected AnimationTimer m_Timer;
 
         private Vector3 m_sceneCenter, m_sceneMin, m_sceneMax;
         private Scene m_model;
@@ -72,7 +72,7 @@ namespace AWGL
 
         private void InitialiseTimer()
         {
-            m_Timer = new PreciseTimer();
+            m_Timer = new AnimationTimer();
         }
 
         private void InitialiseStockShaders()
