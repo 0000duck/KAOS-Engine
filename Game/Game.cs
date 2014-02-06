@@ -18,18 +18,17 @@ namespace Game
         public override void Initialise()
         {
             SetupStates();
-            stateManager.SetState("skybox");
+            stateManager.ChangeState("skybox");
         }
 
         private void SetupStates()
         {
             stateManager.AddState("skybox", new Skyboxstate(stateManager));
-            stateManager.AddState("vbo", new VboState(stateManager));
         }
 
         private void SetState(string stateToLoad)
         {
-            stateManager.SetState(stateToLoad);
+            stateManager.ChangeState(stateToLoad);
         }
 
         public override void UpdateFrame(float elapsedTime)
