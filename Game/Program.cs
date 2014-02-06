@@ -11,7 +11,7 @@ namespace Game
         [STAThread]
         static void Main()
         {
-            using (Game game = new Game(1024, 600, 3, 2)) { game.Run(60, 0); }
+            using (Game game = new Game(1024, 600, 4, 1)) { game.Run(60, 0); }
         }
     }
 }

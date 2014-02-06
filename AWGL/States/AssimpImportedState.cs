@@ -23,14 +23,10 @@ namespace AWGL.States
         BufferObjectManager m_bufferObjectManager = new BufferObjectManager();
         BufferObject m_bufferObject;
         StateManager m_stateManager;
-        ShaderManager m_shaderManager;
 
-        
-
-        public AssimpImportedState(StateManager stateManager, ShaderManager shaderManager)
+        public AssimpImportedState(StateManager stateManager)
         {
             m_stateManager = stateManager;
-            m_shaderManager = shaderManager;
         }
 
         public void Render()

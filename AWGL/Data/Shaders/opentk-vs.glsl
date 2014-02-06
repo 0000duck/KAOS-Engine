@@ -1,4 +1,4 @@
-﻿#version 140
+#version 410 core
 
 precision highp float;
 
@@ -20,7 +20,7 @@ out vec3 normal;
 void main(void)
 {
   //works only for orthogonal modelview
-  normal = (modelview_matrix * vec4(in_normal, 0)).xyz;
+  //normal = (modelview_matrix * vec4(in_normal, 0)).xyz;
   
   gl_Position = projection_matrix * modelview_matrix * vec4(in_position, 1);
 }

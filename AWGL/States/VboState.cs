@@ -17,34 +17,28 @@ namespace AWGL.States
     public class VboState : IGameObject
     {
         BufferObjectManager m_bufferObjectManager = new BufferObjectManager();
+
         BufferObject m_bufferObject;
         StateManager m_stateManager;
-        ShaderManager m_shaderManager;
-        Cube cube;
+        Cube cube = new Cube(0, 0, 0);
 
-        public VboState(StateManager stateManager, ShaderManager shaderManager)
+        public VboState(StateManager stateManager)
         {
             m_stateManager = stateManager;
-            this.m_stateManager = stateManager;
-            this.m_shaderManager = shaderManager;
-
-            cube = new Cube();
 
             CreateVBOs();
         }
 
         private void CreateVBOs()
         {
-            // this buffer object will take care of VAO generation temporarily - stored in bufferObject.VaoId
             BufferObject tempVBO = new BufferObject();
             tempVBO.PositionData = cube.Vertices;
             tempVBO.NormalsData = cube.Normals;
             tempVBO.IndicesData = cube.Indices;
             tempVBO.PrimitiveType = PrimitiveType.Triangles;
 
-            m_bufferObjectManager.AddBufferObject("test-cube", tempVBO, m_shaderManager.ProgramHandle);
+            m_bufferObjectManager.AddBufferObject("test-cube", tempVBO, ShaderManager.DefaultShader.ID);
             m_bufferObject = m_bufferObjectManager.GetBuffer("test-cube");
-
         }
 
         public void Update(float elapsedTime)

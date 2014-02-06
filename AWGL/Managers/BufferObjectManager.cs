@@ -74,7 +74,7 @@ namespace AWGL.Managers
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
             GL.BindAttribLocation(program, bufferHandle, "in_position");
 
-                bufferHandle = GL.GetAttribLocation(program, "in_normal");
+            bufferHandle = GL.GetAttribLocation(program, "in_normal");
             GL.EnableVertexAttribArray(bufferHandle);
             GL.BindBuffer(BufferTarget.ArrayBuffer, bufferObject.VboID);
             GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, sizeOfPositionData);

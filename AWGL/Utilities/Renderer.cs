@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using AWGL.Managers;
+using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System;
@@ -8,23 +9,19 @@ using System.Text;
 
 namespace AWGL.Utilities
 {
-    class Renderer
+    public static class Renderer
     {
-        public Renderer()
-        {
-            GL.Enable(EnableCap.Texture2D);
-            //GL.Enable(EnableCap.Blend);
-            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-        }
+        internal static Matrix4 projectionMatrix, modelViewProjectionMatrix, modelViewMatrix;
+        internal static int handle_projectionMatrix, handle_modelViewProjectionMatrix, handle_modelViewMatrix;
 
-        public void DrawImmediateModeVertex(Vector3d position, Color4 color, Vector2 uvs)
+        public static void DrawImmediateModeVertex(Vector3d position, Color4 color, Vector2 uvs)
         {
             GL.Color4(color);
             GL.TexCoord2(uvs);
             GL.Vertex3(position);
         }
 
-        public void DrawSprite(Sprite sprite)
+        public static void DrawSprite(Sprite sprite)
         {
             GL.BindTexture(TextureTarget.Texture2D, sprite.Texture.ID);
             GL.Begin(PrimitiveType.Triangles);
@@ -34,14 +31,51 @@ namespace AWGL.Utilities
                     sprite.VertexPositions[i],
                     sprite.VertexColours[i],
                     sprite.VertexUVs[i]);
-
             }
             GL.End();
         }
 
-        public void DrawSkyBox()
+        public static void DrawSkyBox(TextureManager m_textureManager, BufferObject cubeObject)
+        {
+            GL.ClearBuffer(ClearBuffer.Color, 0, new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
+            GL.ClearBuffer(ClearBuffer.Depth, 0, new float[] { 1.0f });
+
+            GL.UseProgram(ShaderManager.Get("Skybox").ID);
+            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.BindTexture(TextureTarget.TextureCubeMap, m_textureManager.Get("skybox1").ID);
+
+            GL.Disable(EnableCap.DepthTest);
+            int temploc = GL.GetUniformLocation(ShaderManager.Get("Skybox").ID, "tex_cubemap");
+            GL.Uniform1(temploc, 0);
+
+            GL.UniformMatrix4(handle_modelViewMatrix, false, ref modelViewMatrix);
+            //GL.Uniform3(eye_handle, ref eyeObjectSpace);
+            GL.UniformMatrix4(handle_modelViewProjectionMatrix, false, ref modelViewProjectionMatrix);
+
+            GL.BindVertexArray(cubeObject.VaoID);
+            GL.DrawElements(cubeObject.PrimitiveType, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
+
+            GL.Enable(EnableCap.DepthTest);
+        }
+
+        public static void DrawWireframeVoxel(float length, float height, float width)
+        {
+            
+        }
+
+        public static void DrawChunk(Chunk chunk)
         {
 
+        }
+
+        internal static void ToggleWireframeOn()
+        {
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+        }
+
+        internal static void ToggleWireframeOff()
+        {
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
         }
     }
 }

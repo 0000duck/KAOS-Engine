@@ -10,21 +10,22 @@ namespace AWGL.Utilities
     /// <summary>
     /// Camera
     /// </summary>
-    public class Camera
+    public static class Camera
     {
-        public Vector3 Position = new Vector3(0f, 5f, 5f);
-        public Vector3 Orientation = new Vector3(0f, 0f, 0f);
-        public float MoveSpeed = 0.2f;
-        public float MouseSensitivity = 0.01f;
+        public static Vector3 Position = new Vector3(0f, 0f, 0f);
+        public static Vector3 Orientation = new Vector3(0f, 0f, 0f);
+        public static float MoveSpeed = 0.2f;
+        public static float MouseSensitivity = 0.01f;
 
-        public Matrix4 LookAtMatrix
+        public static Matrix4 LookAtMatrix
         {
             get
             {
                 return GetViewMatrix();
             }
         }
-        public Matrix4 GetViewMatrix()
+
+        public static Matrix4 GetViewMatrix()
         {
             Vector3 lookat = new Vector3();
 
@@ -35,7 +36,7 @@ namespace AWGL.Utilities
             return Matrix4.LookAt(Position, Position + lookat, Vector3.UnitY);
         }
 
-        public void Move(float x, float y, float z)
+        public static void Move(float x, float y, float z)
         {
             Vector3 offset = new Vector3();
 
@@ -54,15 +55,13 @@ namespace AWGL.Utilities
             Logger.WriteLine("Camera Position = " + Position);
         }
 
-        public void AddRotation(float x, float y)
+        public static void AddRotation(float x, float y)
         {
             x = x * MouseSensitivity;
             y = y * MouseSensitivity;
 
             Orientation.X = (Orientation.X + x) % ((float)Math.PI * 2.0f);
             Orientation.Y = Math.Max(Math.Min(Orientation.Y + y, (float)Math.PI / 2.0f - 0.1f), (float)-Math.PI / 2.0f + 0.1f);
-
-            Logger.WriteLine("Camera Orientation = " + Orientation);
         }
     }
 }

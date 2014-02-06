@@ -11,18 +11,19 @@ namespace AWGL.Shapes
 {
     public class Cube : Shape
     {
-        public Cube()
+
+        public Cube(int x, int y, int z)
         {
             Vertices = new Vector3[]
             {
-                new Vector3(-1.0f, -1.0f,  1.0f),
-                new Vector3( 1.0f, -1.0f,  1.0f),
-                new Vector3( 1.0f,  1.0f,  1.0f),
-                new Vector3(-1.0f,  1.0f,  1.0f),
-                new Vector3(-1.0f, -1.0f, -1.0f),
-                new Vector3( 1.0f, -1.0f, -1.0f), 
-                new Vector3( 1.0f,  1.0f, -1.0f),
-                new Vector3(-1.0f,  1.0f, -1.0f)
+                new Vector3(x-1.0f, y-1.0f,  z+1.0f),
+                new Vector3(x+ 1.0f, y-1.0f,  z+1.0f),
+                new Vector3(x+ 1.0f,  y+1.0f,  z+1.0f),
+                new Vector3(x-1.0f,  y+1.0f,  z+1.0f),
+                new Vector3(x-1.0f, y-1.0f, z-1.0f),
+                new Vector3(x+ 1.0f, y-1.0f, z-1.0f), 
+                new Vector3(x+ 1.0f,  y+1.0f, z-1.0f),
+                new Vector3(x-1.0f,  y+1.0f, z-1.0f)
             };
 
             Indices = new int[]
@@ -65,6 +66,7 @@ namespace AWGL.Shapes
                 ColorToRgba32(Color.Gold),
             };
         }
+
 
         /// <summary>
         /// Converts a Color instance into an int representation

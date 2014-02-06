@@ -32,7 +32,7 @@ namespace AWGL.Managers
             stateStore.Add(stateName, state);
         }
 
-        public void ChangeState(string stateName)
+        public void SetState(string stateName)
         {
             Debug.Assert( Exists(stateName) );
             currentState = stateStore[stateName];

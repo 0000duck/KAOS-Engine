@@ -18,10 +18,9 @@ namespace AWGL.Managers
             return m_textureDatabase[textureId];
         }
 
+        private int textureGpuHandle;
         private Bitmap bitmap;
         private BitmapData bitmapData;
-
-        private int textureGpuHandle;
 
         public void LoadTexture(string textureId, string path)
         {
@@ -30,34 +29,67 @@ namespace AWGL.Managers
 
             GL.GenTextures(1, out textureGpuHandle);
             GL.BindTexture(TextureTarget.Texture2D, textureGpuHandle);
-            
-            try
-            {
-                bitmap = new Bitmap(path);
-                bitmap.Save("test.bmp", ImageFormat.Bmp);
-                bitmapData = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                    ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            }
-            catch (Exception e)
-            {
-                Logger.WriteLine("Error loading texture. " + e.Message);
-            }
 
+            OpenImageFile(path);
 
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bitmapData.Width, bitmapData.Height, 0,
+            GL.TexImage2D(TextureTarget.Texture2D, 
+                0, PixelInternalFormat.Rgba, bitmapData.Width, bitmapData.Height, 0,
                 OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bitmapData.Scan0);
 
-            bitmap.UnlockBits(bitmapData);
+            CloseImageFile();
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
-            
+
             m_textureDatabase.Add(textureId, new Texture(textureGpuHandle, bitmapData.Width, bitmapData.Height));
         }
 
-        #region MyRegion
+        public void LoadSkyTexture(string textureId, string[] path)
+        {
+            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.GenTextures(1, out textureGpuHandle);
+            GL.BindTexture(TextureTarget.TextureCubeMap, textureGpuHandle);
 
-        #endregion
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapR, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+
+            for (int face = 0; face < 6; face++)
+            {
+                OpenImageFile(path[face]);
+                bitmap.Save(face + ".bmp");
+                GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX + face, 
+                    0, PixelInternalFormat.Rgba, bitmapData.Width, bitmapData.Height, 0,
+                    OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bitmapData.Scan0);
+
+                GL.Finish();
+                CloseImageFile();
+            }
+
+            m_textureDatabase.Add(textureId, new Texture(textureGpuHandle, bitmapData.Width, bitmapData.Height));
+        }
+
+        private void OpenImageFile(string path)
+        {
+            bitmap = new Bitmap(path);
+
+            bitmapData = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+        }
+
+        private void CloseImageFile()
+        {
+            bitmap.UnlockBits(bitmapData);
+
+            CleanUp();
+        }
+
+        private void CleanUp()
+        {
+            bitmap.Dispose();
+        }
 
 
         public void Dispose()

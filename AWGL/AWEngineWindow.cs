@@ -1,6 +1,7 @@
 ﻿using Assimp;
 using Assimp.Configs;
 using AWGL.Managers;
+using AWGL.Nodes;
 using AWGL.Utilities;
 using OpenTK;
 using OpenTK.Graphics;
@@ -8,10 +9,15 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace AWGL
@@ -31,10 +37,7 @@ namespace AWGL
         int modelviewMatrixLocation, projectionMatrixLocation;
 
         protected Matrix4 projectionMatrix, modelviewMatrix;
-        protected ShaderManager shaderManager;
         protected PreciseTimer m_Timer;
-        protected AWGL.Utilities.Camera camera;
-        protected List<Key> keyList;
 
         private Vector3 m_sceneCenter, m_sceneMin, m_sceneMax;
         private Scene m_model;
@@ -43,75 +46,71 @@ namespace AWGL
         private int m_texId;
         
         public AWEngineWindow(int height, int width, int major, int minor)
-            : base(height, width, new GraphicsMode(32, 24, 8, 8), AWEngineWindow.AppName, GameWindowFlags.Default, 
-            DisplayDevice.Default, 0, 0, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
+            : base(height, width, new GraphicsMode(32, 16, 0, 4), AWEngineWindow.AppName, GameWindowFlags.Default, 
+            DisplayDevice.Default, major, minor, GraphicsContextFlags.Default)
         { }
 
         #region Load everything here
         protected override void OnLoad(System.EventArgs e)
         {
-            m_Timer = new PreciseTimer();
-
-            //CameraManager
-            camera = new AWGL.Utilities.Camera();
-            
-            // InputManager
-            keyList = new List<Key>();
-            Keyboard.KeyDown += HandleKeyDown;
-            Keyboard.KeyUp += HandleKeyUp;
-
-            //CreateShaders();
-                                                                                                            //"Content/Models/Vehicles/Jupiter2/jupe2/Jupiter 2 Plus.obj"
-            String fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Content/Models/Characters/bunny/reconstruction/bun_zipper.ply");
-
-            AssimpContext importer = new AssimpContext();
-            importer.SetConfig(new NormalSmoothingAngleConfig(66.0f));
-            m_model = importer.ImportFile(fileName, PostProcessPreset.TargetRealTimeMaximumQuality);
-            ComputeBoundingBox();
-
-            //// Other state
-            GL.Enable(EnableCap.DepthTest);
-            GL.ClearColor(.1f, 0f, .1f, 0f);
-           
-
-#if Debug
-            AWLogger.WriteLine("...Exiting OnLoad"); 
-#endif      
+            BaseInitialisation();
             Initialise();
         }
 
+        private void BaseInitialisation()
+        {
+            InitialiseTimer();
+            InitialiseInput();
+            InitialiseStockShaders();
+        }
+
+        private void InitialiseInput()
+        {
+            Keyboard.KeyDown += HandleKeyDown;
+            Keyboard.KeyUp += HandleKeyUp;
+        }
+
+        private void InitialiseTimer()
+        {
+            m_Timer = new PreciseTimer();
+        }
+
+        private void InitialiseStockShaders()
+        {
+            ShaderManager.LoadDefaultShaderProgram();
+        }
+
         public abstract void Initialise();
-        
 
-        private void CreateShaders()
-        {
-            shaderManager = new ShaderManager("opentk-vs", "opentk-fs");
+        //private void CreateShaders()
+        //{
+        //    shaderManager = new ShaderManager("opentk-vs", "opentk-fs");
 
-            GL.UseProgram(shaderManager.ProgramHandle);
-            QueryMatrixLocations();
+        //    GL.UseProgram(shaderManager.ProgramHandle);
+        //    QueryMatrixLocations();
 
-            float aspectRatio = ScreenWidth / (float)(ScreenHeight);
-            SetProjectionMatrix(Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 1, 64));
-            SetModelviewMatrix(Matrix4.CreateTranslation(0, 0, 5));
-        }
+        //    float aspect = ScreenWidth / (float)(ScreenHeight);
+        //    SetProjectionMatrix(Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect, 1, 100));
+        //    SetModelviewMatrix(Matrix4.CreateRotationX(0.5f) * Matrix4.CreateTranslation(0, 0, -4));
+        //}
 
-        protected void QueryMatrixLocations()
-        {
-            projectionMatrixLocation = GL.GetUniformLocation(shaderManager.ProgramHandle, "projection_matrix");
-            modelviewMatrixLocation = GL.GetUniformLocation(shaderManager.ProgramHandle, "modelview_matrix");
-        }
+        //protected void QueryMatrixLocations()
+        //{
+        //    projectionMatrixLocation = GL.GetUniformLocation(shaderManager.ProgramHandle, "projection_matrix");
+        //    modelviewMatrixLocation = GL.GetUniformLocation(shaderManager.ProgramHandle, "modelview_matrix");
+        //}
 
-        public void SetModelviewMatrix(Matrix4 matrix)
-        {
-            modelviewMatrix = matrix;
-            GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
-        }
+        //protected void SetModelviewMatrix(Matrix4 matrix)
+        //{
+        //    modelviewMatrix = matrix;
+        //    GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
+        //}
 
-        protected void SetProjectionMatrix(Matrix4 matrix)
-        {
-            projectionMatrix = matrix;
-            GL.UniformMatrix4(projectionMatrixLocation, false, ref projectionMatrix);
-        }
+        //protected void SetProjectionMatrix(Matrix4 matrix)
+        //{
+        //    projectionMatrix = matrix;
+        //    GL.UniformMatrix4(projectionMatrixLocation, false, ref projectionMatrix);
+        //}
 
         #endregion
 
@@ -124,20 +123,12 @@ namespace AWGL
                 Point center = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
                 Point delta = new Point(center.X - Cursor.Position.X, center.Y - Cursor.Position.Y);
 
-                camera.AddRotation(delta.X, delta.Y);
+                Utilities.Camera.AddRotation(delta.X, delta.Y);
                 ResetCursor();
             }
 
-            MoveCamera();
-
             //setmodelviewmatrix(matrix4.createrotationy((float)e.time) * modelviewmatrix);
             #endregion
-
-            m_angle += 25f * (float)e.Time;
-            if (m_angle > 360)
-            {
-                m_angle = 0.0f;
-            }
 
             UpdateFrame(m_Timer.GetElapsedTime());
         }
@@ -155,41 +146,47 @@ namespace AWGL
                 " OpenGL: " + GL.GetString(StringName.Version) +
                 " GLSL: " + GL.GetString(StringName.ShadingLanguageVersion) +
                 " FPS: " + string.Format("{0:F}", 1.0 / e.Time);
-            
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            // Single call to StateRenderer to take place here.
-            
-            GL.Enable(EnableCap.Texture2D);
-            GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
-            GL.Enable(EnableCap.Lighting);
-            GL.Enable(EnableCap.Light0);
-            GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.Normalize);
-            GL.FrontFace(FrontFaceDirection.Ccw);
 
-            GL.MatrixMode(MatrixMode.Modelview);
-            Matrix4 lookat = camera.GetViewMatrix();
-            GL.LoadMatrix(ref lookat);
+            //GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+
+            //SetModelviewMatrix(camera.GetViewMatrix());
+
+            // Single call to StateRenderer to take place here.
+
+            #region Assimp Example Code
+            //GL.Enable(EnableCap.Texture2D);
+            //GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
+            //GL.Enable(EnableCap.Lighting);
+            //GL.Enable(EnableCap.Light0);
+            //GL.Enable(EnableCap.DepthTest);
+            //GL.Enable(EnableCap.Normalize);
+            //GL.FrontFace(FrontFaceDirection.Ccw);
+
+            //GL.MatrixMode(MatrixMode.Modelview);
+            //Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
+            //GL.LoadMatrix(ref lookat);
 
             //GL.Rotate(m_angle, 0.0f, 1.0f, 0.0f);
 
-            float tmp = m_sceneMax.X - m_sceneMin.X;
-            tmp = Math.Max(m_sceneMax.Y - m_sceneMin.Y, tmp);
-            tmp = Math.Max(m_sceneMax.Z - m_sceneMin.Z, tmp);
-            tmp = 1.0f / tmp;
-            GL.Scale(tmp * 20, tmp * 20, tmp * 20);
+            //float tmp = m_sceneMax.X - m_sceneMin.X;
+            //tmp = Math.Max(m_sceneMax.Y - m_sceneMin.Y, tmp);
+            //tmp = Math.Max(m_sceneMax.Z - m_sceneMin.Z, tmp);
+            //tmp = 1.0f / tmp;
+            //GL.Scale(tmp * 2, tmp * 2, tmp * 2);
 
-            GL.Translate(-m_sceneCenter);
+            //GL.Translate(-m_sceneCenter);
 
-            if (m_displayList == 0)
-            {
-                m_displayList = GL.GenLists(1);
-                GL.NewList(m_displayList, ListMode.Compile);
-                RecursiveRender(m_model, m_model.RootNode);
-                GL.EndList();
-            }
+            //if (m_displayList == 0)
+            //{
+            //    m_displayList = GL.GenLists(1);
+            //    GL.NewList(m_displayList, ListMode.Compile);
+            //    RecursiveRender(m_model, m_model.RootNode);
+            //    GL.EndList();
+            //}
 
-            GL.CallList(m_displayList);
+            //GL.CallList(m_displayList); 
+            #endregion
 
             RenderFrame(m_Timer.GetElapsedTime());
 
@@ -203,84 +200,46 @@ namespace AWGL
             base.OnResize(e);
             GL.Viewport(0, 0, ScreenWidth, ScreenHeight);
 
-            float widthToHeight = ScreenWidth / (float)ScreenHeight;
-            Matrix4 perspective = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, widthToHeight, 1, 64);
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref perspective);
-        }
+            float aspect = ScreenWidth / (float)ScreenHeight;
+            //SetProjectionMatrix(Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect, 1, 100));
 
+            #region Assimp Example Code
+            //float widthToHeight = ScreenWidth / (float)ScreenHeight;
+            //Matrix4 perspective = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, widthToHeight, 1, 64);
+            //GL.MatrixMode(MatrixMode.Projection);
+            //GL.LoadMatrix(ref perspective); 
+            #endregion
+        }
         #endregion
 
         #region GameWindow.Dispose
         public override void Dispose()
         {
-            base.Dispose();
-            //shaderManager.Dispose();
+            
         } 
         #endregion
 
         #region Input Control
+        
         private void HandleKeyDown(object sender, KeyboardKeyEventArgs e)
         {
-            keyList.Add(e.Key);
+            if (e.Key == Key.Escape)
+                Exit();
+            InputManager.keyList.Add(e.Key);
         }
 
         private void HandleKeyUp(object sender, KeyboardKeyEventArgs e)
         {
-            for (int count = 0; count < keyList.Count; count++)
+            for (int count = 0; count < InputManager.keyList.Count; count++)
             {
-                if (keyList[count] == e.Key)
+                if (InputManager.keyList[count] == e.Key)
                 {
-                    keyList.Remove(keyList[count]);
+                    InputManager.keyList.Remove(InputManager.keyList[count]);
                 }
             }
         }
 
-        private void MoveCamera()
-        {
-            if (keyList.Count > 0) 
-            {
-                foreach (Key key in keyList)
-                {
-
-                    switch (key)
-                    {
-                        case Key.Escape:
-                            Exit();
-                            break;
-
-                        case Key.W:
-                            camera.Move(0f, 0.1f, 0f);
-                            break;
-
-                        case Key.A:
-                            camera.Move(-0.1f, 0f, 0f);
-                            break;
-
-                        case Key.S:
-                            camera.Move(0f, -0.1f, 0f);
-                            break;
-
-                        case Key.D:
-                            camera.Move(0.1f, 0f, 0f);
-                            break;
-
-                        case Key.Q:
-                            camera.Move(0f, 0f, 0.1f);
-                            break;
-
-                        case Key.E:
-                            camera.Move(0f, 0f, -0.1f);
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-            }
-        }
-
-        private void ResetCursor()
+        public void ResetCursor()
         {
             System.Windows.Forms.Cursor.Position = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
         }
@@ -294,7 +253,10 @@ namespace AWGL
                 ResetCursor();
             }
         } 
+        
         #endregion
+
+        #region Assimp example code
 
         private void ComputeBoundingBox()
         {
@@ -465,7 +427,7 @@ namespace AWGL
             Color4 color = new Color4(.8f, .8f, .8f, 1.0f);
             if (mat.HasColorDiffuse)
             {
-                color = FromColor(mat.ColorDiffuse);
+                // color = FromColor(mat.ColorDiffuse);
             }
             GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Diffuse, color);
 
@@ -544,6 +506,8 @@ namespace AWGL
             c.A = color.A;
             return c;
         }
+
+        #endregion
 
         protected override void OnUnload(EventArgs e)
         {

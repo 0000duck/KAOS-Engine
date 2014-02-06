@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AWGL</RootNamespace>
     <AssemblyName>AWGL</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -42,8 +42,10 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
-    <Reference Include="OpenTK.GLControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Documents\OpenTK\1.1\Binaries\OpenTK\Debug\OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -56,7 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IGameObject.cs" />
-    <Compile Include="Managers\BufferManager.cs" />
     <Compile Include="Managers\BufferObjectManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\ModelManager.cs" />
@@ -103,15 +104,19 @@
     <Compile Include="States\AssimpImportedState.cs" />
     <Compile Include="States\DefaultState.cs" />
     <Compile Include="States\DrawSpriteState.cs" />
+    <Compile Include="States\Skyboxstate.cs" />
     <Compile Include="States\SplashScreenState.cs" />
-    <Compile Include="States\TestSpriteClassState.cs" />
     <Compile Include="States\VboState.cs" />
+    <Compile Include="States\VoxelState.cs" />
+    <Compile Include="Utilities\Block.cs" />
     <Compile Include="Utilities\BufferObject.cs" />
     <Compile Include="Utilities\Camera.cs" />
     <Compile Include="Managers\ShaderManager.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Utilities\Chunk.cs" />
     <Compile Include="Utilities\CustomVertexStruct.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Logger.cs" />
     <Compile Include="Nodes\AWCube.cs" />
     <Compile Include="Nodes\AWGraphLines.cs" />
@@ -129,12 +134,12 @@
     <Compile Include="Shapes\Helpers\TetrahedronFace.cs" />
     <Compile Include="Shapes\Helpers\VboShape.cs" />
     <Compile Include="Shapes\Old\Cube.cs" />
-    <Compile Include="AWOldEngineWindow.cs" />
     <Compile Include="Nodes\AWNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Point.cs" />
     <Compile Include="Utilities\PreciseTimer.cs" />
     <Compile Include="Utilities\Renderer.cs" />
+    <Compile Include="Utilities\Shader.cs" />
     <Compile Include="Utilities\Sprite.cs" />
     <Compile Include="Utilities\Texture.cs" />
   </ItemGroup>
@@ -152,10 +157,25 @@
     <None Include="Data\Shaders\opentk-vs.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Shaders\render-fs.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\render-vs.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Shaders\Simple_FS.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Shaders\Simple_VS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\skybox-fs.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\skybox-vs.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Skyboxes\jajlands1\cubemap.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Textures\earth-cubemap.dds">
@@ -167,9 +187,7 @@
     <None Include="Data\Textures\swizzled-rock-normal-gloss.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="libSDL2.dylib">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="libSDL2.dylib" />
     <None Include="OpenTK.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -180,6 +198,42 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="AssimpLicense.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\jajlands1\back.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\jajlands1\bottom.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\jajlands1\front.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\jajlands1\left.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\jajlands1\right.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\jajlands1\top.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\set 16\neg_x.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\set 16\neg_y.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\set 16\neg_z.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\set 16\pos_x.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\set 16\pos_y.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\set 16\pos_z.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Textures\JuliaColorTable.bmp">
@@ -200,9 +254,7 @@
     <Content Include="openal32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="SDL2.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="SDL2.dll" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

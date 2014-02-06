@@ -11,29 +11,25 @@ namespace Game
 {
     class Game : AWEngineWindow
     {
-        public StateManager stateManager;
-        public TextureManager texManager;
+        public StateManager stateManager = new StateManager();
 
         public Game(int width, int height, int major, int minor) : base(width, height, major, minor) { }
 
         public override void Initialise()
         {
+            SetupStates();
+            stateManager.SetState("skybox");
+        }
 
-            texManager = new TextureManager();
+        private void SetupStates()
+        {
+            stateManager.AddState("skybox", new Skyboxstate(stateManager));
+            stateManager.AddState("vbo", new VboState(stateManager));
+        }
 
-            texManager.LoadTexture("sprite1", "Data/Textures/logo.jpg");
-            texManager.LoadTexture("sprite2", "Data/Textures/metal.jpg");
-
-            stateManager = new StateManager();
-            stateManager.AddState("Splash", new SplashScreenState(stateManager));
-            stateManager.AddState("Default", new DefaultState(stateManager));
-            stateManager.AddState("Drawing", new DrawSpriteState(stateManager, texManager));
-            stateManager.AddState("TestTexture", new TestSpriteClassState(texManager));
-            //stateManager.AddState("VboState", new VboState(stateManager, shaderManager));
-            stateManager.AddState("Assimp-state", new AssimpImportedState(stateManager, shaderManager));
-
-            stateManager.ChangeState("Assimp-state");
-            //stateManager.ChangeState("VboState");
+        private void SetState(string stateToLoad)
+        {
+            stateManager.SetState(stateToLoad);
         }
 
         public override void UpdateFrame(float elapsedTime)

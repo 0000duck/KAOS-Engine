@@ -28,7 +28,7 @@ namespace AWGL.States
             delay--;
             if (delay <= 0){
                 delay = 3;
-                m_stateManager.ChangeState("Default");
+                m_stateManager.SetState("Voxels");
             }
             currentRotation = 10 * elapsedTime;
         }

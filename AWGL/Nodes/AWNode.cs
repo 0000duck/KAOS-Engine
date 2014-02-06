@@ -9,7 +9,7 @@ namespace AWGL.Nodes
 {
     public abstract class AWNode
     {
-        protected BufferManager m_BufferManager;
+        protected BufferObjectManager m_BufferManager;
 
         protected AWNode()
         {
