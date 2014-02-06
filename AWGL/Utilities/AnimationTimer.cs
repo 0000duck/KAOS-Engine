@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AWGL.Utilities
 {
-    public class AnimationTimer
+    public class PreciseTimer
     {
         [System.Security.SuppressUnmanagedCodeSecurity]
         [System.Runtime.InteropServices.DllImport("kernel32")]
@@ -19,7 +19,7 @@ namespace AWGL.Utilities
         long m_ticksPerSecond = 0;
         long m_previouslyElapsedTime = 0;
 
-        public AnimationTimer()
+        public PreciseTimer()
         {
             QueryPerformanceFrequency(ref m_ticksPerSecond);
             GetElapsedTime();
