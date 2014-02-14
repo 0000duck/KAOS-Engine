@@ -9,7 +9,8 @@ namespace AWGL.Utilities
     public static class Renderer
     {
         internal static Matrix4 projectionMatrix, modelViewProjectionMatrix, modelViewMatrix;
-        internal static int handle_projectionMatrix, handle_modelViewProjectionMatrix, handle_modelViewMatrix;
+        internal static Vector3 eyePosition;
+        internal static int handle_projectionMatrix, handle_modelViewProjectionMatrix, handle_modelViewMatrix, handle_eyePosition;
 
         public static void DrawImmediateModeVertex(Vector3d position, Color4 color, Vector2 uvs)
         {
@@ -46,7 +47,7 @@ namespace AWGL.Utilities
             GL.Uniform1(temploc, 0);
 
             GL.UniformMatrix4(handle_modelViewMatrix, false, ref modelViewMatrix);
-            //GL.Uniform3(eye_handle, ref eyeObjectSpace);
+            GL.Uniform3(handle_eyePosition, ref eyePosition);
             GL.UniformMatrix4(handle_modelViewProjectionMatrix, false, ref modelViewProjectionMatrix);
 
             GL.BindVertexArray(cubeObject.VaoID);

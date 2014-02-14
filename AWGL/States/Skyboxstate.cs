@@ -104,9 +104,9 @@ namespace AWGL.States
         {
             ShaderManager.LoadCustomProgram("Skybox", "skybox-vs", "skybox-fs");
 
-            Renderer.handle_modelViewMatrix = GL.GetUniformLocation(ShaderManager.Get("Skybox").ID, "eye_position");
+            Renderer.handle_eyePosition = GL.GetUniformLocation(ShaderManager.Get("Skybox").ID, "eye_position");
             Renderer.handle_modelViewProjectionMatrix = GL.GetUniformLocation(ShaderManager.Get("Skybox").ID, "mvp_matrix");
-            eye_handle = GL.GetUniformLocation(ShaderManager.Get("Skybox").ID, "mv_matrix");
+            Renderer.handle_modelViewMatrix = GL.GetUniformLocation(ShaderManager.Get("Skybox").ID, "mv_matrix");
         }
 
         private void LoadCubeMap()
@@ -149,9 +149,9 @@ namespace AWGL.States
             _rotation += elapsedTime * 0.1f;
 
             Renderer.projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
-            Renderer.modelViewMatrix = Matrix4.Mult(Matrix4.Identity, Camera.GetViewMatrix());
-            eyeObjectSpace = new Vector3(0.0f, 0.0f, 1.0f);
-            Renderer.modelViewProjectionMatrix = Matrix4.Mult(Renderer.projectionMatrix, Camera.GetViewMatrix());
+            Renderer.modelViewMatrix = Matrix4.Identity;
+            Renderer.eyePosition = Camera.Position;
+            Renderer.modelViewProjectionMatrix = Matrix4.Mult(Renderer.projectionMatrix, Renderer.modelViewMatrix);
         }
 
         public void Render()

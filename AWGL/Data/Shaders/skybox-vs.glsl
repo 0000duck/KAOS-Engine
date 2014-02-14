@@ -13,6 +13,6 @@ in lowp vec3 in_position;
 
  void main(void)
  {
-	vs_out.tc = in_position;
-	gl_Position = mvp_matrix * vec4(in_position, 1.0);
+	vs_out.tc = in_position.xyz;
+	gl_Position = mvp_matrix * vec4(in_position.xyz - eye_position, 1.0);
  }
