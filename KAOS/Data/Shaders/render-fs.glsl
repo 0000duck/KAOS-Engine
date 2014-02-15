@@ -32,6 +32,7 @@ void main(void)
 
 	//color = color * vec4(ambient + diffuse * lightColor, 1.0);
 
+	// see: http://nuclear.mutantstargoat.com/articles/sdr_fract/
 
 	vec2 z, c;
 
