@@ -8,9 +8,9 @@ namespace AWGL.Utilities
 {
     public static class Renderer
     {
-        internal static Matrix4 projectionMatrix, modelViewProjectionMatrix, modelViewMatrix;
+        internal static Matrix4 projectionMatrix, modelViewProjectionMatrix, modelViewMatrix, viewMatrix;
         internal static Vector3 eyePosition;
-        internal static int handle_projectionMatrix, handle_modelViewProjectionMatrix, handle_modelViewMatrix, handle_eyePosition;
+        internal static int handle_projectionMatrix, handle_modelViewProjectionMatrix, handle_modelViewMatrix, handle_eyePosition, handle_viewMatrix;
 
         public static void DrawImmediateModeVertex(Vector3d position, Color4 color, Vector2 uvs)
         {
@@ -42,21 +42,26 @@ namespace AWGL.Utilities
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.TextureCubeMap, m_textureManager.Get("skybox1").ID);
 
-            GL.Disable(EnableCap.DepthTest);
             int temploc = GL.GetUniformLocation(ShaderManager.Get("Skybox").ID, "tex_cubemap");
             GL.Uniform1(temploc, 0);
 
-            
+            eyePosition = Camera.Position;
             GL.Uniform3(handle_eyePosition, ref eyePosition);
-            GL.UniformMatrix4(handle_modelViewProjectionMatrix, false, ref modelViewProjectionMatrix);
 
             GL.BindVertexArray(cubeObject.VaoID);
+            GL.Disable(EnableCap.DepthTest);
+
+            GL.UniformMatrix4(handle_viewMatrix, false, ref viewMatrix);
+
             GL.DrawElements(cubeObject.PrimitiveType, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             GL.Enable(EnableCap.DepthTest);
 
-            Renderer.modelViewProjectionMatrix = Matrix4.Mult(Renderer.projectionMatrix, Renderer.modelViewMatrix);
+            GL.UseProgram(ShaderManager.Get("Render").ID);
+
+            //Renderer.modelViewProjectionMatrix = Matrix4.Mult(Renderer.projectionMatrix, Renderer.modelViewMatrix);
             GL.UniformMatrix4(handle_modelViewMatrix, false, ref modelViewMatrix);
+            GL.UniformMatrix4(handle_projectionMatrix, false, ref projectionMatrix);
         }
 
         public static void DrawWireframeVoxel(float length, float height, float width)
