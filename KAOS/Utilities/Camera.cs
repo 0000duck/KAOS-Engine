@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace KAOS.Utilities
 {
     /// <summary>
-    /// Camera
+    /// Camera: http://neokabuto.blogspot.co.uk/2014/01/opentk-tutorial-5-basic-camera.html (slightly modified)
     /// </summary>
     public static class Camera
     {
-        public static Vector3 Position = new Vector3(0f, 0f, 0f);
-        public static Vector3 Orientation = new Vector3(0f, 0f, 0f);
+        public static Vector3 Position = new Vector3(0f, 0f, -4f);
+        public static Vector3 Orientation = new Vector3((float)Math.PI, 0f, 0f);
         public static float MoveSpeed = 0.2f;
         public static float MouseSensitivity = 0.01f;
 
