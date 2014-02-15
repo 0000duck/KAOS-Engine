@@ -12,7 +12,7 @@ namespace AWGL.Utilities
        
         internal static void WriteLine(string output)
         {
-            Console.WriteLine(KAOSEngine.AppName + " Logger: " + output.Trim());
+            Console.WriteLine(AWEngineWindow.AppName + " Logger: " + output.Trim());
         }
 
         internal static void PlatformInfo()
