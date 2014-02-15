@@ -1,9 +1,9 @@
-﻿using AWGL.Utilities;
+﻿using KAOS.Utilities;
 using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 using System.IO;
 
-namespace AWGL.Managers
+namespace KAOS.Managers
 {
     /// <summary>
     /// Responsible for building individual shaders and linking them to the main program.

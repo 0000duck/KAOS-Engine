@@ -1,8 +1,8 @@
 ﻿using Assimp;
 using Assimp.Configs;
-using AWGL.Managers;
-using AWGL.Nodes;
-using AWGL.Utilities;
+using KAOS.Managers;
+using KAOS.Nodes;
+using KAOS.Utilities;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -20,13 +20,13 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 
-namespace AWGL
+namespace KAOS
 {
     /// <summary>
     /// Inherit from here to get started.
     /// This is the main interface to the system.
     /// </summary>
-    public abstract class AWEngineWindow : GameWindow, IDisposable
+    public abstract class KAOSWindow : GameWindow, IDisposable
     {
 
         public static string AppName { get { return "AWEngine"; } }
@@ -45,8 +45,8 @@ namespace AWGL
         private int m_displayList;
         private int m_texId;
         
-        public AWEngineWindow(int height, int width, int major, int minor)
-            : base(height, width, new GraphicsMode(32, 16, 0, 4), AWEngineWindow.AppName, GameWindowFlags.Default, 
+        public KAOSWindow(int height, int width, int major, int minor)
+            : base(height, width, new GraphicsMode(32, 16, 0, 4), KAOSWindow.AppName, GameWindowFlags.Default, 
             DisplayDevice.Default, major, minor, GraphicsContextFlags.Default)
         { }
 
@@ -141,7 +141,7 @@ namespace AWGL
             
             GL.Viewport(0, 0, ScreenWidth, ScreenHeight);
 
-            Title = AWEngineWindow.AppName +
+            Title = KAOSWindow.AppName +
 
                 " OpenGL: " + GL.GetString(StringName.Version) +
                 " GLSL: " + GL.GetString(StringName.ShadingLanguageVersion) +

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AWGL.Nodes
+namespace KAOS.Nodes
 {
     public class AWGroupNode : AWNode, ISceneNode, IGroupNode, IEnumerable<ISceneNode>
     {

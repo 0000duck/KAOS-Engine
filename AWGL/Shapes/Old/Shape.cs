@@ -8,7 +8,7 @@
 
 using OpenTK;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
     public abstract class Shape
     {

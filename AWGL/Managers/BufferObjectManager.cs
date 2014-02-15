@@ -1,10 +1,10 @@
-﻿using AWGL.Utilities;
+﻿using KAOS.Utilities;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 
-namespace AWGL.Managers
+namespace KAOS.Managers
 {
     public class BufferObjectManager
     {

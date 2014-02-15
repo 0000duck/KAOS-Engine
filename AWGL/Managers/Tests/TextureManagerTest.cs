@@ -1,7 +1,7 @@
 ﻿
 using NUnit.Framework;
 
-namespace AWGL.Managers.Tests
+namespace KAOS.Managers.Tests
 {
     [TestFixture]
     public class TextureManagerTest

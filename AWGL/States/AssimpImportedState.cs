@@ -1,8 +1,8 @@
-﻿using AWGL.Interfaces;
-using AWGL.Managers;
-using AWGL.Utilities;
+﻿using KAOS.Interfaces;
+using KAOS.Managers;
+using KAOS.Utilities;
 
-namespace AWGL.States
+namespace KAOS.States
 {
     public class AssimpImportedState :IGameObject
     {

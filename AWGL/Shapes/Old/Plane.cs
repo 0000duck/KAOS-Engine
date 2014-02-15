@@ -10,7 +10,7 @@ using System.Text;
 
 using OpenTK;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
     public class Plane : Shape
     {

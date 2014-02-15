@@ -1,5 +1,5 @@
-﻿using AWGL.Shapes;
-using AWGL.Tutorial;
+﻿using KAOS.Shapes;
+using KAOS.Tutorial;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AWGL.Nodes
+namespace KAOS.Nodes
 {
     /// <summary>
     /// Cube Node

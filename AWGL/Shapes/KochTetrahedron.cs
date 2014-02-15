@@ -1,6 +1,6 @@
 using System;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
     public sealed class KochTetrahedron: DrawableShape
     {

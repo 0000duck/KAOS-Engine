@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace AWGL.Utilities
+namespace KAOS.Utilities
 {
     /// <summary>
     /// AWLogger
@@ -12,7 +12,7 @@ namespace AWGL.Utilities
        
         internal static void WriteLine(string output)
         {
-            Console.WriteLine(AWEngineWindow.AppName + " Logger: " + output.Trim());
+            Console.WriteLine(KAOSWindow.AppName + " Logger: " + output.Trim());
         }
 
         internal static void PlatformInfo()

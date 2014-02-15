@@ -1,6 +1,6 @@
 using OpenTK;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
 	public sealed class SlicedHose : DrawableShape
 	{

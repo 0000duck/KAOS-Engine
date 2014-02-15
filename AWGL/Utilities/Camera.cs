@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AWGL.Utilities
+namespace KAOS.Utilities
 {
     /// <summary>
     /// Camera

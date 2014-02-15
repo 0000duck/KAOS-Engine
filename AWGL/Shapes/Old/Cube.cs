@@ -7,7 +7,7 @@
 using OpenTK;
 using System.Drawing;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
     public class Cube : Shape
     {

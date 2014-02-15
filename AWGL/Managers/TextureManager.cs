@@ -1,11 +1,11 @@
-﻿using AWGL.Utilities;
+﻿using KAOS.Utilities;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace AWGL.Managers
+namespace KAOS.Managers
 {
     public class TextureManager : IDisposable
     {

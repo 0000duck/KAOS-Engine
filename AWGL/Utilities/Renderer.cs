@@ -1,10 +1,10 @@
-﻿using AWGL.Managers;
+﻿using KAOS.Managers;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System;
 
-namespace AWGL.Utilities
+namespace KAOS.Utilities
 {
     public static class Renderer
     {

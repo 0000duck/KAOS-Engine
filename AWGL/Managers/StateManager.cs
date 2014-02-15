@@ -1,8 +1,8 @@
-﻿using AWGL.Interfaces;
+﻿using KAOS.Interfaces;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace AWGL.Managers
+namespace KAOS.Managers
 {
     public class StateManager
     {

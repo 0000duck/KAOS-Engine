@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
     public class Chunk
     {

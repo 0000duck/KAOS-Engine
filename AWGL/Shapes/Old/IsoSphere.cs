@@ -7,7 +7,7 @@
 using OpenTK;
 using System;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
     class IsoSphere : Shape
     {

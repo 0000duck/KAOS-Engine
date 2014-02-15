@@ -1,4 +1,4 @@
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
     public sealed class VboShape: DrawableShape
     {

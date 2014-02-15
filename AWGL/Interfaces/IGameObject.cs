@@ -1,5 +1,5 @@
 ﻿
-namespace AWGL.Interfaces
+namespace KAOS.Interfaces
 {
     public interface IGameObject
     {

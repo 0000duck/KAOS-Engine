@@ -29,7 +29,7 @@ using OpenTK;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace AWGL.Tutorial
+namespace KAOS.Tutorial
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     struct VertexPositionColor

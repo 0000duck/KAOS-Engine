@@ -1,5 +1,5 @@
 ﻿
-namespace AWGL.Managers
+namespace KAOS.Managers
 {
     class ModelManager
     {

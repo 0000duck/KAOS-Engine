@@ -1,7 +1,7 @@
 ﻿using OpenTK;
 using System.Diagnostics;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
     public sealed class TorusKnot: DrawableShape
     {

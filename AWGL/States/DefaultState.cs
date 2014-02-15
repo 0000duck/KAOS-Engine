@@ -1,11 +1,11 @@
-﻿using AWGL.Interfaces;
-using AWGL.Managers;
+﻿using KAOS.Interfaces;
+using KAOS.Managers;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 
-namespace AWGL.States
+namespace KAOS.States
 {
     public class DefaultState : IGameObject
     {

@@ -1,11 +1,11 @@
-﻿using AWGL.Shapes;
+﻿using KAOS.Shapes;
 using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace AWGL.Utilities
+namespace KAOS.Utilities
 {
     public class Chunk : IDisposable
     {

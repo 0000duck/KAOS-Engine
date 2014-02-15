@@ -1,11 +1,11 @@
-﻿using AWGL.Interfaces;
-using AWGL.Managers;
-using AWGL.Utilities;
+﻿using KAOS.Interfaces;
+using KAOS.Managers;
+using KAOS.Utilities;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 
-namespace AWGL.States
+namespace KAOS.States
 {
     public class DrawSpriteState : IGameObject
     {

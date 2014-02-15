@@ -1,6 +1,6 @@
 using OpenTK;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
 
     /// <summary>winding always assumed CCW (Counter-ClockWise)</summary>

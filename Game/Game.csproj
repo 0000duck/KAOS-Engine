@@ -331,9 +331,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AWGL\AWGL.csproj">
+    <ProjectReference Include="..\AWGL\KAOS.csproj">
       <Project>{43e7c301-7345-49d7-b8e8-f02b097f599f}</Project>
-      <Name>AWGL</Name>
+      <Name>KAOS</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

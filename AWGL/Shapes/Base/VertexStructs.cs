@@ -1,7 +1,7 @@
 using OpenTK;
 using System.Runtime.InteropServices;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
     public struct VertexT2dN3dV3d
     {

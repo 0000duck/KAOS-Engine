@@ -7,8 +7,8 @@
     <ProjectGuid>{43E7C301-7345-49D7-B8E8-F02B097F599F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AWGL</RootNamespace>
-    <AssemblyName>AWGL</AssemblyName>
+    <RootNamespace>KAOS</RootNamespace>
+    <AssemblyName>KAOS</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -127,7 +127,7 @@
     <Compile Include="Nodes\AWGroupNode.cs" />
     <Compile Include="Nodes\IGroupNode.cs" />
     <Compile Include="Nodes\ISceneNode.cs" />
-    <Compile Include="AWEngineWindow.cs" />
+    <Compile Include="KAOSWindow.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
     <Compile Include="Shapes\Base\VertexStructs.cs" />
     <Compile Include="Shapes\Helpers\Chunk.cs" />

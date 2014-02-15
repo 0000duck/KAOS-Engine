@@ -1,7 +1,7 @@
 ﻿using OpenTK.Input;
 using System.Collections.Generic;
 
-namespace AWGL.Managers
+namespace KAOS.Managers
 {
     public static class InputManager
     {

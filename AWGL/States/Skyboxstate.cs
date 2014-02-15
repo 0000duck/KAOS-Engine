@@ -1,13 +1,13 @@
-﻿using AWGL.Interfaces;
-using AWGL.Managers;
-using AWGL.Shapes;
-using AWGL.Utilities;
+﻿using KAOS.Interfaces;
+using KAOS.Managers;
+using KAOS.Shapes;
+using KAOS.Utilities;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System;
 
-namespace AWGL.States
+namespace KAOS.States
 {
     public class Skyboxstate : IGameObject
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AWGL.Utilities
+namespace KAOS.Utilities
 {
     public class Sprite
     {

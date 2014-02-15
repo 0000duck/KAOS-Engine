@@ -1,6 +1,6 @@
-﻿using AWGL;
-using AWGL.Managers;
-using AWGL.States;
+﻿using KAOS;
+using KAOS.Managers;
+using KAOS.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    class Game : AWEngineWindow
+    class Game : KAOSWindow
     {
         public StateManager stateManager = new StateManager();
 

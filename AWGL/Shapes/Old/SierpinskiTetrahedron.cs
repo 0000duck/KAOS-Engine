@@ -1,7 +1,7 @@
 using OpenTK;
 using System;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
     public sealed partial class SierpinskiTetrahedron: DrawableShape
     {

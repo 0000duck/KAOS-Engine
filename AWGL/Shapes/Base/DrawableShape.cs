@@ -8,7 +8,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
     // Abstract base class for procedurally generated geometry
     // 

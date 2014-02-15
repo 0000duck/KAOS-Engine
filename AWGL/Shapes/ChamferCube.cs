@@ -1,7 +1,7 @@
 using OpenTK;
 using System.Collections.Generic;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
     public sealed class ChamferCube: DrawableShape
     {

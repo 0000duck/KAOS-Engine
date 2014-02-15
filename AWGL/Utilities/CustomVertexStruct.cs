@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace AWGL.Utilities
+namespace KAOS.Utilities
 {
     public struct AWVertex
     {

@@ -1,5 +1,5 @@
-﻿using AWGL.Interfaces;
-using AWGL.Managers;
+﻿using KAOS.Interfaces;
+using KAOS.Managers;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Timers;
 
-namespace AWGL.States
+namespace KAOS.States
 {
     public class SplashScreenState : IGameObject
     {

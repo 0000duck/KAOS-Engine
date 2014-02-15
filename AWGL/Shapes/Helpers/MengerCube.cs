@@ -2,7 +2,7 @@ using OpenTK;
 using System;
 using System.Collections.Generic;
 
-namespace AWGL.Shapes
+namespace KAOS.Shapes
 {
     public sealed partial class MengerSponge
     {
