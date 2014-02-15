@@ -62,9 +62,8 @@
     <Compile Include="Managers\BufferObjectManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\ModelManager.cs" />
+    <Compile Include="Managers\ShaderManager.cs" />
     <Compile Include="Managers\StateManager.cs" />
-    <Compile Include="Managers\Tests\StateManagerTest.cs" />
-    <Compile Include="Managers\Tests\TextureManagerTest.cs" />
     <Compile Include="Managers\TextureManager.cs" />
     <Compile Include="Shapes\Capsule.cs">
       <SubType>Code</SubType>
@@ -112,9 +111,6 @@
     <Compile Include="Utilities\Block.cs" />
     <Compile Include="Utilities\BufferObject.cs" />
     <Compile Include="Utilities\Camera.cs" />
-    <Compile Include="Managers\ShaderManager.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Utilities\Chunk.cs" />
     <Compile Include="Utilities\CustomVertexStruct.cs" />
     <Compile Include="Utilities\Extensions.cs" />
@@ -185,6 +181,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="libSDL2.dylib" />
+    <None Include="OpenTK.dll.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
