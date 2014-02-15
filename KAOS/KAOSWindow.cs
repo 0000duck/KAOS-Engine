@@ -77,7 +77,8 @@ namespace KAOS
 
         private void InitialiseStockShaders()
         {
-            ShaderManager.LoadDefaultShaderProgram();
+            ShaderManager.LoadDefaultSkyboxShader();
+            ShaderManager.LoadDefaultRenderShader();
         }
 
         public abstract void Initialise();

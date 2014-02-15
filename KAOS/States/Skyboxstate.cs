@@ -18,52 +18,6 @@ namespace KAOS.States
         Cube cube;
         BufferObject cubeObject;
 
-        // Data layout for each line below is:
-        // position{XYZ},			    normal{XYZ},
-        float[] vertexData = new float[] {
-            0.5f, -0.5f, -0.5f,        -1.0f, 0.0f, 0.0f,
-            0.5f, 0.5f, -0.5f,         -1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,
-            0.5f, 0.5f, -0.5f,         -1.0f, 0.0f, 0.0f,
-            0.5f, 0.5f, 0.5f,          -1.0f, 0.0f, 0.0f,
-  
-            0.5f, 0.5f, -0.5f,         0.0f, -1.0f, 0.0f,
-            -0.5f, 0.5f, -0.5f,        0.0f, -1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f,          0.0f, -1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f,          0.0f, -1.0f, 0.0f,
-            -0.5f, 0.5f, -0.5f,        0.0f, -1.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f,         0.0f, -1.0f, 0.0f,
-  
-            -0.5f, 0.5f, -0.5f,        1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,       1.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,       1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, 0.5f,        1.0f, 0.0f, 0.0f,
-  
-            -0.5f, -0.5f, -0.5f,       0.0f, 1.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,        0.0f, 1.0f, 0.0f,
-            -0.5f, -0.5f, 0.5f,        0.0f, 1.0f, 0.0f,
-            -0.5f, -0.5f, 0.5f,        0.0f, 1.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,        0.0f, 1.0f, 0.0f,
-            0.5f, -0.5f, 0.5f,         0.0f, 1.0f, 0.0f,
-  
-            0.5f, 0.5f, 0.5f,          0.0f, 0.0f, -1.0f,
-            -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, -1.0f,
-            0.5f, -0.5f, 0.5f,         0.0f, 0.0f, -1.0f,
-            0.5f, -0.5f, 0.5f,         0.0f, 0.0f, -1.0f,
-            -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, -1.0f,
-            -0.5f, -0.5f, 0.5f,        0.0f, 0.0f, -1.0f,
-  
-            0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, -0.5f,         0.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, -0.5f,         0.0f, 0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, 1.0f,
-            -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, 1.0f
-        };
-
         static string defaultSkyboxPath = "Data/Skyboxes/set 16/";
         string[] skyboxFaces = new String[]
         {
@@ -78,7 +32,6 @@ namespace KAOS.States
         Matrix3 modelMatrix3, normalMatrix;
         Vector3 eyeObjectSpace;
         Vector3 trans;
-
         
         int eye_handle, skybox_vao;
 
@@ -92,7 +45,7 @@ namespace KAOS.States
             m_textureManager = new TextureManager();
 
             LoadCubeMap();
-            CreateShaders();
+            QueryShaders();
 
             _rotation = MathHelper.DegreesToRadians(90);
             trans = new Vector3(0f, 0f, -10f);
@@ -100,18 +53,13 @@ namespace KAOS.States
             LoadTestObject();
         }
 
-        private void CreateShaders()
+        private void QueryShaders()
         {
-            ShaderManager.LoadCustomProgram("Skybox", "skybox-vs", "skybox-fs");
+            Renderer.handle_eyePosition = GL.GetUniformLocation(ShaderManager.Skybox.ID, "eye_position");
+            Renderer.handle_viewMatrix = GL.GetUniformLocation(ShaderManager.Skybox.ID, "view_matrix");
 
-            Renderer.handle_eyePosition = GL.GetUniformLocation(ShaderManager.Get("Skybox").ID, "eye_position");
-            Renderer.handle_viewMatrix = GL.GetUniformLocation(ShaderManager.Get("Skybox").ID, "view_matrix");
-
-            Logger.WriteLine("Render Shader");
-            ShaderManager.LoadCustomProgram("Render", "render-vs", "render-fs");
-
-            Renderer.handle_projectionMatrix = GL.GetUniformLocation(ShaderManager.Get("Render").ID, "proj_matrix");
-            Renderer.handle_modelViewMatrix = GL.GetUniformLocation(ShaderManager.Get("Render").ID, "mv_matrix");
+            Renderer.handle_projectionMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "proj_matrix");
+            Renderer.handle_modelViewMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "mv_matrix");
         }
 
         private void LoadCubeMap()
@@ -134,8 +82,8 @@ namespace KAOS.States
             cubeObject.IndicesData = cube.Indices;
             cubeObject.PrimitiveType = PrimitiveType.TriangleStrip;
 
-            m_bufferManager.AddBufferObject("SkyCube", cubeObject, ShaderManager.Get("Skybox").ID);
-            m_bufferManager.AddBufferObject("Cube", cubeObject, ShaderManager.Get("Render").ID);
+            m_bufferManager.AddBufferObject("SkyCube", cubeObject, ShaderManager.Skybox.ID);
+            m_bufferManager.AddBufferObject("Cube", cubeObject, ShaderManager.Render.ID);
         }
 
         public void Update(float elapsedTime)
@@ -157,7 +105,7 @@ namespace KAOS.States
             
             cubeObject = m_bufferManager.GetBuffer("Cube");
             GL.BindVertexArray(cubeObject.VaoID);
-            GL.UseProgram(ShaderManager.Get("Render").ID);
+            GL.UseProgram(ShaderManager.Render.ID);
 
             GL.UniformMatrix4(Renderer.handle_modelViewMatrix, false, ref Renderer.modelViewMatrix);
             GL.UniformMatrix4(Renderer.handle_projectionMatrix, false, ref Renderer.projectionMatrix);

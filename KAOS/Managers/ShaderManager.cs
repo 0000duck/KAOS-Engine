@@ -16,15 +16,25 @@ namespace KAOS.Managers
         private static int m_vertexShaderHandle, m_fragmentShaderHandle, m_programHandle;
 
         private static string defaultDataPath = "Data/Shaders/";
-        private static string m_vertexShaderFile = "opentk-vs";
-        private static string m_fragmentShaderFile = "opentk-fs";
+        private static string m_vertexShaderFile = "skybox-vs";
+        private static string m_fragmentShaderFile = "skybox-fs";
 
-        internal static void LoadDefaultShaderProgram()
+        internal static void LoadDefaultSkyboxShader()
         {
             if (m_shaderStorage == null)
                 m_shaderStorage = new Dictionary<string, Shader>();
             m_programHandle = BuildProgram();
-            m_shaderStorage.Add("default", new Shader(m_programHandle));
+            m_shaderStorage.Add("skybox", new Shader(m_programHandle));
+        }
+
+        internal static void LoadDefaultRenderShader()
+        {
+            m_vertexShaderFile = "render-vs";
+            m_fragmentShaderFile = "render-fs";
+            if (m_shaderStorage == null)
+                m_shaderStorage = new Dictionary<string, Shader>();
+            m_programHandle = BuildProgram();
+            m_shaderStorage.Add("render", new Shader(m_programHandle));
         }
 
         public static void LoadCustomProgram(string shaderID, string vertexShaderPath, string fragmentShaderPath)
@@ -36,11 +46,19 @@ namespace KAOS.Managers
             m_shaderStorage.Add(shaderID, new Shader(m_programHandle));
         }
 
-        public static Shader DefaultShader
+        public static Shader Skybox
         {
             get
             {
-                return m_shaderStorage["default"];
+                return Get("skybox");
+            }
+        }
+
+        public static Shader Render
+        {
+            get
+            {
+                return Get("render");
             }
         }
 

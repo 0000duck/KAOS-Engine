@@ -30,7 +30,7 @@ namespace KAOS.States
             tempVBO.IndicesData = cube.Indices;
             tempVBO.PrimitiveType = PrimitiveType.Triangles;
 
-            m_bufferObjectManager.AddBufferObject("test-cube", tempVBO, ShaderManager.DefaultShader.ID);
+            m_bufferObjectManager.AddBufferObject("test-cube", tempVBO, ShaderManager.Skybox.ID);
             m_bufferObject = m_bufferObjectManager.GetBuffer("test-cube");
         }
 

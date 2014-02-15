@@ -38,7 +38,7 @@ namespace KAOS.Utilities
             GL.ClearBuffer(ClearBuffer.Color, 0, new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
             GL.ClearBuffer(ClearBuffer.Depth, 0, new float[] { 1.0f });
 
-            GL.UseProgram(ShaderManager.Get("Skybox").ID);
+            GL.UseProgram(ShaderManager.Skybox.ID);
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.TextureCubeMap, m_textureManager.Get("skybox1").ID);
 
