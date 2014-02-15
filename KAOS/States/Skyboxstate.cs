@@ -44,6 +44,8 @@ namespace KAOS.States
             m_stateManager = stateManager;
             m_textureManager = new TextureManager();
 
+            m_textureManager.LoadTexture1D("1d", "pal.bmp");
+
             LoadCubeMap();
             QueryShaders();
 
@@ -60,6 +62,10 @@ namespace KAOS.States
 
             Renderer.handle_projectionMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "proj_matrix");
             Renderer.handle_modelViewMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "mv_matrix");
+
+            Renderer.handle_centre = GL.GetUniformLocation(ShaderManager.Render.ID, "center");
+            Renderer.handle_scale = GL.GetUniformLocation(ShaderManager.Render.ID, "scale");
+            Renderer.handle_iter = GL.GetUniformLocation(ShaderManager.Render.ID, "iter");
         }
 
         private void LoadCubeMap()
@@ -109,6 +115,12 @@ namespace KAOS.States
 
             GL.UniformMatrix4(Renderer.handle_modelViewMatrix, false, ref Renderer.modelViewMatrix);
             GL.UniformMatrix4(Renderer.handle_projectionMatrix, false, ref Renderer.projectionMatrix);
+            GL.Uniform1(Renderer.handle_iter, 70);
+            GL.Uniform2(Renderer.handle_centre, 0f, 0f);
+            GL.Uniform1(Renderer.handle_scale, 2.2);
+
+
+            GL.BindTexture(TextureTarget.Texture1D, m_textureManager.Get("1d").ID);
 
             GL.DrawElements(cubeObject.PrimitiveType, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
         }

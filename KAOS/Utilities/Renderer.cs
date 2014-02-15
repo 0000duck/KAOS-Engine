@@ -21,6 +21,9 @@ namespace KAOS.Utilities
             handle_modelViewMatrix, handle_eyePosition, handle_viewMatrix, m_displayList, m_texId;
         internal static Scene m_model;
         internal static float m_angle;
+        public static int handle_centre;
+        public static int handle_scale;
+        public static int handle_iter;
 
         public static void DrawImmediateModeVertex(Vector3d position, Color4 color, Vector2 uvs)
         {

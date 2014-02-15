@@ -42,6 +42,29 @@ namespace KAOS.Managers
             m_textureDatabase.Add(textureId, new Texture(textureGpuHandle, bitmapData.Width, bitmapData.Height));
         }
 
+        public void LoadTexture1D(string textureId, string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                throw new ArgumentException(path);
+
+            GL.GenTextures(1, out textureGpuHandle);
+            GL.BindTexture(TextureTarget.Texture1D, textureGpuHandle);
+
+            OpenImageFile(path);
+
+            GL.TexImage1D(TextureTarget.Texture1D,
+                0, PixelInternalFormat.Rgba, bitmapData.Width, 0,
+                OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bitmapData.Scan0);
+
+            CloseImageFile();
+
+            GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+            GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureMagFilter, (int)TextureMinFilter.Nearest);
+            GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
+
+            m_textureDatabase.Add(textureId, new Texture(textureGpuHandle, bitmapData.Width, bitmapData.Height));
+        }
+
         public void LoadSkyTexture(string textureId, string[] path)
         {
             GL.ActiveTexture(TextureUnit.Texture0);
