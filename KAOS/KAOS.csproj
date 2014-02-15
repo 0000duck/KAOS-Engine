@@ -112,7 +112,6 @@
     <Compile Include="Utilities\BufferObject.cs" />
     <Compile Include="Utilities\Camera.cs" />
     <Compile Include="Utilities\Chunk.cs" />
-    <Compile Include="Utilities\CustomVertexStruct.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Logger.cs" />
     <Compile Include="Nodes\AWCube.cs" />
