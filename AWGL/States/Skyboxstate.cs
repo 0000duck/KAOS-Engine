@@ -148,10 +148,10 @@ namespace AWGL.States
             MoveCamera();
             _rotation += elapsedTime * 0.1f;
 
-            Renderer.projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
+            Renderer.projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90.0f), aspect, 0.1f, 100.0f);
             Renderer.modelViewMatrix = Matrix4.Identity;
             Renderer.eyePosition = Camera.Position;
-            Renderer.modelViewProjectionMatrix = Matrix4.Mult(Renderer.projectionMatrix, Renderer.modelViewMatrix);
+            
         }
 
         public void Render()

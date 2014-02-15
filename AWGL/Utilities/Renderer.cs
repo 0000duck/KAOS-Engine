@@ -46,7 +46,7 @@ namespace AWGL.Utilities
             int temploc = GL.GetUniformLocation(ShaderManager.Get("Skybox").ID, "tex_cubemap");
             GL.Uniform1(temploc, 0);
 
-            GL.UniformMatrix4(handle_modelViewMatrix, false, ref modelViewMatrix);
+            
             GL.Uniform3(handle_eyePosition, ref eyePosition);
             GL.UniformMatrix4(handle_modelViewProjectionMatrix, false, ref modelViewProjectionMatrix);
 
@@ -54,6 +54,9 @@ namespace AWGL.Utilities
             GL.DrawElements(cubeObject.PrimitiveType, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             GL.Enable(EnableCap.DepthTest);
+
+            Renderer.modelViewProjectionMatrix = Matrix4.Mult(Renderer.projectionMatrix, Renderer.modelViewMatrix);
+            GL.UniformMatrix4(handle_modelViewMatrix, false, ref modelViewMatrix);
         }
 
         public static void DrawWireframeVoxel(float length, float height, float width)
