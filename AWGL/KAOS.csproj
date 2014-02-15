@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IGameObject.cs" />
+    <Compile Include="Data\Interfaces\IGameObject.cs" />
     <Compile Include="Managers\BufferObjectManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\ModelManager.cs" />
@@ -127,7 +127,7 @@
     <Compile Include="Nodes\AWGroupNode.cs" />
     <Compile Include="Nodes\IGroupNode.cs" />
     <Compile Include="Nodes\ISceneNode.cs" />
-    <Compile Include="KAOSEngine.cs" />
+    <Compile Include="AWEngineWindow.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
     <Compile Include="Shapes\Base\VertexStructs.cs" />
     <Compile Include="Shapes\Helpers\Chunk.cs" />
@@ -175,9 +175,6 @@
     <None Include="Data\Shaders\skybox-vs.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Skyboxes\jajlands1\cubemap.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Data\Textures\earth-cubemap.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -200,24 +197,6 @@
     <Content Include="AssimpLicense.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Skyboxes\jajlands1\back.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Skyboxes\jajlands1\bottom.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Skyboxes\jajlands1\front.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Skyboxes\jajlands1\left.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Skyboxes\jajlands1\right.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Skyboxes\jajlands1\top.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Data\Skyboxes\set 16\neg_x.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -234,6 +213,24 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Skyboxes\set 16\pos_z.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\st-peters\neg_x.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\st-peters\neg_y.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\st-peters\neg_z.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\st-peters\pos_x.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\st-peters\pos_y.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Skyboxes\st-peters\pos_z.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Textures\JuliaColorTable.bmp">

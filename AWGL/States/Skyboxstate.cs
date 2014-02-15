@@ -123,16 +123,6 @@ namespace AWGL.States
             GL.BindVertexArray(skybox_vao);
 
             GL.DepthFunc(DepthFunction.Lequal);
-            //GL.GenBuffers(1, out cubevbo);
-            //GL.BindBuffer(BufferTarget.ArrayBuffer, cubevbo);
-            //GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(sizeof(float) * vertexData.Length), vertexData, BufferUsageHint.StaticDraw);
-
-            //GL.EnableVertexAttribArray(vertexAttribPosition);
-            //GL.VertexAttribPointer(vertexAttribPosition, 3, VertexAttribPointerType.Float, false, 24, BUFFER_OFFSET(0));
-            //GL.EnableVertexAttribArray(vertexAttribNormal);
-            //GL.VertexAttribPointer(vertexAttribNormal, 3, VertexAttribPointerType.Float, false, 24, BUFFER_OFFSET(12));
-
-            //cubeindexCount = 36;
         }
 
         private void LoadTestObject()
@@ -144,27 +134,35 @@ namespace AWGL.States
             cubeObject.IndicesData = cube.Indices;
             cubeObject.PrimitiveType = PrimitiveType.TriangleStrip;
 
-            m_bufferManager.AddBufferObject("Cube", cubeObject, ShaderManager.Get("Skybox").ID);
-            cubeObject = m_bufferManager.GetBuffer("Cube");
+            m_bufferManager.AddBufferObject("SkyCube", cubeObject, ShaderManager.Get("Skybox").ID);
+            m_bufferManager.AddBufferObject("Cube", cubeObject, ShaderManager.Get("Render").ID);
         }
 
         public void Update(float elapsedTime)
         {
             MoveCamera();
-            _rotation += elapsedTime * 0.1f;
 
             Renderer.projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90.0f), aspect, 0.1f, 100.0f);
             
             Renderer.viewMatrix = Camera.GetViewMatrix();
 
-            Renderer.modelViewMatrix = Matrix4.Mult(Renderer.viewMatrix, Matrix4.CreateTranslation(new Vector3(0f, -4f, 0f)));
+            Renderer.modelViewMatrix = Matrix4.Mult(Renderer.viewMatrix, Matrix4.CreateTranslation(Camera.Position));
             Renderer.eyePosition = Camera.Position;
-            
         }
 
         public void Render()
         {
+            cubeObject = m_bufferManager.GetBuffer("SkyCube");
             Renderer.DrawSkyBox(m_textureManager, cubeObject);
+            
+            cubeObject = m_bufferManager.GetBuffer("Cube");
+            GL.BindVertexArray(cubeObject.VaoID);
+            GL.UseProgram(ShaderManager.Get("Render").ID);
+
+            GL.UniformMatrix4(Renderer.handle_modelViewMatrix, false, ref Renderer.modelViewMatrix);
+            GL.UniformMatrix4(Renderer.handle_projectionMatrix, false, ref Renderer.projectionMatrix);
+
+            GL.DrawElements(cubeObject.PrimitiveType, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
         }
 
         #region Input Control

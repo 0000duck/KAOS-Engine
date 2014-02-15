@@ -42,12 +42,6 @@ namespace AWGL.Utilities
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.TextureCubeMap, m_textureManager.Get("skybox1").ID);
 
-            int temploc = GL.GetUniformLocation(ShaderManager.Get("Skybox").ID, "tex_cubemap");
-            GL.Uniform1(temploc, 0);
-
-            eyePosition = Camera.Position;
-            GL.Uniform3(handle_eyePosition, ref eyePosition);
-
             GL.BindVertexArray(cubeObject.VaoID);
             GL.Disable(EnableCap.DepthTest);
 
@@ -56,12 +50,6 @@ namespace AWGL.Utilities
             GL.DrawElements(cubeObject.PrimitiveType, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             GL.Enable(EnableCap.DepthTest);
-
-            GL.UseProgram(ShaderManager.Get("Render").ID);
-
-            //Renderer.modelViewProjectionMatrix = Matrix4.Mult(Renderer.projectionMatrix, Renderer.modelViewMatrix);
-            GL.UniformMatrix4(handle_modelViewMatrix, false, ref modelViewMatrix);
-            GL.UniformMatrix4(handle_projectionMatrix, false, ref projectionMatrix);
         }
 
         public static void DrawWireframeVoxel(float length, float height, float width)
