@@ -91,8 +91,8 @@ namespace KAOS.States
             MoveCamera();
 
             Renderer.projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90.0f), aspect, 0.1f, 100.0f);
-            
-            Renderer.viewMatrix = Camera.GetViewMatrix();
+
+            Renderer.viewMatrix = Matrix4.Invert(Camera.GetViewMatrix());
 
             Renderer.modelViewMatrix = Matrix4.Mult(Renderer.viewMatrix, Matrix4.CreateTranslation(Camera.Position));
             Renderer.eyePosition = Camera.Position;
