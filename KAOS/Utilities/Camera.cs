@@ -12,7 +12,7 @@ namespace KAOS.Utilities
     /// </summary>
     public static class Camera
     {
-        public static Vector3 Position = new Vector3(0f, 0f, -4f);
+        public static Vector3 Position = new Vector3(0f, 0f, -2f);
         public static Vector3 Orientation = new Vector3((float)Math.PI, 0f, 0f);
         public static float MoveSpeed = 0.2f;
         public static float MouseSensitivity = 0.01f;
