@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    class Game : AWEngineWindow
+    class Game : KAOSEngine
     {
         public StateManager stateManager = new StateManager();
 

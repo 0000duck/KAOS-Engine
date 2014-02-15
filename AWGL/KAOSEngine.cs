@@ -26,10 +26,10 @@ namespace AWGL
     /// Inherit from here to get started.
     /// This is the main interface to the system.
     /// </summary>
-    public abstract class AWEngineWindow : GameWindow, IDisposable
+    public abstract class KAOSEngine : GameWindow, IDisposable
     {
 
-        public static string AppName { get { return "AWEngine"; } }
+        public static string AppName { get { return "KAOS"; } }
 
         public int ScreenWidth { get { return this.ClientSize.Width; } }
         public int ScreenHeight { get { return this.ClientSize.Height; } }
@@ -45,12 +45,11 @@ namespace AWGL
         private int m_displayList;
         private int m_texId;
         
-        public AWEngineWindow(int height, int width, int major, int minor)
-            : base(height, width, new GraphicsMode(32, 16, 0, 4), AWEngineWindow.AppName, GameWindowFlags.Default, 
+        public KAOSEngine(int height, int width, int major, int minor)
+            : base(height, width, new GraphicsMode(32, 16, 0, 4), KAOSEngine.AppName, GameWindowFlags.Default, 
             DisplayDevice.Default, major, minor, GraphicsContextFlags.Default)
         { }
 
-        #region Load everything here
         protected override void OnLoad(System.EventArgs e)
         {
             BaseInitialisation();
@@ -80,60 +79,12 @@ namespace AWGL
             ShaderManager.LoadDefaultShaderProgram();
         }
 
-        public abstract void Initialise();
 
-        //private void CreateShaders()
-        //{
-        //    shaderManager = new ShaderManager("opentk-vs", "opentk-fs");
-
-        //    GL.UseProgram(shaderManager.ProgramHandle);
-        //    QueryMatrixLocations();
-
-        //    float aspect = ScreenWidth / (float)(ScreenHeight);
-        //    SetProjectionMatrix(Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect, 1, 100));
-        //    SetModelviewMatrix(Matrix4.CreateRotationX(0.5f) * Matrix4.CreateTranslation(0, 0, -4));
-        //}
-
-        //protected void QueryMatrixLocations()
-        //{
-        //    projectionMatrixLocation = GL.GetUniformLocation(shaderManager.ProgramHandle, "projection_matrix");
-        //    modelviewMatrixLocation = GL.GetUniformLocation(shaderManager.ProgramHandle, "modelview_matrix");
-        //}
-
-        //protected void SetModelviewMatrix(Matrix4 matrix)
-        //{
-        //    modelviewMatrix = matrix;
-        //    GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
-        //}
-
-        //protected void SetProjectionMatrix(Matrix4 matrix)
-        //{
-        //    projectionMatrix = matrix;
-        //    GL.UniformMatrix4(projectionMatrixLocation, false, ref projectionMatrix);
-        //}
-
-        #endregion
-
-        #region Game Loop
+        /// Loop Area
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            #region input
-            if (Focused)
-            {
-                Point center = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
-                Point delta = new Point(center.X - Cursor.Position.X, center.Y - Cursor.Position.Y);
-
-                Utilities.Camera.AddRotation(delta.X, delta.Y);
-                ResetCursor();
-            }
-
-            //setmodelviewmatrix(matrix4.createrotationy((float)e.time) * modelviewmatrix);
-            #endregion
-
             UpdateFrame(m_Timer.GetElapsedTime());
         }
-
-        new public abstract void UpdateFrame(float elapsedTime);
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
@@ -141,18 +92,11 @@ namespace AWGL
             
             GL.Viewport(0, 0, ScreenWidth, ScreenHeight);
 
-            Title = AWEngineWindow.AppName +
+            Title = KAOSEngine.AppName +
 
                 " OpenGL: " + GL.GetString(StringName.Version) +
                 " GLSL: " + GL.GetString(StringName.ShadingLanguageVersion) +
                 " FPS: " + string.Format("{0:F}", 1.0 / e.Time);
-
-            //GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-
-            //SetModelviewMatrix(camera.GetViewMatrix());
-
-            // Single call to StateRenderer to take place here.
 
             #region Assimp Example Code
             //GL.Enable(EnableCap.Texture2D);
@@ -210,14 +154,6 @@ namespace AWGL
             //GL.LoadMatrix(ref perspective); 
             #endregion
         }
-        #endregion
-
-        #region GameWindow.Dispose
-        public override void Dispose()
-        {
-            
-        } 
-        #endregion
 
         #region Input Control
         
@@ -238,23 +174,6 @@ namespace AWGL
                 }
             }
         }
-
-        public void ResetCursor()
-        {
-            System.Windows.Forms.Cursor.Position = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
-        }
-
-        protected override void OnFocusedChanged(EventArgs e)
-        {
-            base.OnFocusedChanged(e);
-
-            if (Focused)
-            {
-                ResetCursor();
-            }
-        } 
-        
-        #endregion
 
         #region Assimp example code
 
