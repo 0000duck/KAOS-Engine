@@ -62,7 +62,6 @@
     <Compile Include="Managers\BufferObjectManager.cs" />
     <Compile Include="Interfaces\IDrawableShape.cs" />
     <Compile Include="Managers\InputManager.cs" />
-    <Compile Include="Managers\ModelManager.cs" />
     <Compile Include="Managers\ShaderManager.cs" />
     <Compile Include="Managers\StateManager.cs" />
     <Compile Include="Managers\TextureManager.cs" />
@@ -102,14 +101,10 @@
     <Compile Include="Shapes\VertexPositionColor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="States\DrawSpriteState.cs" />
     <Compile Include="States\Skyboxstate.cs" />
     <Compile Include="States\SplashScreenState.cs" />
-    <Compile Include="States\VoxelState.cs" />
-    <Compile Include="Utilities\Block.cs" />
     <Compile Include="Utilities\BufferObject.cs" />
     <Compile Include="Utilities\Camera.cs" />
-    <Compile Include="Utilities\Chunk.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Logger.cs" />
     <Compile Include="Nodes\AWGroupNode.cs" />
@@ -128,7 +123,6 @@
     <Compile Include="Utilities\AnimationTimer.cs" />
     <Compile Include="Utilities\Renderer.cs" />
     <Compile Include="Utilities\Shader.cs" />
-    <Compile Include="Utilities\Sprite.cs" />
     <Compile Include="Utilities\Texture.cs" />
   </ItemGroup>
   <ItemGroup>
