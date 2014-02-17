@@ -16,12 +16,12 @@ namespace KAOS.Managers
 
         internal static void PollInput()
         {
-            #region Keyboard
-            keyState = Keyboard.GetState();
+            KeyboardUpdate();
+            MouseUpdate();
+        }
 
-            #endregion
-
-            #region Mouse
+        private static void MouseUpdate()
+        {
             current = Mouse.GetState();
             if (current[MouseButton.Left])
             {
@@ -35,8 +35,53 @@ namespace KAOS.Managers
                 }
                 previous = current;
             }
-
-            #endregion
         }
+
+        private static void KeyboardUpdate()
+        {
+            foreach (Key key in InputManager.keyList)
+            {
+
+                switch (key)
+                {
+                    case Key.W:
+                        Utilities.Camera.Move(0f, 0.1f, 0f);
+                        break;
+
+                    case Key.A:
+                        Utilities.Camera.Move(-0.1f, 0f, 0f);
+                        break;
+
+                    case Key.S:
+                        Utilities.Camera.Move(0f, -0.1f, 0f);
+                        break;
+
+                    case Key.D:
+                        Utilities.Camera.Move(0.1f, 0f, 0f);
+                        break;
+
+                    case Key.Q:
+                        Utilities.Camera.Move(0f, 0f, 0.1f);
+                        break;
+
+                    case Key.E:
+                        Utilities.Camera.Move(0f, 0f, -0.1f);
+                        break;
+
+                    case Key.F1:
+                        Utilities.Renderer.ToggleWireframeOn();
+                        break;
+
+                    case Key.F2:
+                        Utilities.Renderer.ToggleWireframeOff();
+                        break;
+
+                    default:
+                        break;
+                }
+
+            }
+        }
+
     }
 }

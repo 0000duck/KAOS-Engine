@@ -82,8 +82,6 @@ namespace KAOS.States
 
         public void Update(float elapsedTime)
         {
-            MoveCamera();
-
             Renderer.projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90.0f), aspect, 0.1f, 100.0f);
 
             Renderer.viewMatrix = Matrix4.Invert(Camera.GetViewMatrix());
@@ -96,55 +94,6 @@ namespace KAOS.States
         {
             Renderer.DrawSkyBox(m_textureManager, m_bufferManager.GetBuffer("SkyCube"));
             Renderer.DrawObject(m_textureManager, m_bufferManager.GetBuffer("MengerSponge"));
-        }
-
-        #region Input Control
-        private void MoveCamera()
-        {
-            foreach (Key key in InputManager.keyList)
-            {
-
-                switch (key)
-                {
-                    case Key.W:
-                        Camera.Move(0f, 0.1f, 0f);
-                        break;
-
-                    case Key.A:
-                        Camera.Move(-0.1f, 0f, 0f);
-                        break;
-
-                    case Key.S:
-                        Camera.Move(0f, -0.1f, 0f);
-                        break;
-
-                    case Key.D:
-                        Camera.Move(0.1f, 0f, 0f);
-                        break;
-
-                    case Key.Q:
-                        Camera.Move(0f, 0f, 0.1f);
-                        break;
-
-                    case Key.E:
-                        Camera.Move(0f, 0f, -0.1f);
-                        break;
-
-                    case Key.F1:
-                        Renderer.ToggleWireframeOn();
-                        break;
-
-                    case Key.F2:
-                        Renderer.ToggleWireframeOff();
-                        break;
-
-                    default:
-                        break;
-                }
-
-
-            }
-        #endregion
         }
 
         public void Dispose()

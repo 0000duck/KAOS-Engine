@@ -38,7 +38,14 @@ namespace KAOS
         private void BaseInitialisation()
         {
             InitialiseTimer();
+            InitialiseInput();
             InitialiseStockShaders();
+        }
+
+        private void InitialiseInput()
+        {
+            Keyboard.KeyDown += HandleKeyDown;
+            Keyboard.KeyUp += HandleKeyUp;
         }
 
         private void InitialiseTimer()
@@ -94,13 +101,6 @@ namespace KAOS
             GL.Viewport(0, 0, ScreenWidth, ScreenHeight);
 
             float aspect = ScreenWidth / (float)ScreenHeight;
-
-            #region Assimp Example Code
-            //float widthToHeight = ScreenWidth / (float)ScreenHeight;
-            //Matrix4 perspective = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, widthToHeight, 1, 64);
-            //GL.MatrixMode(MatrixMode.Projection);
-            //GL.LoadMatrix(ref perspective); 
-            #endregion
         }
         #endregion
 

@@ -31,20 +31,6 @@ namespace KAOS.Utilities
             GL.Vertex3(position);
         }
 
-        public static void DrawSprite(Sprite sprite)
-        {
-            GL.BindTexture(TextureTarget.Texture2D, sprite.Texture.ID);
-            GL.Begin(OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
-            for (int i = 0; i < Sprite.VertexAmount; i++)
-            {
-                DrawImmediateModeVertex(
-                    sprite.VertexPositions[i],
-                    sprite.VertexColours[i],
-                    sprite.VertexUVs[i]);
-            }
-            GL.End();
-        }
-
         public static void DrawSkyBox(TextureManager textureManager, BufferObject bufferObject)
         {
             GL.ClearBuffer(ClearBuffer.Color, 0, new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
