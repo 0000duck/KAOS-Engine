@@ -52,7 +52,7 @@ namespace KAOS.States
 
             Renderer.handle_projectionMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "proj_matrix");
             Renderer.handle_modelMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "model_matrix");
-            Renderer.handle_viewMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "view_matrix");
+            Renderer.handle_viewMatrix2 = GL.GetUniformLocation(ShaderManager.Render.ID, "view_matrix");
 
             Renderer.handle_centre = GL.GetUniformLocation(ShaderManager.Render.ID, "center");
             Renderer.handle_scale = GL.GetUniformLocation(ShaderManager.Render.ID, "scale");
