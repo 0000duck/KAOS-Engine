@@ -51,7 +51,8 @@ namespace KAOS.States
             Renderer.handle_viewMatrix = GL.GetUniformLocation(ShaderManager.Skybox.ID, "view_matrix");
 
             Renderer.handle_projectionMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "proj_matrix");
-            Renderer.handle_modelViewMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "mv_matrix");
+            Renderer.handle_modelMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "model_matrix");
+            Renderer.handle_viewMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "view_matrix");
 
             Renderer.handle_centre = GL.GetUniformLocation(ShaderManager.Render.ID, "center");
             Renderer.handle_scale = GL.GetUniformLocation(ShaderManager.Render.ID, "scale");
@@ -73,9 +74,10 @@ namespace KAOS.States
         {
             Renderer.projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90.0f), aspect, 0.1f, 100.0f);
 
-            Renderer.viewMatrix = Matrix4.Invert(Camera.GetViewMatrix());
+            Renderer.viewMatrix = Matrix4.Mult(Matrix4.Identity, Camera.GetViewMatrix());
+            Renderer.modelMatrix = Matrix4.CreateScale(2f);
 
-            Renderer.modelViewMatrix = Matrix4.Mult(Renderer.viewMatrix, Matrix4.CreateTranslation(Camera.Position));
+            //Renderer.modelViewMatrix = Matrix4.Mult(Renderer.viewMatrix, Matrix4.CreateTranslation(Camera.Position));
             Renderer.eyePosition = Camera.Position;
         }
 
