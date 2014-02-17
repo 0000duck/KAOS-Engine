@@ -39,7 +39,7 @@ namespace KAOS.States
             m_stateManager = stateManager;
             m_textureManager = new TextureManager();
 
-            m_textureManager.LoadTexture1D("1d", "pal.bmp");
+            //m_textureManager.LoadTexture1D("1d", "pal.bmp");
 
             LoadCubeMap();
             QueryShaders();
@@ -77,8 +77,7 @@ namespace KAOS.States
         {
             cube = new Cube(0, 0, 0);
             m_bufferManager.AddBufferObject("SkyCube", cube, ShaderManager.Skybox.ID);
-            m_bufferManager.AddBufferObject("Torus", new TorusKnot(256, 32, 0.1, 3, 4, 1, false), ShaderManager.Render.ID); 
-            m_bufferManager.AddBufferObject("Cube", cube, ShaderManager.Render.ID);
+            m_bufferManager.AddBufferObject("MengerSponge", new MengerSponge(1.0, Shapes.MengerSponge.eSubdivisions.Two, true ), ShaderManager.Render.ID); 
         }
 
         public void Update(float elapsedTime)
@@ -96,7 +95,7 @@ namespace KAOS.States
         public void Render()
         {
             Renderer.DrawSkyBox(m_textureManager, m_bufferManager.GetBuffer("SkyCube"));
-            Renderer.DrawObject(m_textureManager, m_bufferManager.GetBuffer("Cube"));
+            Renderer.DrawObject(m_textureManager, m_bufferManager.GetBuffer("MengerSponge"));
         }
 
         #region Input Control

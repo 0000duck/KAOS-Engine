@@ -45,7 +45,7 @@ namespace KAOS.Utilities
             GL.End();
         }
 
-        public static void DrawSkyBox(TextureManager textureManager, BufferObject Object)
+        public static void DrawSkyBox(TextureManager textureManager, BufferObject bufferObject)
         {
             GL.ClearBuffer(ClearBuffer.Color, 0, new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
             GL.ClearBuffer(ClearBuffer.Depth, 0, new float[] { 1.0f });
@@ -54,31 +54,30 @@ namespace KAOS.Utilities
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.TextureCubeMap, textureManager.Get("skybox1").ID);
 
-            GL.BindVertexArray(Object.VaoID);
+            GL.BindVertexArray(bufferObject.VaoID);
             GL.Disable(EnableCap.DepthTest);
 
             GL.UniformMatrix4(handle_viewMatrix, false, ref viewMatrix);
 
-            GL.DrawElements(OpenTK.Graphics.OpenGL.PrimitiveType.TriangleStrip, Object.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            GL.DrawElements(OpenTK.Graphics.OpenGL.PrimitiveType.TriangleStrip, bufferObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             GL.Enable(EnableCap.DepthTest);
         }
 
         public static void DrawObject(TextureManager textureManager, BufferObject bufferObject)
         {
-
-            GL.BindVertexArray(bufferObject.VaoID);
             GL.UseProgram(ShaderManager.Render.ID);
+            GL.BindVertexArray(bufferObject.VaoID);
 
-            GL.UniformMatrix4(Renderer.handle_modelViewMatrix, false, ref Renderer.modelViewMatrix);
-            GL.UniformMatrix4(Renderer.handle_projectionMatrix, false, ref Renderer.projectionMatrix);
+            GL.UniformMatrix4(handle_modelViewMatrix, false, ref modelViewMatrix);
+            GL.UniformMatrix4(handle_projectionMatrix, false, ref projectionMatrix);
             GL.Uniform1(Renderer.handle_iter, 70);
             GL.Uniform2(Renderer.handle_centre, 0f, 0f);
             GL.Uniform1(Renderer.handle_scale, 2.2);
 
             //GL.BindTexture(TextureTarget.Texture1D, m_textureManager.Get("1d").ID);
 
-            GL.DrawElements(OpenTK.Graphics.OpenGL.PrimitiveType.Triangles, bufferObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            GL.DrawElements(OpenTK.Graphics.OpenGL.PrimitiveType.TriangleStrip, bufferObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
         }
         internal static void ToggleWireframeOn()
         {

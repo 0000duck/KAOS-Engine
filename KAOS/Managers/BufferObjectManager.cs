@@ -91,7 +91,8 @@ namespace KAOS.Managers
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, bufferObject.IboID);
 
-            GL.BindVertexArray(bufferObject.VaoID);
+            // IMPORTANT: vertex array needs unbinding here to avoid rendering incorrectly
+            GL.BindVertexArray(0);
 
             m_bufferStore.Add(name, bufferObject);
         }
