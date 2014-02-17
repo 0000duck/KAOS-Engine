@@ -177,6 +177,53 @@ namespace KAOS.Shapes
         }
 
         #endregion
+
+        public Vector3[] Normals
+        {
+            get
+            {
+                Vector3[] normals = new Vector3[VertexArray.Length];
+                for (uint i = 0; i < VertexArray.Length; i++)
+                {
+                    normals[i] = (Vector3)VertexArray[i].Normal;
+                }
+                return normals;
+            }
+        }
+
+        public Vector2[] Texcoords
+        {
+            get
+            {
+                Vector2[] vertices = new Vector2[VertexArray.Length];
+                for (uint i = 0; i < VertexArray.Length; i++)
+                {
+                    vertices[i] = (Vector2)VertexArray[i].TexCoord;
+                }
+                return vertices;
+            }
+        }
+
+        public uint[] Indices
+        {
+            get
+            {
+                return IndexArray;
+            }
+        }
+
+        public Vector3[] Vertices
+        {
+            get
+            {
+                Vector3[] postion = new Vector3[VertexArray.Length];
+                for (uint i = 0; i < VertexArray.Length; i++)
+                {
+                    postion[i] = (Vector3)VertexArray[i].Position;
+                }
+                return postion;
+            }
+        }
     }
 
 }

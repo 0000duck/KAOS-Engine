@@ -16,7 +16,6 @@ namespace KAOS.States
         private TextureManager m_textureManager;
 
         Cube cube;
-        BufferObject cubeObject;
 
         static string defaultSkyboxPath = "Data/Skyboxes/set 16/";
         string[] skyboxFaces = new String[]
@@ -29,11 +28,7 @@ namespace KAOS.States
             defaultSkyboxPath + "neg_z.bmp",
         };
 
-        Matrix3 modelMatrix3, normalMatrix;
-        Vector3 eyeObjectSpace;
-        Vector3 trans;
-        
-        int eye_handle, skybox_vao;
+        int skybox_vao;
 
         float aspect = 1024 / (float)600;
         float _rotation;
@@ -50,7 +45,6 @@ namespace KAOS.States
             QueryShaders();
 
             _rotation = MathHelper.DegreesToRadians(90);
-            trans = new Vector3(0f, 0f, -10f);
 
             LoadTestObject();
         }
@@ -83,11 +77,8 @@ namespace KAOS.States
         {
             cube = new Cube(0, 0, 0);
             m_bufferManager.AddBufferObject("SkyCube", cube, ShaderManager.Skybox.ID);
-            //m_bufferManager.AddBufferObject("Cube", cube, ShaderManager.Render.ID);
-            m_bufferManager.AddBufferObject("Torus", new TorusKnot( 256, 32, 0.1, 3, 4, 1, true ), ShaderManager.Render.ID);
-
-            //m_bufferManager.AddBufferObject("SkyCube", cubeObject, ShaderManager.Skybox.ID);
-            //m_bufferManager.AddBufferObject("Cube", cubeObject, ShaderManager.Render.ID);
+            m_bufferManager.AddBufferObject("Torus", new TorusKnot(256, 32, 0.1, 3, 4, 1, false), ShaderManager.Render.ID); 
+            m_bufferManager.AddBufferObject("Cube", cube, ShaderManager.Render.ID);
         }
 
         public void Update(float elapsedTime)
@@ -104,23 +95,8 @@ namespace KAOS.States
 
         public void Render()
         {
-            cubeObject = m_bufferManager.GetBuffer("SkyCube");
-            Renderer.DrawSkyBox(m_textureManager, cubeObject);
-            
-            cubeObject = m_bufferManager.GetBuffer("Torus");
-            GL.BindVertexArray(cubeObject.VaoID);
-            GL.UseProgram(ShaderManager.Render.ID);
-
-            GL.UniformMatrix4(Renderer.handle_modelViewMatrix, false, ref Renderer.modelViewMatrix);
-            GL.UniformMatrix4(Renderer.handle_projectionMatrix, false, ref Renderer.projectionMatrix);
-            GL.Uniform1(Renderer.handle_iter, 70);
-            GL.Uniform2(Renderer.handle_centre, 0f, 0f);
-            GL.Uniform1(Renderer.handle_scale, 2.2);
-
-
-            //GL.BindTexture(TextureTarget.Texture1D, m_textureManager.Get("1d").ID);
-
-            GL.DrawElements(PrimitiveType.Triangles, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            Renderer.DrawSkyBox(m_textureManager, m_bufferManager.GetBuffer("SkyCube"));
+            Renderer.DrawObject(m_textureManager, m_bufferManager.GetBuffer("Cube"));
         }
 
         #region Input Control

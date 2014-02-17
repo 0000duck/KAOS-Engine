@@ -13,17 +13,16 @@ namespace KAOS.Utilities
 {
     public static class Renderer
     {
-        internal static Matrix4 projectionMatrix, modelViewProjectionMatrix, modelViewMatrix, viewMatrix;
+        #region Members
+        internal static Matrix4 projectionMatrix, modelViewMatrix, viewMatrix;
         internal static Vector3 eyePosition, m_sceneCenter, m_sceneMin, m_sceneMax;
-        internal static int
-            handle_projectionMatrix,
-            handle_modelViewProjectionMatrix,
-            handle_modelViewMatrix, handle_eyePosition, handle_viewMatrix, m_displayList, m_texId;
+        internal static int handle_projectionMatrix, handle_modelViewMatrix, handle_eyePosition, handle_viewMatrix, 
+            m_displayList, m_texId, 
+            handle_centre, handle_scale, handle_iter;
+
         internal static Scene m_model;
         internal static float m_angle;
-        public static int handle_centre;
-        public static int handle_scale;
-        public static int handle_iter;
+        #endregion
 
         public static void DrawImmediateModeVertex(Vector3d position, Color4 color, Vector2 uvs)
         {
@@ -46,25 +45,52 @@ namespace KAOS.Utilities
             GL.End();
         }
 
-        public static void DrawSkyBox(TextureManager m_textureManager, BufferObject cubeObject)
+        public static void DrawSkyBox(TextureManager textureManager, BufferObject Object)
         {
             GL.ClearBuffer(ClearBuffer.Color, 0, new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
             GL.ClearBuffer(ClearBuffer.Depth, 0, new float[] { 1.0f });
 
             GL.UseProgram(ShaderManager.Skybox.ID);
             GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.TextureCubeMap, m_textureManager.Get("skybox1").ID);
+            GL.BindTexture(TextureTarget.TextureCubeMap, textureManager.Get("skybox1").ID);
 
-            GL.BindVertexArray(cubeObject.VaoID);
+            GL.BindVertexArray(Object.VaoID);
             GL.Disable(EnableCap.DepthTest);
 
             GL.UniformMatrix4(handle_viewMatrix, false, ref viewMatrix);
 
-            GL.DrawElements(OpenTK.Graphics.OpenGL.PrimitiveType.TriangleStrip, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            GL.DrawElements(OpenTK.Graphics.OpenGL.PrimitiveType.TriangleStrip, Object.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             GL.Enable(EnableCap.DepthTest);
         }
 
+        public static void DrawObject(TextureManager textureManager, BufferObject bufferObject)
+        {
+
+            GL.BindVertexArray(bufferObject.VaoID);
+            GL.UseProgram(ShaderManager.Render.ID);
+
+            GL.UniformMatrix4(Renderer.handle_modelViewMatrix, false, ref Renderer.modelViewMatrix);
+            GL.UniformMatrix4(Renderer.handle_projectionMatrix, false, ref Renderer.projectionMatrix);
+            GL.Uniform1(Renderer.handle_iter, 70);
+            GL.Uniform2(Renderer.handle_centre, 0f, 0f);
+            GL.Uniform1(Renderer.handle_scale, 2.2);
+
+            //GL.BindTexture(TextureTarget.Texture1D, m_textureManager.Get("1d").ID);
+
+            GL.DrawElements(OpenTK.Graphics.OpenGL.PrimitiveType.Triangles, bufferObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
+        }
+        internal static void ToggleWireframeOn()
+        {
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+        }
+
+        internal static void ToggleWireframeOff()
+        {
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+        }
+
+        #region Assimp Example
         public static void DrawModel()
         {
             GL.Enable(EnableCap.Texture2D);
@@ -98,16 +124,6 @@ namespace KAOS.Utilities
             }
 
             GL.CallList(m_displayList);
-        }
-
-        internal static void ToggleWireframeOn()
-        {
-            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-        }
-
-        internal static void ToggleWireframeOff()
-        {
-            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
         }
 
         private static void ComputeBoundingBox()
@@ -358,5 +374,6 @@ namespace KAOS.Utilities
             c.A = color.A;
             return c;
         }
+        #endregion
     }
 }

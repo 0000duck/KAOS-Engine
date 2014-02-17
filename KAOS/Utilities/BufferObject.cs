@@ -18,16 +18,16 @@ namespace KAOS.Utilities
 
         public PrimitiveType PrimitiveType { get; set; }
 
-        public Vector3d[] PositionData { get; set; }
+        public Vector3[] PositionData { get; set; }
 
-        public Vector3d[] NormalsData { get; set; }
+        public Vector3[] NormalsData { get; set; }
 
         public Color4[] ColorData { get; set; }
 
         public uint[] IndicesData { get; set; }
 
         public BufferObject(int vaoId, int vboId, int iboId, int vPosition, int vNormals, int vColor, 
-            Vector3d[] vPositionData, Vector3d[] vNormalsData, Color4[] vColorData, PrimitiveType primitiveType, uint[] indicesData) :this()
+            Vector3[] vPositionData, Vector3[] vNormalsData, Color4[] vColorData, PrimitiveType primitiveType, uint[] indicesData) :this()
         {
             #region Buffer Pointer IDs
             VaoID = vaoId;
