@@ -1,4 +1,6 @@
-﻿using KAOS.Utilities;
+﻿using KAOS.Interfaces;
+using KAOS.Shapes;
+using KAOS.Utilities;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
@@ -10,13 +12,34 @@ namespace KAOS.Managers
     {
         Dictionary<string, BufferObject> m_bufferStore = new Dictionary<string, BufferObject>();
 
-        public void AddBufferObject(string name, BufferObject bufferObject, int program)
+        public void AddBufferObject(string name, IDrawableShape shape, int program)
         {
+            BufferObject bufferObject = new BufferObject();
+            //bufferObject.PositionData = new Vector3d[1];
+            //bufferObject.NormalsData = new Vector3d[1];
+            VertexT2dN3dV3d[] vertexData;
+            uint[] indices;
+            BeginMode type;
+
+            shape.GetArraysforVBO(out type, out vertexData, out indices);
+            for (int i = 0; i < vertexData.Length; i++)
+            {
+                if (i == 0)
+                {
+                    bufferObject.PositionData = new Vector3d[]{ vertexData[i].Position};
+                    bufferObject.NormalsData = new Vector3d[]{ vertexData[i].Normal};
+                }
+                bufferObject.PositionData = bufferObject.PositionData.Concat(new Vector3d[]{ vertexData[i].Position});
+                bufferObject.NormalsData = bufferObject.NormalsData.Concat(new Vector3d[]{ vertexData[i].Normal});
+            }
+
+            bufferObject.IndicesData = indices;
+
             int bufferHandle;
 
             #region Get sizes of buffer stores
-            int sizeOfPositionData = Vector3.SizeInBytes * bufferObject.PositionData.Length;
-            int sizeOfNormalsData = Vector3.SizeInBytes * bufferObject.NormalsData.Length;
+            int sizeOfPositionData = Vector3d.SizeInBytes * bufferObject.PositionData.Length;
+            int sizeOfNormalsData = Vector3d.SizeInBytes * bufferObject.NormalsData.Length;
             //int sizeOfColorData = Marshal.SizeOf(new Color4()) * bufferObject.ColorData.Length;
             IntPtr bufferSize = new IntPtr (sizeOfPositionData + sizeOfNormalsData);
             IntPtr noOffset = new IntPtr(0);
@@ -34,10 +57,10 @@ namespace KAOS.Managers
             // Initialise storage space for the Vertex Buffer.
             GL.BufferData(BufferTarget.ArrayBuffer, bufferSize, IntPtr.Zero, BufferUsageHint.StaticDraw);
             // Send Position data.
-            GL.BufferSubData<Vector3>(BufferTarget.ArrayBuffer, noOffset,
+            GL.BufferSubData<Vector3d>(BufferTarget.ArrayBuffer, noOffset,
                 new IntPtr(sizeOfPositionData), bufferObject.PositionData);
             // Send Normals data, offset by size of Position data.
-            GL.BufferSubData<Vector3>(BufferTarget.ArrayBuffer,
+            GL.BufferSubData<Vector3d>(BufferTarget.ArrayBuffer,
                 new IntPtr(sizeOfPositionData), new IntPtr(sizeOfNormalsData), bufferObject.NormalsData);
             
             GL.GenBuffers(1, out bufferHandle);
@@ -66,13 +89,13 @@ namespace KAOS.Managers
             bufferHandle = GL.GetAttribLocation(program, "in_position");
             GL.EnableVertexAttribArray(bufferHandle); 
             GL.BindBuffer(BufferTarget.ArrayBuffer, bufferObject.VboID);
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, true, Vector3d.SizeInBytes, 0);
             GL.BindAttribLocation(program, bufferHandle, "in_position");
 
             bufferHandle = GL.GetAttribLocation(program, "in_normal");
             GL.EnableVertexAttribArray(bufferHandle);
             GL.BindBuffer(BufferTarget.ArrayBuffer, bufferObject.VboID);
-            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, sizeOfPositionData);
+            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, true, Vector3d.SizeInBytes, sizeOfPositionData);
             GL.BindAttribLocation(program, bufferHandle, "in_normal");
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, bufferObject.IboID);

@@ -20,7 +20,7 @@ namespace KAOS.Shapes
             Vertices = new Vector3[count];
             Normals = new Vector3[count];
             Texcoords = new Vector2[count];
-            Indices = new int[6 * count / 4];
+            Indices = new uint[6 * count / 4];
 
             int i = 0;
             for (double t = -System.Math.PI; (float)t < (float)System.Math.PI - Single.Epsilon; t += System.Math.PI / (double)t_steps)
@@ -39,12 +39,12 @@ namespace KAOS.Shapes
             
             for (i = 0; i < 6*count/4; i+=6)
             {
-                Indices[i] = i;
-                Indices[i + 1] = i + 1;
-                Indices[i + 2] = i + 2 * s_steps + 1;
-                Indices[i + 3] = i + 2 * s_steps;
-                Indices[i + 4] = i;
-                Indices[i + 5] = i + 2 * s_steps + 1;
+                Indices[i] = (uint)i;
+                Indices[i + 1] = (uint)i + 1;
+                Indices[i + 2] = (uint)(i + 2 * s_steps + 1);
+                Indices[i + 3] = (uint)(i + 2 * s_steps);
+                Indices[i + 4] = (uint)i;
+                Indices[i + 5] = (uint)(i + 2 * s_steps + 1);
             }
         }
     }

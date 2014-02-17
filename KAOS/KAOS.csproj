@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Interfaces\IGameObject.cs" />
     <Compile Include="Managers\BufferObjectManager.cs" />
+    <Compile Include="Interfaces\IDrawableShape.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\ModelManager.cs" />
     <Compile Include="Managers\ShaderManager.cs" />

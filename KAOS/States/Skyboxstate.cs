@@ -82,14 +82,12 @@ namespace KAOS.States
         private void LoadTestObject()
         {
             cube = new Cube(0, 0, 0);
-            cubeObject = new BufferObject();
-            cubeObject.PositionData = cube.Vertices;
-            cubeObject.NormalsData = cube.Normals;
-            cubeObject.IndicesData = cube.Indices;
-            cubeObject.PrimitiveType = PrimitiveType.TriangleStrip;
+            m_bufferManager.AddBufferObject("SkyCube", cube, ShaderManager.Skybox.ID);
+            //m_bufferManager.AddBufferObject("Cube", cube, ShaderManager.Render.ID);
+            m_bufferManager.AddBufferObject("Torus", new TorusKnot( 256, 32, 0.1, 3, 4, 1, true ), ShaderManager.Render.ID);
 
-            m_bufferManager.AddBufferObject("SkyCube", cubeObject, ShaderManager.Skybox.ID);
-            m_bufferManager.AddBufferObject("Cube", cubeObject, ShaderManager.Render.ID);
+            //m_bufferManager.AddBufferObject("SkyCube", cubeObject, ShaderManager.Skybox.ID);
+            //m_bufferManager.AddBufferObject("Cube", cubeObject, ShaderManager.Render.ID);
         }
 
         public void Update(float elapsedTime)
@@ -109,7 +107,7 @@ namespace KAOS.States
             cubeObject = m_bufferManager.GetBuffer("SkyCube");
             Renderer.DrawSkyBox(m_textureManager, cubeObject);
             
-            cubeObject = m_bufferManager.GetBuffer("Cube");
+            cubeObject = m_bufferManager.GetBuffer("Torus");
             GL.BindVertexArray(cubeObject.VaoID);
             GL.UseProgram(ShaderManager.Render.ID);
 
@@ -120,9 +118,9 @@ namespace KAOS.States
             GL.Uniform1(Renderer.handle_scale, 2.2);
 
 
-            GL.BindTexture(TextureTarget.Texture1D, m_textureManager.Get("1d").ID);
+            //GL.BindTexture(TextureTarget.Texture1D, m_textureManager.Get("1d").ID);
 
-            GL.DrawElements(cubeObject.PrimitiveType, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            //GL.DrawElements(PrimitiveType.Triangles, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
         }
 
         #region Input Control

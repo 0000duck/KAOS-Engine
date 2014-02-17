@@ -19,7 +19,7 @@ namespace KAOS.Shapes
     // Can use a Display List to prevent repeated immediate mode draws.
     //
 
-    public abstract class DrawableShape: IDisposable
+    public abstract class DrawableShape: IDisposable, KAOS.Interfaces.IDrawableShape
     {
         protected BeginMode PrimitiveMode;
         protected VertexT2dN3dV3d[] VertexArray;

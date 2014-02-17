@@ -9,7 +9,7 @@ namespace KAOS.Shapes
         public Vector3d Normal;
         public Vector3d Position;
 
-        public VertexT2dN3dV3d( Vector2d texcoord, Vector3d normal, Vector3d position )
+        public VertexT2dN3dV3d(Vector2d texcoord, Vector3d normal, Vector3d position)
         {
             TexCoord = texcoord;
             Normal = normal;

@@ -26,7 +26,7 @@ namespace KAOS.Shapes
                 new Vector3(x-1.0f,  y+1.0f, z-1.0f)
             };
 
-            Indices = new int[]
+            Indices = new uint[]
             {
                 // front face
                 0, 1, 2, 2, 3, 0,

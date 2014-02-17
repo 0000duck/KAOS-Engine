@@ -18,7 +18,7 @@ namespace KAOS.Shapes
         {
             Vertices = new Vector3[x_res * y_res];
             Normals = new Vector3[x_res * y_res];
-            Indices = new int[6 * x_res * y_res];
+            Indices = new uint[6 * x_res * y_res];
             Texcoords = new Vector2[x_res * y_res];
 
             int i = 0;
@@ -40,13 +40,13 @@ namespace KAOS.Shapes
             {
                 for (int x = 0; x < x_res - 1; x++)
                 {
-                    Indices[i++] = (y + 0) * x_res + x;
-                    Indices[i++] = (y + 1) * x_res + x;
-                    Indices[i++] = (y + 0) * x_res + x + 1;
+                    Indices[i++] = (uint)((y + 0) * x_res + x);
+                    Indices[i++] = (uint)((y + 1) * x_res + x);
+                    Indices[i++] = (uint)((y + 0) * x_res + x + 1);
 
-                    Indices[i++] = (y + 0) * x_res + x + 1;
-                    Indices[i++] = (y + 1) * x_res + x;
-                    Indices[i++] = (y + 1) * x_res + x + 1;
+                    Indices[i++] = (uint)((y + 0) * x_res + x + 1);
+                    Indices[i++] = (uint)((y + 1) * x_res + x);
+                    Indices[i++] = (uint)((y + 1) * x_res + x + 1);
                 }
             }
         }
