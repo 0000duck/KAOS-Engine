@@ -122,6 +122,7 @@
     <Compile Include="Utilities\AnimationTimer.cs" />
     <Compile Include="Utilities\Renderer.cs" />
     <Compile Include="Utilities\Shader.cs" />
+    <Compile Include="Utilities\TextRenderer.cs" />
     <Compile Include="Utilities\Texture.cs" />
   </ItemGroup>
   <ItemGroup>
