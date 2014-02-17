@@ -11,22 +11,22 @@ using System.Windows.Forms;
 namespace KAOS
 {
     /// <summary>
-    /// Inherit from here to get started.
-    /// This is the main interface to the system.
+    /// This is the main interface to the system. Inherit from here to get started.
     /// </summary>
-    public abstract class KAOSWindow : GameWindow, IDisposable
+    public abstract class KAOSEngine : GameWindow, IDisposable
     {
 
-        public static string AppName { get { return "AWEngine"; } }
+        public static string AppName { get { return "KAOS-Engine"; } }
 
         public int ScreenWidth { get { return this.ClientSize.Width; } }
         public int ScreenHeight { get { return this.ClientSize.Height; } }
 
-        protected Matrix4 projectionMatrix, modelviewMatrix;
         protected AnimationTimer m_Timer;
+
+        MouseState current, previous;
         
-        public KAOSWindow(int height, int width, int major, int minor)
-            : base(height, width, new GraphicsMode(32, 16, 0, 4), KAOSWindow.AppName, GameWindowFlags.Default, 
+        public KAOSEngine(int height, int width, int major, int minor)
+            : base(height, width, new GraphicsMode(32, 16, 0, 4), KAOSEngine.AppName, GameWindowFlags.Default, 
             DisplayDevice.Default, major, minor, GraphicsContextFlags.Default)
         { }
 
@@ -65,8 +65,6 @@ namespace KAOS
 
         #endregion
 
-        MouseState current, previous;
-
         #region Game Loop
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
@@ -99,7 +97,7 @@ namespace KAOS
             
             GL.Viewport(0, 0, ScreenWidth, ScreenHeight);
 
-            Title = KAOSWindow.AppName +
+            Title = KAOSEngine.AppName +
 
                 " OpenGL: " + GL.GetString(StringName.Version) +
                 " GLSL: " + GL.GetString(StringName.ShadingLanguageVersion) +

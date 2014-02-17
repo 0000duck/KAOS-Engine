@@ -12,7 +12,7 @@ namespace KAOS.Utilities
        
         internal static void WriteLine(string output)
         {
-            Console.WriteLine(KAOSWindow.AppName + " Logger: " + output.Trim());
+            Console.WriteLine(KAOSEngine.AppName + " Logger: " + output.Trim());
         }
 
         internal static void PlatformInfo()
