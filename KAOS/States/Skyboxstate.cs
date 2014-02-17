@@ -120,7 +120,7 @@ namespace KAOS.States
 
             //GL.BindTexture(TextureTarget.Texture1D, m_textureManager.Get("1d").ID);
 
-            //GL.DrawElements(PrimitiveType.Triangles, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            GL.DrawElements(PrimitiveType.Triangles, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
         }
 
         #region Input Control

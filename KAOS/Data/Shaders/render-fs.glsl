@@ -23,14 +23,14 @@ void main(void)
 {
     // Reflect view vector about the plane defined by the normal
     // at the fragment
-    //vec3 r = reflect(fs_in.view, normalize(fs_in.normal));
+    vec3 r = reflect(fs_in.view, normalize(fs_in.normal));
 
     // Sample from scaled using reflection vector
-    // color = texture(tex_cubemap, r);
+     color = texture(tex_cubemap, r);
 
-	//float diffuse = clamp(dot(lightVecNormalized, normalize(fs_in.normal)), 0.0, 1.0);
+	float diffuse = clamp(dot(lightVecNormalized, normalize(fs_in.normal)), 0.0, 1.0);
 
-	//color = color * vec4(ambient + diffuse * lightColor, 1.0);
+	color = color * vec4(ambient + diffuse * lightColor, 1.0);
 
 	// see: http://nuclear.mutantstargoat.com/articles/sdr_fract/
 
@@ -50,5 +50,5 @@ void main(void)
         z.y = y;
     }
 
-    gl_FragColor = texture1D(tex, (i == iter ? 0.0 : float(i)) / 100.0);
+    //gl_FragColor = texture1D(tex, (i == iter ? 0.0 : float(i)) / 100.0);
 }
