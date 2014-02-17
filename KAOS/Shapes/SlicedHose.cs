@@ -1,4 +1,5 @@
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace KAOS.Shapes
 {
@@ -30,7 +31,7 @@ namespace KAOS.Shapes
         public SlicedHose( eSide side, uint subdivs, double scale, Vector3d offset1, Vector3d offset2, bool useDL )
             : base( useDL )
         {
-            PrimitiveMode = OpenTK.Graphics.OpenGL.BeginMode.Triangles;
+            PrimitiveMode = PrimitiveType.Triangles;
 
             Vector3d start = Vector3d.Zero,
                      end = Vector3d.Zero;

@@ -1,4 +1,5 @@
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 
 namespace KAOS.Shapes
@@ -44,9 +45,9 @@ namespace KAOS.Shapes
                 HoseSubDivs = 15;
                 break;
             }
-            PrimitiveMode = OpenTK.Graphics.OpenGL.BeginMode.Triangles;
+            PrimitiveMode = PrimitiveType.Triangles;
 
-            OpenTK.Graphics.OpenGL.BeginMode TemporaryMode;
+            PrimitiveType TemporaryMode;
             VertexT2dN3dV3d[] TemporaryVBO;
             uint[] TemporaryIBO;
 

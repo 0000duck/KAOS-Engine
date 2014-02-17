@@ -13,6 +13,8 @@ namespace KAOS.Shapes
 {
     public abstract class Shape : KAOS.Interfaces.IDrawableShape
     {
+        protected PrimitiveType PrimitiveMode;
+        
         private Vector3[] vertices, normals;
         private Vector2[] texcoords;
         private uint[] indices;
@@ -51,9 +53,9 @@ namespace KAOS.Shapes
             }
         }
 
-        public void GetArraysforVBO(out OpenTK.Graphics.OpenGL.BeginMode primitives, out VertexT2dN3dV3d[] vertices, out uint[] indices)
+        public void GetArraysforVBO(out PrimitiveType primitives, out VertexT2dN3dV3d[] vertices, out uint[] indices)
         {
-            primitives = BeginMode.Triangles;
+            primitives = PrimitiveMode;
 
             vertices = new VertexT2dN3dV3d[Vertices.Length];
             for (uint i = 0; i < Vertices.Length ; i++)
@@ -66,9 +68,9 @@ namespace KAOS.Shapes
             indices = Indices;
         }
 
-        public void GetArraysforVBO(out OpenTK.Graphics.OpenGL.BeginMode primitives, out VertexT2fN3fV3f[] vertices, out uint[] indices)
+        public void GetArraysforVBO(out PrimitiveType primitives, out VertexT2fN3fV3f[] vertices, out uint[] indices)
         {
-            primitives = BeginMode.Triangles;
+            primitives = PrimitiveMode;
 
             vertices = new VertexT2fN3fV3f[Vertices.Length];
             for (uint i = 0; i < Vertices.Length; i++)
@@ -81,9 +83,9 @@ namespace KAOS.Shapes
             indices = Indices;
         }
 
-        public void GetArraysforVBO(out OpenTK.Graphics.OpenGL.BeginMode primitives, out VertexT2hN3hV3h[] vertices, out uint[] indices)
+        public void GetArraysforVBO(out PrimitiveType primitives, out VertexT2hN3hV3h[] vertices, out uint[] indices)
         {
-            primitives = BeginMode.Triangles;
+            primitives = PrimitiveMode;
 
             vertices = new VertexT2hN3hV3h[Vertices.Length];
             for (uint i = 0; i < Vertices.Length; i++)

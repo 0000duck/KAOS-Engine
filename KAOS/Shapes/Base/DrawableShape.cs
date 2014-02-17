@@ -21,7 +21,7 @@ namespace KAOS.Shapes
 
     public abstract class DrawableShape: IDisposable, KAOS.Interfaces.IDrawableShape
     {
-        protected BeginMode PrimitiveMode;
+        protected PrimitiveType PrimitiveMode;
         protected VertexT2dN3dV3d[] VertexArray;
         protected uint[] IndexArray;
 
@@ -30,8 +30,8 @@ namespace KAOS.Shapes
             get
             {
                 switch ( PrimitiveMode )
-                { 
-                case BeginMode.Triangles:
+                {
+                    case PrimitiveType.Triangles:
                     if ( IndexArray != null )
                     {
                         return IndexArray.Length / 3;
@@ -55,14 +55,14 @@ namespace KAOS.Shapes
         public DrawableShape( bool useDisplayList )
         {
             UseDisplayList = useDisplayList;
-            PrimitiveMode = BeginMode.Triangles;
+            PrimitiveMode = PrimitiveType.Triangles;
             VertexArray = null;
             IndexArray = null;
         }
 
         #region Convert to VBO
 
-        public void GetArraysforVBO(out BeginMode primitives, out VertexT2dN3dV3d[] vertices, out uint[] indices)
+        public void GetArraysforVBO(out PrimitiveType primitives, out VertexT2dN3dV3d[] vertices, out uint[] indices)
         {
             primitives = PrimitiveMode;
 
@@ -77,7 +77,7 @@ namespace KAOS.Shapes
             indices = IndexArray;
         }
 
-        public void GetArraysforVBO(out BeginMode primitives, out VertexT2fN3fV3f[] vertices, out uint[] indices)
+        public void GetArraysforVBO(out PrimitiveType primitives, out VertexT2fN3fV3f[] vertices, out uint[] indices)
         {
             primitives = PrimitiveMode;
 
@@ -92,7 +92,7 @@ namespace KAOS.Shapes
             indices = IndexArray;
         }
 
-        public void GetArraysforVBO(out BeginMode primitives, out VertexT2hN3hV3h[] vertices, out uint[] indices)
+        public void GetArraysforVBO(out PrimitiveType primitives, out VertexT2hN3hV3h[] vertices, out uint[] indices)
         {
             primitives = PrimitiveMode;
 

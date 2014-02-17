@@ -1,4 +1,5 @@
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 
 namespace KAOS.Shapes
@@ -37,7 +38,7 @@ namespace KAOS.Shapes
         {
             double Diameter = radius;
 
-            PrimitiveMode = OpenTK.Graphics.OpenGL.BeginMode.Triangles;
+            PrimitiveMode = PrimitiveType.Triangles;
 
             if ( sides[0] == eDir.All )
             {

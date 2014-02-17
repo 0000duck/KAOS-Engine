@@ -1,4 +1,5 @@
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 
@@ -38,7 +39,7 @@ namespace KAOS.Shapes
             default: throw new ArgumentOutOfRangeException( "Subdivisions other than contained in the enum cause overflows and are not allowed." );
             }
 
-            PrimitiveMode = OpenTK.Graphics.OpenGL.BeginMode.Triangles;
+            PrimitiveMode = PrimitiveType.Triangles;
 
             #region Get Array Dimensions
             uint

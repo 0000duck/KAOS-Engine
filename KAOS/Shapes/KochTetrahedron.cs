@@ -1,3 +1,4 @@
+using OpenTK.Graphics.OpenGL;
 using System;
 
 namespace KAOS.Shapes
@@ -49,7 +50,7 @@ namespace KAOS.Shapes
 
             }
 
-            PrimitiveMode = OpenTK.Graphics.OpenGL.BeginMode.Triangles;
+            PrimitiveMode = PrimitiveType.Triangles;
             SierpinskiTetrahedron.GetVertexArray( ref Triangles, out VertexArray );
             IndexArray = null;
         }

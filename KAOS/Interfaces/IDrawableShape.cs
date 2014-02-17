@@ -15,8 +15,8 @@ namespace KAOS.Interfaces
         Vector2[] Texcoords { get; }
         uint[] Indices { get; }
 
-        void GetArraysforVBO(out BeginMode primitives, out VertexT2dN3dV3d[] vertices, out uint[] indices);
-        void GetArraysforVBO(out BeginMode primitives, out VertexT2fN3fV3f[] vertices, out uint[] indices);
-        void GetArraysforVBO(out BeginMode primitives, out VertexT2hN3hV3h[] vertices, out uint[] indices);
+        void GetArraysforVBO(out PrimitiveType primitives, out VertexT2dN3dV3d[] vertices, out uint[] indices);
+        void GetArraysforVBO(out PrimitiveType primitives, out VertexT2fN3fV3f[] vertices, out uint[] indices);
+        void GetArraysforVBO(out PrimitiveType primitives, out VertexT2hN3hV3h[] vertices, out uint[] indices);
     }
 }
