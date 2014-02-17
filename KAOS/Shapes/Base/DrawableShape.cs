@@ -195,12 +195,12 @@ namespace KAOS.Shapes
         {
             get
             {
-                Vector2[] vertices = new Vector2[VertexArray.Length];
+                Vector2[] texCoords = new Vector2[VertexArray.Length];
                 for (uint i = 0; i < VertexArray.Length; i++)
                 {
-                    vertices[i] = (Vector2)VertexArray[i].TexCoord;
+                    texCoords[i] = (Vector2)VertexArray[i].TexCoord;
                 }
-                return vertices;
+                return texCoords;
             }
         }
 
