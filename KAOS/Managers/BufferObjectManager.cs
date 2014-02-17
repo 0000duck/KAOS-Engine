@@ -8,6 +8,9 @@ using System.Collections.Generic;
 
 namespace KAOS.Managers
 {
+    /// <summary>
+    /// Responsible for uploading vertex data to the gpu and setting up vertex arrays.
+    /// </summary>
     public class BufferObjectManager
     {
         Dictionary<string, BufferObject> m_bufferStore = new Dictionary<string, BufferObject>();

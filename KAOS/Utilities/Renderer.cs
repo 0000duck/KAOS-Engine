@@ -11,6 +11,9 @@ using System.Reflection;
 
 namespace KAOS.Utilities
 {
+    /// <summary>
+    /// Responsible for all rendering.
+    /// </summary>
     public static class Renderer
     {
         #region Members

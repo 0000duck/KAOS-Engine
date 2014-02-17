@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace KAOS.Utilities
 {
     /// <summary>
-    /// AWLogger
+    /// Responsible for displaying runtime information.
     /// </summary>
     internal static class Logger
     {

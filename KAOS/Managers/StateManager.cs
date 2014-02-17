@@ -4,9 +4,12 @@ using System.Diagnostics;
 
 namespace KAOS.Managers
 {
+    /// <summary>
+    /// Responsible for managing different game states such as splash screen, menus, etc...
+    /// </summary>
     public class StateManager
     {
-        Dictionary<string, IGameObject> stateStore = new Dictionary<string, IGameObject>();
+        private Dictionary<string, IGameObject> stateStore = new Dictionary<string, IGameObject>();
         IGameObject currentState = null;
 
         public void Update(float elapsedTime)

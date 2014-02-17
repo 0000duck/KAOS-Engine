@@ -7,9 +7,12 @@ using System.Drawing.Imaging;
 
 namespace KAOS.Managers
 {
+    /// <summary>
+    /// Responsible for uploading textures to the GPU.
+    /// </summary>
     public class TextureManager : IDisposable
     {
-        Dictionary<string, Texture> m_textureDatabase = new Dictionary<string, Texture>();
+        private Dictionary<string, Texture> m_textureDatabase = new Dictionary<string, Texture>();
 
         public Texture Get(string textureId)
         {

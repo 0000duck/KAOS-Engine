@@ -6,6 +6,9 @@ using System.Text;
 
 namespace KAOS.Utilities
 {
+    /// <summary>
+    /// Provides accurate timing information which may later be used for any animation.
+    /// </summary>
     public class AnimationTimer
     {
         [System.Security.SuppressUnmanagedCodeSecurity]

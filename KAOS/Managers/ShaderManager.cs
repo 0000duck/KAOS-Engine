@@ -10,7 +10,8 @@ namespace KAOS.Managers
     /// </summary>
     public static class ShaderManager
     {
-        static Dictionary<string, Shader> m_shaderStorage;// = new Dictionary<string, Shader>();
+        #region Private Members
+        private static Dictionary<string, Shader> m_shaderStorage;// = new Dictionary<string, Shader>();
 
         // Handles
         private static int m_vertexShaderHandle, m_fragmentShaderHandle, m_programHandle;
@@ -18,6 +19,7 @@ namespace KAOS.Managers
         private static string defaultDataPath = "Data/Shaders/";
         private static string m_vertexShaderFile = "skybox-vs";
         private static string m_fragmentShaderFile = "skybox-fs";
+        #endregion
 
         internal static void LoadDefaultSkyboxShader()
         {
@@ -133,24 +135,6 @@ namespace KAOS.Managers
 
             return programHandle;
         }
-        #endregion
-
-        #region Public Methods
-
-        //public void SetUniforms(
-        //    out int projMatrixHandle, out int mvMatrixHandle,
-        //    out Matrix4 projMatrix, Matrix4 mvMatrix,
-        //    Size dimensions, ref Camera camera)
-        //{
-        //    projMatrixHandle = GL.GetUniformLocation(this.ProgramHandle, "projection_matrix");
-        //    mvMatrixHandle = GL.GetUniformLocation(this.ProgramHandle, "modelview_matrix");
-
-        //    float aspectRatio = dimensions.Width / (float)(dimensions.Height);
-        //    Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 1, 100, out projMatrix);
-
-        //    GL.UniformMatrix4(projMatrixHandle, false, ref projMatrix);
-        //    GL.UniformMatrix4(mvMatrixHandle, false, ref mvMatrix);
-        //} 
         #endregion
 
     }

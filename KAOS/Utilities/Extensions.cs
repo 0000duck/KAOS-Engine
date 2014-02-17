@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace KAOS.Utilities
 {
+    /// <summary>
+    /// Extension methods belong here.
+    /// </summary>
     public static class Extensions
     {
         // http://stackoverflow.com/a/1547282/1090268
