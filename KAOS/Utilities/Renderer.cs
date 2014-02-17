@@ -60,19 +60,9 @@ namespace KAOS.Utilities
 
             GL.UniformMatrix4(handle_viewMatrix, false, ref viewMatrix);
 
-            GL.DrawElements(cubeObject.PrimitiveType, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            GL.DrawElements(OpenTK.Graphics.OpenGL.PrimitiveType.TriangleStrip, cubeObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             GL.Enable(EnableCap.DepthTest);
-        }
-
-        public static void DrawWireframeVoxel(float length, float height, float width)
-        {
-
-        }
-
-        public static void DrawChunk(Chunk chunk)
-        {
-
         }
 
         public static void DrawModel()
