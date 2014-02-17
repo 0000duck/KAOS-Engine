@@ -21,8 +21,6 @@ namespace KAOS
 
         public int ScreenWidth { get { return this.ClientSize.Width; } }
         public int ScreenHeight { get { return this.ClientSize.Height; } }
-        
-        int modelviewMatrixLocation, projectionMatrixLocation;
 
         protected Matrix4 projectionMatrix, modelviewMatrix;
         protected AnimationTimer m_Timer;
@@ -172,7 +170,6 @@ namespace KAOS
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            GL.DeleteTexture(Renderer.m_texId);
         }
     }
 }

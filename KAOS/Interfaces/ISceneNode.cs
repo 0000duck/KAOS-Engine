@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace KAOS.Nodes
+namespace KAOS.Interfaces
 {
     public interface ISceneNode 
     {

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using KAOS.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace KAOS.Nodes
+namespace KAOS.Interfaces
 {
     public interface IGroupNode : IEnumerable<ISceneNode>
     {

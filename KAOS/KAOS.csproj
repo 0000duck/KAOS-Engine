@@ -102,12 +102,9 @@
     <Compile Include="Shapes\VertexPositionColor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="States\AssimpImportedState.cs" />
-    <Compile Include="States\DefaultState.cs" />
     <Compile Include="States\DrawSpriteState.cs" />
     <Compile Include="States\Skyboxstate.cs" />
     <Compile Include="States\SplashScreenState.cs" />
-    <Compile Include="States\VboState.cs" />
     <Compile Include="States\VoxelState.cs" />
     <Compile Include="Utilities\Block.cs" />
     <Compile Include="Utilities\BufferObject.cs" />
@@ -115,14 +112,9 @@
     <Compile Include="Utilities\Chunk.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Logger.cs" />
-    <Compile Include="Nodes\AWCube.cs" />
-    <Compile Include="Nodes\AWGraphLines.cs" />
-    <Compile Include="Nodes\AWMesh.cs" />
-    <Compile Include="Nodes\AWParticles.cs" />
-    <Compile Include="Nodes\AWPolygon.cs" />
     <Compile Include="Nodes\AWGroupNode.cs" />
-    <Compile Include="Nodes\IGroupNode.cs" />
-    <Compile Include="Nodes\ISceneNode.cs" />
+    <Compile Include="Interfaces\IGroupNode.cs" />
+    <Compile Include="Interfaces\ISceneNode.cs" />
     <Compile Include="KAOSWindow.cs" />
     <Compile Include="Shapes\Base\DrawableShape.cs" />
     <Compile Include="Shapes\Base\VertexStructs.cs" />
