@@ -6,12 +6,13 @@
 
 
 
+using KAOS.Interfaces;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace KAOS.Shapes
 {
-    public abstract class Shape : KAOS.Interfaces.IDrawableShape
+    public abstract class Shape : IDrawableShape
     {
         protected PrimitiveType PrimitiveMode;
         

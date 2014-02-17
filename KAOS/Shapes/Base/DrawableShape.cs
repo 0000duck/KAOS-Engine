@@ -4,6 +4,7 @@
  */
 #endregion
 
+using KAOS.Interfaces;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
@@ -19,7 +20,7 @@ namespace KAOS.Shapes
     // Can use a Display List to prevent repeated immediate mode draws.
     //
 
-    public abstract class DrawableShape: IDisposable, KAOS.Interfaces.IDrawableShape
+    public abstract class DrawableShape: IDisposable, IDrawableShape
     {
         protected PrimitiveType PrimitiveMode;
         protected VertexT2dN3dV3d[] VertexArray;

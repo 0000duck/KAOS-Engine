@@ -59,7 +59,7 @@ namespace KAOS.Utilities
 
             GL.UniformMatrix4(handle_viewMatrix, false, ref viewMatrix);
 
-            GL.DrawElements(OpenTK.Graphics.OpenGL.PrimitiveType.TriangleStrip, bufferObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            GL.DrawElements(bufferObject.PrimitiveType, bufferObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             GL.Enable(EnableCap.DepthTest);
         }
@@ -77,7 +77,7 @@ namespace KAOS.Utilities
 
             //GL.BindTexture(TextureTarget.Texture1D, m_textureManager.Get("1d").ID);
 
-            GL.DrawElements(OpenTK.Graphics.OpenGL.PrimitiveType.TriangleStrip, bufferObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            GL.DrawElements(bufferObject.PrimitiveType, bufferObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
         }
         internal static void ToggleWireframeOn()
         {

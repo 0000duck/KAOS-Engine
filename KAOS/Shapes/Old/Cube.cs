@@ -5,6 +5,7 @@
 #endregion
 
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 
 namespace KAOS.Shapes
@@ -65,6 +66,8 @@ namespace KAOS.Shapes
                 ColorToRgba32(Color.Gold),
                 ColorToRgba32(Color.Gold),
             };
+
+            PrimitiveMode = PrimitiveType.Triangles;
         }
 
 

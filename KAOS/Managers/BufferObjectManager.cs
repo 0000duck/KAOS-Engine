@@ -17,15 +17,16 @@ namespace KAOS.Managers
             BufferObject bufferObject = new BufferObject();
             //bufferObject.PositionData = new Vector3d[1];
             //bufferObject.NormalsData = new Vector3d[1];
-            //VertexT2fN3fV3f[] vertexData;
-            //uint[] indices;
-            //BeginMode type;
+            VertexT2fN3fV3f[] vertexData;
+            uint[] indices;
+            PrimitiveType type;
 
-            //shape.GetArraysforVBO(out type, out vertexData, out indices);
+            shape.GetArraysforVBO(out type, out vertexData, out indices);
 
             bufferObject.PositionData = shape.Vertices;
             bufferObject.NormalsData = shape.Normals;
             bufferObject.IndicesData = shape.Indices;
+            bufferObject.PrimitiveType = type;
 
             int bufferHandle;
 
