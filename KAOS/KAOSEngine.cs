@@ -22,8 +22,6 @@ namespace KAOS
         public int ScreenHeight { get { return this.ClientSize.Height; } }
 
         protected AnimationTimer m_Timer;
-
-        MouseState current, previous;
         
         public KAOSEngine(int height, int width, int major, int minor)
             : base(height, width, new GraphicsMode(32, 16, 0, 4), KAOSEngine.AppName, GameWindowFlags.Default, 
@@ -40,14 +38,7 @@ namespace KAOS
         private void BaseInitialisation()
         {
             InitialiseTimer();
-            InitialiseInput();
             InitialiseStockShaders();
-        }
-
-        private void InitialiseInput()
-        {
-            Keyboard.KeyDown += HandleKeyDown;
-            Keyboard.KeyUp += HandleKeyUp;
         }
 
         private void InitialiseTimer()
@@ -68,23 +59,8 @@ namespace KAOS
         #region Game Loop
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            #region Mouse Input
-            current = OpenTK.Input.Mouse.GetState();
-            if (current[MouseButton.Left])
-            {
-                if (current != previous)
-                {
-                    // Mouse state has changed
-                    int xdelta = current.X - previous.X;
-                    int ydelta = current.Y - previous.Y;
-                    int zdelta = current.Wheel - previous.Wheel;
-                    Utilities.Camera.AddRotation(xdelta, ydelta);
-                }
-                previous = current;
-                ResetCursor();
-            }
-            
-            #endregion
+            InputManager.PollInput();
+            ResetCursor();
 
             UpdateFrame(m_Timer.GetElapsedTime());
         }
@@ -129,7 +105,7 @@ namespace KAOS
         #endregion
 
         #region Input Control
-        
+
         private void HandleKeyDown(object sender, KeyboardKeyEventArgs e)
         {
             if (e.Key == Key.Escape)
