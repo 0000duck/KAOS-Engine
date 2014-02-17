@@ -15,8 +15,6 @@ namespace KAOS.States
         private StateManager m_stateManager;
         private TextureManager m_textureManager;
 
-        Cube cube;
-
         static string defaultSkyboxPath = "Data/Textures/skybox/";
         string[] skyboxFaces = new String[]
         {
@@ -27,8 +25,6 @@ namespace KAOS.States
             defaultSkyboxPath + "pos_z.bmp",
             defaultSkyboxPath + "neg_z.bmp",
         };
-
-        int skybox_vao;
 
         float aspect = 1024 / (float)600;
         float _rotation;
@@ -65,18 +61,11 @@ namespace KAOS.States
         private void LoadCubeMap()
         {
             m_textureManager.LoadSkyTexture("skybox1", skyboxFaces);
-            GL.Enable(EnableCap.TextureCubeMapSeamless);
-
-            GL.GenVertexArrays(1, out skybox_vao);
-            GL.BindVertexArray(skybox_vao);
-
-            GL.DepthFunc(DepthFunction.Lequal);
         }
 
         private void LoadTestObject()
         {
-            cube = new Cube(0, 0, 0);
-            m_bufferManager.AddBufferObject("SkyCube", cube, ShaderManager.Skybox.ID);
+            m_bufferManager.AddBufferObject("SkyCube", new Cube(0, 0, 0), ShaderManager.Skybox.ID);
             m_bufferManager.AddBufferObject("MengerSponge", new MengerSponge(1.0, Shapes.MengerSponge.eSubdivisions.Two, true ), ShaderManager.Render.ID); 
         }
 

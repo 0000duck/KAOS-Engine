@@ -127,28 +127,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Data\Shaders\CH02_VS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\CH02_FS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\opentk-fs.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\opentk-vs.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Data\Shaders\render-fs.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Shaders\render-vs.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\Simple_FS.glsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Shaders\Simple_VS.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Shaders\skybox-fs.glsl">
@@ -182,22 +164,22 @@
     <Content Include="AssimpLicense.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Skyboxes\set 16\neg_x.bmp">
+    <Content Include="Data\Textures\skybox\neg_x.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Skyboxes\set 16\neg_y.bmp">
+    <Content Include="Data\Textures\skybox\neg_y.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Skyboxes\set 16\neg_z.bmp">
+    <Content Include="Data\Textures\skybox\neg_z.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Skyboxes\set 16\pos_x.bmp">
+    <Content Include="Data\Textures\skybox\pos_x.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Skyboxes\set 16\pos_y.bmp">
+    <Content Include="Data\Textures\skybox\pos_y.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Skyboxes\set 16\pos_z.bmp">
+    <Content Include="Data\Textures\skybox\pos_z.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Textures\JuliaColorTable.bmp">

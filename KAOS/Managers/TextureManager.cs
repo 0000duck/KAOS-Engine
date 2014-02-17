@@ -19,7 +19,7 @@ namespace KAOS.Managers
             return m_textureDatabase[textureId];
         }
 
-        private int textureGpuHandle;
+        private int textureGpuHandle, textureVao;
         private Bitmap bitmap;
         private BitmapData bitmapData;
 
@@ -42,7 +42,7 @@ namespace KAOS.Managers
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
-            m_textureDatabase.Add(textureId, new Texture(textureGpuHandle, bitmapData.Width, bitmapData.Height));
+            m_textureDatabase.Add(textureId, new Texture(textureGpuHandle, textureVao, bitmapData.Width, bitmapData.Height));
         }
 
         public void LoadTexture1D(string textureId, string path)
@@ -65,7 +65,7 @@ namespace KAOS.Managers
             GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureMagFilter, (int)TextureMinFilter.Nearest);
             GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
 
-            m_textureDatabase.Add(textureId, new Texture(textureGpuHandle, bitmapData.Width, bitmapData.Height));
+            m_textureDatabase.Add(textureId, new Texture(textureGpuHandle, textureVao, bitmapData.Width, bitmapData.Height));
         }
 
         public void LoadSkyTexture(string textureId, string[] path)
@@ -92,7 +92,14 @@ namespace KAOS.Managers
                 CloseImageFile();
             }
 
-            m_textureDatabase.Add(textureId, new Texture(textureGpuHandle, bitmapData.Width, bitmapData.Height));
+            //GL.Enable(EnableCap.TextureCubeMapSeamless);
+
+            //GL.GenVertexArrays(1, out textureVao);
+            //GL.BindVertexArray(textureVao);
+
+            //GL.DepthFunc(DepthFunction.Lequal);
+
+            m_textureDatabase.Add(textureId, new Texture(textureGpuHandle, textureVao, bitmapData.Width, bitmapData.Height));
         }
 
         private void OpenImageFile(string path)
