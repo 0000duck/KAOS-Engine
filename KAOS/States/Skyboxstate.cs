@@ -9,7 +9,7 @@ using System;
 
 namespace KAOS.States
 {
-    public class Skyboxstate : IGameObject
+    public class Skyboxstate : IDisposable, IGameObject
     {
         private BufferObjectManager m_bufferManager;
         private StateManager m_stateManager;
@@ -145,6 +145,11 @@ namespace KAOS.States
 
             }
         #endregion
+        }
+
+        public void Dispose()
+        {
+            m_textureManager.Dispose();
         }
     }
 }

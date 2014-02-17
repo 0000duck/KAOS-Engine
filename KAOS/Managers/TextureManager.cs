@@ -103,15 +103,7 @@ namespace KAOS.Managers
         private void CloseImageFile()
         {
             bitmap.UnlockBits(bitmapData);
-
-            CleanUp();
         }
-
-        private void CleanUp()
-        {
-            bitmap.Dispose();
-        }
-
 
         public void Dispose()
         {
