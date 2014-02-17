@@ -17,7 +17,7 @@ namespace KAOS.States
 
         Cube cube;
 
-        static string defaultSkyboxPath = "Data/Skyboxes/set 16/";
+        static string defaultSkyboxPath = "Data/Textures/skybox/";
         string[] skyboxFaces = new String[]
         {
             defaultSkyboxPath + "pos_x.bmp",
