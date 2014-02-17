@@ -67,19 +67,27 @@ namespace KAOS
 
         #endregion
 
+        MouseState current, previous;
+
         #region Game Loop
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            #region input
-            if (Focused)
+            #region Mouse Input
+            current = OpenTK.Input.Mouse.GetState();
+            if (current[MouseButton.Left])
             {
-                Point center = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
-                Point delta = new Point(center.X - Cursor.Position.X, center.Y - Cursor.Position.Y);
-
-                Utilities.Camera.AddRotation(delta.X, delta.Y);
+                if (current != previous)
+                {
+                    // Mouse state has changed
+                    int xdelta = current.X - previous.X;
+                    int ydelta = current.Y - previous.Y;
+                    int zdelta = current.Wheel - previous.Wheel;
+                    Utilities.Camera.AddRotation(xdelta, ydelta);
+                }
+                previous = current;
                 ResetCursor();
             }
-
+            
             #endregion
 
             UpdateFrame(m_Timer.GetElapsedTime());
