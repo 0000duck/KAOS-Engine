@@ -28,7 +28,7 @@ namespace KAOS
             DisplayDevice.Default, major, minor, GraphicsContextFlags.Default)
         { }
 
-        #region Load everything here
+        // Load everything here
         protected override void OnLoad(System.EventArgs e)
         {
             BaseInitialisation();
@@ -61,9 +61,7 @@ namespace KAOS
 
         public abstract void Initialise();
 
-        #endregion
-
-        #region Game Loop
+        // Game Loop
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             InputManager.PollInput();
@@ -102,9 +100,8 @@ namespace KAOS
 
             float aspect = ScreenWidth / (float)ScreenHeight;
         }
-        #endregion
-
-        #region Input Control
+        
+        // Input Control
 
         private void HandleKeyDown(object sender, KeyboardKeyEventArgs e)
         {
@@ -139,8 +136,6 @@ namespace KAOS
             }
         } 
         
-        #endregion
-
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
