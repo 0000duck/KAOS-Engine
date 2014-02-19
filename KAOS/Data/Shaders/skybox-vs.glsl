@@ -11,6 +11,6 @@ in lowp vec3 in_position;
 
  void main(void)
  {
-	vs_out.tc = mat3(view_matrix) * in_position.xyz;
+	vs_out.tc = mat3(view_matrix) * normalize(in_position.xyz);
 	gl_Position = vec4(in_position.xyz, 1.0);
  }
