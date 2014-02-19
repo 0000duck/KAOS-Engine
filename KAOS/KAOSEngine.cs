@@ -18,8 +18,8 @@ namespace KAOS
 
         public static string AppName { get { return "KAOS-Engine"; } }
 
-        public int ScreenWidth { get { return this.ClientSize.Width; } }
-        public int ScreenHeight { get { return this.ClientSize.Height; } }
+        protected int ScreenWidth { get { return this.ClientSize.Width; } }
+        protected int ScreenHeight { get { return this.ClientSize.Height; } }
 
         protected AnimationTimer m_Timer;
         
@@ -77,6 +77,9 @@ namespace KAOS
             base.OnRenderFrame(e);
             
             GL.Viewport(0, 0, ScreenWidth, ScreenHeight);
+
+            GL.ClearBuffer(ClearBuffer.Color, 0, new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
+            GL.ClearBuffer(ClearBuffer.Depth, 0, new float[] { 1.0f });
 
             Title = KAOSEngine.AppName +
 

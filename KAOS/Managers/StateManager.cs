@@ -12,11 +12,11 @@ namespace KAOS.Managers
         private Dictionary<string, IGameObject> stateStore = new Dictionary<string, IGameObject>();
         IGameObject currentState = null;
 
-        public void Update(float elapsedTime)
+        public void Update(float elapsedTime, float aspect)
         {
             if (currentState == null)
                 return;
-            currentState.Update(elapsedTime);
+            currentState.Update(elapsedTime, aspect);
         }
 
         public void Render()

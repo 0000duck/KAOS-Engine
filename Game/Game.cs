@@ -33,7 +33,7 @@ namespace Game
 
         public override void UpdateFrame(float elapsedTime)
         {
-            stateManager.Update(elapsedTime);
+            stateManager.Update(elapsedTime, (float)ScreenWidth / ScreenHeight);
         }
 
         public override void RenderFrame(float elapsedTime)

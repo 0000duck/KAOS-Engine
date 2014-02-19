@@ -26,7 +26,6 @@ namespace KAOS.States
             defaultSkyboxPath + "neg_z.bmp",
         };
 
-        float aspect = 1024 / (float)600;
         float _rotation;
 
         public Skyboxstate(StateManager stateManager)
@@ -70,7 +69,7 @@ namespace KAOS.States
             m_bufferManager.AddBufferObject("MengerSponge", new MengerSponge(1.0, Shapes.MengerSponge.eSubdivisions.Two, true ), ShaderManager.Render.ID); 
         }
 
-        public void Update(float elapsedTime)
+        public void Update(float elapsedTime, float aspect)
         {
             Renderer.projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90.0f), aspect, 0.1f, 100.0f);
 

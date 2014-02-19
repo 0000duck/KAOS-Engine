@@ -33,9 +33,6 @@ namespace KAOS.Utilities
 
         public static void DrawSkyBox(TextureManager textureManager, BufferObject bufferObject)
         {
-            GL.ClearBuffer(ClearBuffer.Color, 0, new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
-            GL.ClearBuffer(ClearBuffer.Depth, 0, new float[] { 1.0f });
-
             GL.UseProgram(ShaderManager.Skybox.ID);
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.TextureCubeMap, textureManager.Get("skybox1").ID);

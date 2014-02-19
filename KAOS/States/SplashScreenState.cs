@@ -23,7 +23,7 @@ namespace KAOS.States
             m_stateManager = stateManager;
         }
 
-        public void Update(float elapsedTime)
+        public void Update(float elapsedTime, float aspect)
         {
             delay--;
             if (delay <= 0){
