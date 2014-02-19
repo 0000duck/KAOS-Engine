@@ -46,7 +46,6 @@ namespace KAOS.States
 
         private void QueryShaders()
         {
-            Renderer.handle_eyePosition = GL.GetUniformLocation(ShaderManager.Skybox.ID, "eye_position");
             Renderer.handle_viewMatrix = GL.GetUniformLocation(ShaderManager.Skybox.ID, "view_matrix");
 
             Renderer.handle_projectionMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "proj_matrix");
@@ -66,7 +65,8 @@ namespace KAOS.States
         private void LoadTestObject()
         {
             m_bufferManager.AddBufferObject("SkyCube", new Cube(0, 0, 0), ShaderManager.Skybox.ID);
-            m_bufferManager.AddBufferObject("MengerSponge", new MengerSponge(1.0, Shapes.MengerSponge.eSubdivisions.Two, true ), ShaderManager.Render.ID); 
+            m_bufferManager.AddBufferObject("MengerSponge", new MengerSponge(1.0, Shapes.MengerSponge.eSubdivisions.Two, true ), ShaderManager.Render.ID);
+            m_bufferManager.AddBufferObject("Sphere", new SlicedSphere(2.0f, Vector3d.Zero, SlicedSphere.eSubdivisions.Eight, new SlicedSphere.eDir[] { SlicedSphere.eDir.All }, false), ShaderManager.Render.ID); 
         }
 
         public void Update(float elapsedTime, float aspect)
@@ -76,14 +76,13 @@ namespace KAOS.States
             Renderer.viewMatrix = Matrix4.Mult(Matrix4.Identity, Camera.GetViewMatrix());
             Renderer.modelMatrix = Matrix4.CreateScale(2f);
 
-            //Renderer.modelViewMatrix = Matrix4.Mult(Renderer.viewMatrix, Matrix4.CreateTranslation(Camera.Position));
             Renderer.eyePosition = Camera.Position;
         }
 
         public void Render()
         {
             Renderer.DrawSkyBox(m_textureManager, m_bufferManager.GetBuffer("SkyCube"));
-            Renderer.DrawObject(m_textureManager, m_bufferManager.GetBuffer("MengerSponge"));
+            Renderer.DrawObject(m_textureManager, m_bufferManager.GetBuffer("Sphere"));
         }
 
         public void Dispose()
