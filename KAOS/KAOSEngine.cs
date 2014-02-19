@@ -22,6 +22,7 @@ namespace KAOS
         protected int ScreenHeight { get { return this.ClientSize.Height; } }
 
         protected AnimationTimer m_Timer;
+        protected Vector2 lastMousePos = new Vector2();
         
         public KAOSEngine(int height, int width, int major, int minor)
             : base(height, width, new GraphicsMode(32, 16, 0, 4), KAOSEngine.AppName, GameWindowFlags.Default, 
@@ -64,8 +65,14 @@ namespace KAOS
         // Game Loop
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            InputManager.PollInput();
-            ResetCursor();
+            InputManager.PollKeyboard();
+            if (Focused)
+            {
+                Vector2 delta = lastMousePos - new Vector2(OpenTK.Input.Mouse.GetState().X, OpenTK.Input.Mouse.GetState().Y);
+
+                Camera.AddRotation(delta.X, delta.Y);
+                ResetCursor();
+            }
 
             UpdateFrame(m_Timer.GetElapsedTime());
         }
@@ -86,8 +93,6 @@ namespace KAOS
                 " OpenGL: " + GL.GetString(StringName.Version) +
                 " GLSL: " + GL.GetString(StringName.ShadingLanguageVersion) +
                 " FPS: " + string.Format("{0:F}", 1.0 / e.Time);
-
-            
 
             RenderFrame(m_Timer.GetElapsedTime());
 
@@ -126,7 +131,8 @@ namespace KAOS
 
         public void ResetCursor()
         {
-            System.Windows.Forms.Cursor.Position = new Point(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
+            OpenTK.Input.Mouse.SetPosition(Bounds.Left + Bounds.Width / 2, Bounds.Top + Bounds.Height / 2);
+            lastMousePos = new Vector2(OpenTK.Input.Mouse.GetState().X, OpenTK.Input.Mouse.GetState().Y);
         }
 
         protected override void OnFocusedChanged(EventArgs e)

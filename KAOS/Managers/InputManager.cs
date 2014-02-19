@@ -14,30 +14,7 @@ namespace KAOS.Managers
         internal static MouseState current, previous;
         internal static KeyboardState keyState;
 
-        internal static void PollInput()
-        {
-            KeyboardUpdate();
-            MouseUpdate();
-        }
-
-        private static void MouseUpdate()
-        {
-            current = Mouse.GetState();
-            if (current[MouseButton.Left])
-            {
-                if (current != previous)
-                {
-                    // Mouse state has changed
-                    int xdelta = current.X - previous.X;
-                    int ydelta = current.Y - previous.Y;
-                    int zdelta = current.Wheel - previous.Wheel;
-                    Utilities.Camera.AddRotation(xdelta, ydelta);
-                }
-                previous = current;
-            }
-        }
-
-        private static void KeyboardUpdate()
+        internal static void PollKeyboard()
         {
             foreach (Key key in InputManager.keyList)
             {
@@ -79,9 +56,21 @@ namespace KAOS.Managers
                     default:
                         break;
                 }
-
             }
         }
 
+        internal static void PollMouse()
+        {
+            current = Mouse.GetState();
+            if (current != previous)
+            {
+                // Mouse state has changed
+                int xdelta = current.X - previous.X;
+                int ydelta = current.Y - previous.Y;
+                int zdelta = current.Wheel - previous.Wheel;
+                Utilities.Camera.AddRotation(xdelta, ydelta);
+            }
+            previous = current;
+        }
     }
 }
