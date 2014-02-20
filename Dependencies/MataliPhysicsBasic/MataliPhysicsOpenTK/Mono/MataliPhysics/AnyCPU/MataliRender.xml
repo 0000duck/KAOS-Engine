@@ -1,0 +1,2391 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MataliRender</name>
+    </assembly>
+    <members>
+        <member name="T:Komires.MataliRender.RenderLightDirectionalPNTA">
+            <summary>
+            Directional light shader with the change of transparency (A) for vertices in the format position (P), normal vector (N), texture coordinates (T).
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.IRender">
+            <summary>
+            Interface for shaders.
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.IRender.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.#ctor">
+            <summary>
+            Creates directional light shader with the change of transparency (A) for vertices in the format position (P), normal vector (N), texture coordinates (T).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.GetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Gets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.GetView(OpenTK.Matrix4@)">
+            <summary>
+            Gets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.GetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Gets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetWorld(OpenTK.Matrix4)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetView(OpenTK.Matrix4@)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetView(OpenTK.Matrix4)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetProjection(OpenTK.Matrix4)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.GetLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Gets the light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.GetOppositeLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Gets the opposite light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.GetLightDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Gets the diffuse color of the light.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.GetLightSpecular(OpenTK.Vector3@)">
+            <summary>
+            Gets the specular color of the light.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Sets the light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetLightDirection(OpenTK.Vector3)">
+            <summary>
+            Sets the light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetLightDirection(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the light direction. 
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetLightDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetLightDiffuse(OpenTK.Vector3)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetLightDiffuse(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetLightSpecular(OpenTK.Vector3@)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetLightSpecular(OpenTK.Vector3)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetLightSpecular(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.GetAmbient(OpenTK.Vector3@)">
+            <summary>
+            Gets the ambient color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="ambient">The ambient color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.GetDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Gets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="diffuse">The diffuse color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.GetEmission(OpenTK.Vector3@)">
+            <summary>
+            Gets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="emission">The emissive color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.GetSpecular(OpenTK.Vector3@)">
+            <summary>
+            Gets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="specular">The specular color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetAmbient(OpenTK.Vector3@)">
+            <summary>
+            Sets the ambient color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="ambient">The ambient color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetAmbient(OpenTK.Vector3)">
+            <summary>
+            Sets the ambient color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="ambient">The ambient color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetAmbient(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the ambient color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Sets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="diffuse">The diffuse color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetDiffuse(OpenTK.Vector3)">
+            <summary>
+            Sets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="diffuse">The diffuse color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetDiffuse(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetEmission(OpenTK.Vector3@)">
+            <summary>
+            Sets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="emission">The emissive color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetEmission(OpenTK.Vector3)">
+            <summary>
+            Sets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="emission">The emissive color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetEmission(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetSpecular(OpenTK.Vector3@)">
+            <summary>
+            Sets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="specular">The specular color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetSpecular(OpenTK.Vector3)">
+            <summary>
+            Sets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="specular">The specular color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.SetSpecular(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalPNTA.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalPNTA.Enable">
+            <summary>
+            Enables or disables the light. Default to false.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalPNTA.Intensity">
+            <summary>
+            Gets or sets light intensity from the range 0 - 2. Default to 1.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalPNTA.SpecularPower">
+            <summary>
+            Gets or sets the specular power of the light.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalPNTA.Alpha">
+            <summary>
+            Gets or sets the transparency factor.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalPNTA.EnableTexture">
+            <summary>
+            Enables or disables reading of the texture.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalPNTA.EnableTwoSidedNormals">
+            <summary>
+            Enables or disables two-sided normal vectors for material.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalPNTA.Texture">
+            <summary>
+            Gets or sets the texture.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalPNTA.EnableScaleNormals">
+            <summary>
+            Enables or disables scaling of the normal vectors.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.RenderPCT">
+            <summary>
+            Shader for vertices in the format position (P), color (C), texture coordinates (T).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPCT.#ctor">
+            <summary>
+            Creates shader for vertices in the format position (P), color (C), texture coordinates (T).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPCT.GetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Gets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPCT.GetView(OpenTK.Matrix4@)">
+            <summary>
+            Gets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPCT.GetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Gets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPCT.SetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPCT.SetWorld(OpenTK.Matrix4)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPCT.SetView(OpenTK.Matrix4@)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPCT.SetView(OpenTK.Matrix4)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPCT.SetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPCT.SetProjection(OpenTK.Matrix4)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPCT.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderPCT.EnableTexture">
+            <summary>
+            Enables or disables reading the texture.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderPCT.Texture">
+            <summary>
+            Gets or sets the texture.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.RenderScreenDeferredQuadP">
+            <summary>
+            Screen shader. Shader renders the screen quadrilateral using graphics buffer of deferred rendering for vertices in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderScreenDeferredQuadP.#ctor">
+            <summary>
+            Creates screen shader. Shader renders the screen quadrilateral using graphics buffer of deferred rendering for vertices in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderScreenDeferredQuadP.GetAmbient(OpenTK.Vector3@)">
+            <summary>
+            Gets the ambient color. Default to Red = x = 1, Green = y = 1, Blue = z = 1.
+            </summary>
+            <param name="ambient">The ambient color.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderScreenDeferredQuadP.SetAmbient(OpenTK.Vector3@)">
+            <summary>
+            Sets the ambient color. Default to Red = x = 1, Green = y = 1, Blue = z = 1.
+            </summary>
+            <param name="ambient">The ambient color.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderScreenDeferredQuadP.SetAmbient(OpenTK.Vector3)">
+            <summary>
+            Sets the ambient color. Default to Red = x = 1, Green = y = 1, Blue = z = 1.
+            </summary>
+            <param name="ambient">The ambient color.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderScreenDeferredQuadP.SetAmbient(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the ambient color. Default to Red = x = 1, Green = y = 1, Blue = z = 1.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderScreenDeferredQuadP.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderScreenDeferredQuadP.Width">
+            <summary>
+            Gets or sets screen width.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderScreenDeferredQuadP.Height">
+            <summary>
+            Gets or sets screen height.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderScreenDeferredQuadP.ColorTexture">
+            <summary>
+            Gets or sets the texture of colors.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderScreenDeferredQuadP.LightTexture">
+            <summary>
+            Gets or sets the texture of lights.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.RenderSkyPNT">
+            <summary>
+            Sky shader for vertices in the format position (P), normal vector (N), texture coordinates (T).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.#ctor">
+            <summary>
+            Creates sky shader for vertices in the format position (P), normal vector (N), texture coordinates (T).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.GetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Gets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.GetView(OpenTK.Matrix4@)">
+            <summary>
+            Gets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.GetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Gets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.SetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.SetWorld(OpenTK.Matrix4)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.SetView(OpenTK.Matrix4@)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.SetView(OpenTK.Matrix4)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.SetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.SetProjection(OpenTK.Matrix4)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.GetLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Gets the light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.GetOppositeLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Gets the opposite light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.GetSunColor(OpenTK.Vector3@)">
+            <summary>
+            Gets the diffuse color of the sun.
+            </summary>
+            <param name="SunColor">The diffuse color of the sun.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.GetSkyWavelengths(OpenTK.Vector3@)">
+            <summary>
+            Gets the wavelengths of color components for the sky.
+            </summary>
+            <param name="skyWavelengths">The wavelengths of color components for the sky.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.GetSunWavelengths(OpenTK.Vector3@)">
+            <summary>
+            Gets the wavelengths of color components for the sun.
+            </summary>
+            <param name="sunWavelengths">The wavelengths of color components for the sun.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.SetSkyWavelengths(OpenTK.Vector3@)">
+            <summary>
+            Sets the wavelengths of color components for the sky. Usually from the range 400nm - 700nm. Requires the update with UpdateSkyParameters method. Default to Red = x = 650nm, Green = y = 610nm,  Blue = z = 475nm.
+            </summary>
+            <param name="skyWavelengths">The wavelengths of color components for the sky.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.SetSkyWavelengths(OpenTK.Vector3)">
+            <summary>
+            Sets the wavelengths of color components for the sky. Usually from the range 400nm - 700nm. Requires the update with UpdateSkyParameters method. Default to Red = x = 650nm, Green = y = 610nm,  Blue = z = 475nm.
+            </summary>
+            <param name="skyWavelengths">The wavelengths of color components for the sky.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.SetSkyWavelengths(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the wavelengths of color components for the sky. Usually from the range 400nm - 700nm. Requires the update with UpdateSkyParameters method. Default to Red = x = 650nm, Green = y = 610nm,  Blue = z = 475nm.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.SetSunWavelengths(OpenTK.Vector3@)">
+            <summary>
+            Sets the wavelengths of color components for the sun. Usually from the range 400nm - 700nm. Requires the update with UpdateSunParameters method. Default to Red = x = 650nm, Green = y = 570nm,  Blue = z = 475nm.
+            </summary>
+            <param name="sunWavelengths">The wavelengths of color components for the sun.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.SetSunWavelengths(OpenTK.Vector3)">
+            <summary>
+            Sets the wavelengths of color components for the sun. Usually from the range 400nm - 700nm. Requires the update with UpdateSunParameters method. Default to Red = x = 650nm, Green = y = 570nm,  Blue = z = 475nm.
+            </summary>
+            <param name="sunWavelengths">The wavelengths of color components for the sun.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.SetSunWavelengths(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the wavelengths of color components for the sun. Usually from the range 400nm - 700nm. Requires the update with UpdateSunParameters method. Default to Red = x = 650nm, Green = y = 570nm,  Blue = z = 475nm.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.UpdateSkyParameters">
+            <summary>
+            Updates the SkyWavelengths parameters for the sky.
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.UpdateSunParameters">
+            <summary>
+            Updates the SunRotationAngle, SunTurbidity, SunWavelengths, SunColorMultiplier parameters for the sun.
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderSkyPNT.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.SunColorLuminance">
+            <summary>
+            Gets the color luminance of the sun.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.SunColorMultiplierR">
+            <summary>
+            Gets or sets the multiplier R of red component of the sun color. Default to 1.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.SunColorMultiplierG">
+            <summary>
+            Gets or sets the multiplier G of green component of the sun color. Default to 1.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.SunColorMultiplierB">
+            <summary>
+            Gets or sets the multiplier B of blue component of the sun color. Default to 1.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.SkyFactorG">
+            <summary>
+            Gets or sets the factor G of phase function for the sky. Default to 0.9.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.SkyFactorR">
+            <summary>
+            Gets or sets the factor R of phase function for the sky. Default to 8.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.SkyFactorM">
+            <summary>
+            Gets or sets the factor M of phase function for the sky. Default to 0.00005.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.ObserverAltitude">
+            <summary>
+            Gets or sets the altitude of observer. Default to 100.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.Intensity">
+            <summary>
+            Gets or sets light intensity from the range 0 - 100. Default to 12.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.SunRotationDegAngleX">
+            <summary>
+            Gets or sets the sun rotation angle about the X axis in degrees. Requires the update with UpdateSunParameters method. Default to 0.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.SunRotationDegAngleZ">
+            <summary>
+            Gets or sets the sun rotation angle about the Z axis in degrees. Requires the update with UpdateSunParameters method. Default to 0.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.SunRotationRadAngleX">
+            <summary>
+            Gets or sets the sun rotation angle about the X axis in radians. Requires the update with UpdateSunParameters method. Default to 0.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.SunRotationRadAngleZ">
+            <summary>
+            Gets or sets the sun rotation angle about the Z axis in radians. Requires the update with UpdateSunParameters method. Default to 0.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderSkyPNT.SunTurbidity">
+            <summary>
+            Gets or sets the sun turbidity from the range 1 - 10. Requires the update with UpdateSunParameters method. Default to 1.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.RenderMeshDeferredPNT">
+            <summary>
+            Shader renders the triangle mesh to the graphics buffer of deferred rendering with the change of transparency (A) for vertices in the format position (P), normal vector (N), texture coordinates (T).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.#ctor">
+            <summary>
+            Creates shader, which renders the triangle mesh to the graphics buffer of deferred rendering with the change of transparency (A) for vertices in the format position (P), normal vector (N), texture coordinates (T).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.GetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Gets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.GetView(OpenTK.Matrix4@)">
+            <summary>
+            Gets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.GetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Gets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetWorld(OpenTK.Matrix4)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetView(OpenTK.Matrix4@)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetView(OpenTK.Matrix4)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetProjection(OpenTK.Matrix4)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.GetAmbient(OpenTK.Vector3@)">
+            <summary>
+            Gets the ambient color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="ambient">The ambient color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.GetDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Gets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="diffuse">The diffuse color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.GetEmission(OpenTK.Vector3@)">
+            <summary>
+            Gets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="emission">The emissive color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.GetSpecular(OpenTK.Vector3@)">
+            <summary>
+            Gets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="specular">The specular color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetAmbient(OpenTK.Vector3@)">
+            <summary>
+            Sets the ambient color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="ambient">The ambient color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetAmbient(OpenTK.Vector3)">
+            <summary>
+            Sets the ambient color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="ambient">The ambient color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetAmbient(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the ambient color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Sets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="diffuse">The diffuse color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetDiffuse(OpenTK.Vector3)">
+            <summary>
+            Sets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="diffuse">The diffuse color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetDiffuse(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetEmission(OpenTK.Vector3@)">
+            <summary>
+            Sets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="emission">The emissive color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetEmission(OpenTK.Vector3)">
+            <summary>
+            Sets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="emission">The emissive color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetEmission(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetSpecular(OpenTK.Vector3@)">
+            <summary>
+            Sets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="specular">The specular color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetSpecular(OpenTK.Vector3)">
+            <summary>
+            Sets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="specular">The specular color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.SetSpecular(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderMeshDeferredPNT.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderMeshDeferredPNT.SpecularPower">
+            <summary>
+            Gets or sets the specular power of the light.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderMeshDeferredPNT.Alpha">
+            <summary>
+            Gets or sets the transparency factor.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderMeshDeferredPNT.EnableTexture">
+            <summary>
+            Enables or disables reading the texture.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderMeshDeferredPNT.EnableTwoSidedNormals">
+            <summary>
+            Enables or disables two-sided normal vectors for material.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderMeshDeferredPNT.Texture">
+            <summary>
+            Gets or sets the texture.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderMeshDeferredPNT.EnableScaleNormals">
+            <summary>
+            Enables or disables scaling of the normal vectors.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.RenderLightPointDeferredP">
+            <summary>
+            Point light shader. Shader renders triangle mesh using graphics buffer of deferred rendering for vertices in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.#ctor">
+            <summary>
+            Creates point light shader. Shader renders triangle mesh using graphics buffer of deferred rendering for vertices in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.GetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Gets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.GetView(OpenTK.Matrix4@)">
+            <summary>
+            Gets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.GetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Gets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetWorld(OpenTK.Matrix4)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetView(OpenTK.Matrix4@)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetView(OpenTK.Matrix4)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetProjection(OpenTK.Matrix4)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.GetLightPosition(OpenTK.Vector3@)">
+            <summary>
+            Gets the light position. 
+            </summary>
+            <param name="lightPosition">The light position.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.GetLightDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Gets the diffuse color of the light.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.GetLightSpecular(OpenTK.Vector3@)">
+            <summary>
+            Gets the specular color of the light.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetLightPosition(OpenTK.Vector3@)">
+            <summary>
+            Sets the light position. 
+            </summary>
+            <param name="lightPosition">The light position.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetLightPosition(OpenTK.Vector3)">
+            <summary>
+            Sets the light position. 
+            </summary>
+            <param name="lightPosition">The light position.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetLightPosition(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the light position. 
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetLightDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetLightDiffuse(OpenTK.Vector3)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetLightDiffuse(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetLightSpecular(OpenTK.Vector3@)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetLightSpecular(OpenTK.Vector3)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.SetLightSpecular(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointDeferredP.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointDeferredP.Enable">
+            <summary>
+            Enables or disables the light. Default to false.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointDeferredP.Width">
+            <summary>
+            Gets or sets screen width.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointDeferredP.Height">
+            <summary>
+            Gets or sets screen height.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointDeferredP.Range">
+            <summary>
+            Gets or sets the range of light.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointDeferredP.Intensity">
+            <summary>
+            Gets or sets light intensity from the range 0 - 2. Default to 1.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointDeferredP.SpecularTexture">
+            <summary>
+            Gets or sets the texture of specular.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointDeferredP.NormalTexture">
+            <summary>
+            Gets or sets the texture of normal vectors.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointDeferredP.DepthTexture">
+            <summary>
+            Gets or sets the texture of depth.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.RenderLightSpotDeferredP">
+            <summary>
+            Spotlight shader. Shader renders triangle mesh using graphics buffer of deferred rendering for vertices in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.#ctor">
+            <summary>
+            Creates spotlight shader. Shader renders triangle mesh using graphics buffer of deferred rendering for vertices in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.GetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Gets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.GetView(OpenTK.Matrix4@)">
+            <summary>
+            Gets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.GetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Gets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetWorld(OpenTK.Matrix4)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetView(OpenTK.Matrix4@)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetView(OpenTK.Matrix4)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetProjection(OpenTK.Matrix4)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.GetLightPosition(OpenTK.Vector3@)">
+            <summary>
+            Gets the light position. 
+            </summary>
+            <param name="lightPosition">The light position.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.GetLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Gets the light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.GetOppositeLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Gets the opposite light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.GetLightDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Gets the diffuse color of the light.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.GetLightSpecular(OpenTK.Vector3@)">
+            <summary>
+            Gets the specular color of the light.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetLightPosition(OpenTK.Vector3@)">
+            <summary>
+            Sets the light position. 
+            </summary>
+            <param name="lightPosition">The light position.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetLightPosition(OpenTK.Vector3)">
+            <summary>
+            Sets the light position. 
+            </summary>
+            <param name="lightPosition">The light position.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetLightPosition(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the light position. 
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Sets the light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetLightDirection(OpenTK.Vector3)">
+            <summary>
+            Sets the light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetLightDirection(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the light direction. 
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetLightDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetLightDiffuse(OpenTK.Vector3)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetLightDiffuse(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetLightSpecular(OpenTK.Vector3@)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetLightSpecular(OpenTK.Vector3)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.SetLightSpecular(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotDeferredP.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotDeferredP.Enable">
+            <summary>
+            Enables or disables the light. Default to false.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotDeferredP.Width">
+            <summary>
+            Gets or sets screen width.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotDeferredP.Height">
+            <summary>
+            Gets or sets screen height.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotDeferredP.Range">
+            <summary>
+            Gets or sets the range of light.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotDeferredP.Intensity">
+            <summary>
+            Gets or sets light intensity from the range 0 - 2. Default to 1.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotDeferredP.InnerDegAngle">
+            <summary>
+            Gets or sets the inner angle of light in degrees. Default to 0.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotDeferredP.OuterDegAngle">
+            <summary>
+            Gets or sets the outer angle of light in degrees. Default to 0.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotDeferredP.InnerRadAngle">
+            <summary>
+            Gets or sets the inner angle of light in radians. Default to 0.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotDeferredP.OuterRadAngle">
+            <summary>
+            Gets or sets the outer angle of light in radians. Default to 0.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotDeferredP.SpecularTexture">
+            <summary>
+            Gets or sets the texture of specular.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotDeferredP.NormalTexture">
+            <summary>
+            Gets or sets the texture of normal vectors.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotDeferredP.DepthTexture">
+            <summary>
+            Gets or sets the texture of depth.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.RenderLightPointPNTA">
+            <summary>
+            Point light shader with the change of transparency (A) for vertices in the format position (P), normal vector (N), texture coordinates (T).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.#ctor">
+            <summary>
+            Creates point light shader with the change of transparency (A) for vertices in the format position (P), normal vector (N), texture coordinates (T).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.GetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Gets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.GetView(OpenTK.Matrix4@)">
+            <summary>
+            Gets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.GetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Gets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetWorld(OpenTK.Matrix4)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetView(OpenTK.Matrix4@)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetView(OpenTK.Matrix4)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetProjection(OpenTK.Matrix4)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.GetLightPosition(OpenTK.Vector3@)">
+            <summary>
+            Gets the light position. 
+            </summary>
+            <param name="lightPosition">The light position.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.GetLightDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Gets the diffuse color of the light.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.GetLightSpecular(OpenTK.Vector3@)">
+            <summary>
+            Gets the specular color of the light.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetLightPosition(OpenTK.Vector3@)">
+            <summary>
+            Sets the light position. 
+            </summary>
+            <param name="lightPosition">The light position.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetLightPosition(OpenTK.Vector3)">
+            <summary>
+            Sets the light position. 
+            </summary>
+            <param name="lightPosition">The light position.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetLightPosition(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the light position. 
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetLightDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetLightDiffuse(OpenTK.Vector3)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetLightDiffuse(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetLightSpecular(OpenTK.Vector3@)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetLightSpecular(OpenTK.Vector3)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetLightSpecular(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.GetAmbient(OpenTK.Vector3@)">
+            <summary>
+            Gets the ambient color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="ambient">The ambient color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.GetDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Gets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="diffuse">The diffuse color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.GetEmission(OpenTK.Vector3@)">
+            <summary>
+            Gets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="emission">The emissive color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.GetSpecular(OpenTK.Vector3@)">
+            <summary>
+            Gets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="specular">The specular color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetAmbient(OpenTK.Vector3@)">
+            <summary>
+            Sets the ambient color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="ambient">The ambient color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetAmbient(OpenTK.Vector3)">
+            <summary>
+            Sets the ambient color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="ambient">The ambient color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetAmbient(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the ambient color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Sets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="diffuse">The diffuse color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetDiffuse(OpenTK.Vector3)">
+            <summary>
+            Sets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="diffuse">The diffuse color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetDiffuse(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetEmission(OpenTK.Vector3@)">
+            <summary>
+            Sets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="emission">The emissive color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetEmission(OpenTK.Vector3)">
+            <summary>
+            Sets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="emission">The emissive color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetEmission(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetSpecular(OpenTK.Vector3@)">
+            <summary>
+            Sets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="specular">The specular color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetSpecular(OpenTK.Vector3)">
+            <summary>
+            Sets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="specular">The specular color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.SetSpecular(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightPointPNTA.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointPNTA.Enable">
+            <summary>
+            Enables or disables the light. Default to false.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointPNTA.Range">
+            <summary>
+            Gets or sets the range of light.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointPNTA.Intensity">
+            <summary>
+            Gets or sets light intensity from the range 0 - 2. Default to 1.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointPNTA.SpecularPower">
+            <summary>
+            Gets or sets the specular power of the light.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointPNTA.Alpha">
+            <summary>
+            Gets or sets the transparency factor.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointPNTA.EnableTexture">
+            <summary>
+            Enables or disables reading the texture.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointPNTA.EnableTwoSidedNormals">
+            <summary>
+            Enables or disables two-sided normal vectors for material.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointPNTA.Texture">
+            <summary>
+            Gets or sets the texture.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightPointPNTA.EnableScaleNormals">
+            <summary>
+            Enables or disables scaling of the normal vectors.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.RenderClearDeferredQuadP">
+            <summary>
+            Shader clears the content of the graphics buffer of deferred rendering for vertices of the quadrilateral in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderClearDeferredQuadP.#ctor">
+            <summary>
+            Creates shader, which clears the content of the graphics buffer of deferred rendering for vertices of the quadrilateral in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderClearDeferredQuadP.GetClearScreenColor(OpenTK.Vector3@)">
+            <summary>
+            Gets the clear screen color. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="clearScreenColor">The clear screen color.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderClearDeferredQuadP.SetClearScreenColor(OpenTK.Vector3@)">
+            <summary>
+            Sets the clear screen color. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="clearScreenColor">The clear screen color.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderClearDeferredQuadP.SetClearScreenColor(OpenTK.Vector3)">
+            <summary>
+            Sets the clear screen color. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="clearScreenColor">The clear screen color.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderClearDeferredQuadP.SetClearScreenColor(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the clear screen color. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderClearDeferredQuadP.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.RenderLightDirectionalDeferredQuadP">
+            <summary>
+            Directional light shader. Shader renders screen quadrilateral using graphics buffer of deferred rendering for vertices in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.#ctor">
+            <summary>
+            Creates directional light shader. Shader renders screen quadrilateral using graphics buffer of deferred rendering for vertices in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.GetView(OpenTK.Matrix4@)">
+            <summary>
+            Gets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.GetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Gets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SetView(OpenTK.Matrix4@)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SetView(OpenTK.Matrix4)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SetProjection(OpenTK.Matrix4)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.GetLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Gets the light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.GetOppositeLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Gets the opposite light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.GetLightDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Gets the diffuse color of the light.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.GetLightSpecular(OpenTK.Vector3@)">
+            <summary>
+            Gets the specular color of the light.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SetLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Sets the light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SetLightDirection(OpenTK.Vector3)">
+            <summary>
+            Sets the light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SetLightDirection(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the light direction. 
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SetLightDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SetLightDiffuse(OpenTK.Vector3)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SetLightDiffuse(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SetLightSpecular(OpenTK.Vector3@)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SetLightSpecular(OpenTK.Vector3)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SetLightSpecular(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.Enable">
+            <summary>
+            Enables or disables the light. Default to false.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.Width">
+            <summary>
+            Gets or sets screen width.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.Height">
+            <summary>
+            Gets or sets screen height.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.Intensity">
+            <summary>
+            Gets or sets light intensity from the range 0 - 2. Default to 1.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.SpecularTexture">
+            <summary>
+            Gets or sets the texture of specular.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.NormalTexture">
+            <summary>
+            Gets or sets the texture of normal vectors.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightDirectionalDeferredQuadP.DepthTexture">
+            <summary>
+            Gets or sets the texture of depth.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.VertexPositionColorTexture">
+            <summary>
+            The VertexPositionColorTexture structure. 
+            </summary>
+        </member>
+        <member name="F:Komires.MataliRender.VertexPositionColorTexture.Position">
+            <summary>
+            Position.
+            </summary>
+        </member>
+        <member name="F:Komires.MataliRender.VertexPositionColorTexture.Color">
+            <summary>
+            Color.
+            </summary>
+        </member>
+        <member name="F:Komires.MataliRender.VertexPositionColorTexture.TextureCoordinate">
+            <summary>
+            Texture coordinate.
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.VertexPositionColorTexture.#ctor(OpenTK.Vector3,System.Int32,OpenTK.Vector2)">
+            <summary>
+            Constructor of the VertexPositionColorTexture.
+            </summary>
+            <param name="position">Position.</param>
+            <param name="color">Color.</param>
+            <param name="textureCoordinate">Texture coordinate.</param>
+        </member>
+        <member name="P:Komires.MataliRender.VertexPositionColorTexture.SizeInBytes">
+            <summary>
+            Gets the size of the structure in bytes.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.RenderLightSpotPNTA">
+            <summary>
+            Spotlight shader with the change of transparency (A) for vertices in the format position (P), normal vector (N), texture coordinates (T).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.#ctor">
+            <summary>
+            Creates spotlight shader with the change of transparency (A) for vertices in the format position (P), normal vector (N), texture coordinates (T).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.GetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Gets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.GetView(OpenTK.Matrix4@)">
+            <summary>
+            Gets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.GetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Gets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetWorld(OpenTK.Matrix4)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetView(OpenTK.Matrix4@)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetView(OpenTK.Matrix4)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetProjection(OpenTK.Matrix4)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.GetLightPosition(OpenTK.Vector3@)">
+            <summary>
+            Gets the light position. 
+            </summary>
+            <param name="lightPosition">The light position.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.GetLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Gets the light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.GetOppositeLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Gets the opposite light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.GetLightDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Gets the diffuse color of the light.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.GetLightSpecular(OpenTK.Vector3@)">
+            <summary>
+            Gets the specular color of the light.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetLightPosition(OpenTK.Vector3@)">
+            <summary>
+            Sets the light position. 
+            </summary>
+            <param name="lightPosition">The light position.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetLightPosition(OpenTK.Vector3)">
+            <summary>
+            Sets the light position. 
+            </summary>
+            <param name="lightPosition">The light position.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetLightPosition(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the light position. 
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetLightDirection(OpenTK.Vector3@)">
+            <summary>
+            Sets the light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetLightDirection(OpenTK.Vector3)">
+            <summary>
+            Sets the light direction. 
+            </summary>
+            <param name="lightDirection">The light direction.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetLightDirection(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the light direction. 
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetLightDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetLightDiffuse(OpenTK.Vector3)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightDiffuse">The diffuse color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetLightDiffuse(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the diffuse color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetLightSpecular(OpenTK.Vector3@)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetLightSpecular(OpenTK.Vector3)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="lightSpecular">The specular color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetLightSpecular(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the specular color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.GetAmbient(OpenTK.Vector3@)">
+            <summary>
+            Gets the ambient color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="ambient">The ambient color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.GetDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Gets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="diffuse">The diffuse color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.GetEmission(OpenTK.Vector3@)">
+            <summary>
+            Gets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="emission">The emissive color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.GetSpecular(OpenTK.Vector3@)">
+            <summary>
+            Gets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="specular">The specular color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetAmbient(OpenTK.Vector3@)">
+            <summary>
+            Sets the ambient color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="ambient">The ambient color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetAmbient(OpenTK.Vector3)">
+            <summary>
+            Sets the ambient color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="ambient">The ambient color of the light.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetAmbient(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the ambient color of the light. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetDiffuse(OpenTK.Vector3@)">
+            <summary>
+            Sets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="diffuse">The diffuse color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetDiffuse(OpenTK.Vector3)">
+            <summary>
+            Sets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="diffuse">The diffuse color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetDiffuse(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the diffuse color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetEmission(OpenTK.Vector3@)">
+            <summary>
+            Sets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="emission">The emissive color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetEmission(OpenTK.Vector3)">
+            <summary>
+            Sets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="emission">The emissive color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetEmission(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the emissive color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetSpecular(OpenTK.Vector3@)">
+            <summary>
+            Sets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="specular">The specular color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetSpecular(OpenTK.Vector3)">
+            <summary>
+            Sets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="specular">The specular color of the material.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.SetSpecular(System.Single,System.Single,System.Single)">
+            <summary>
+            Sets the specular color of the material. Default to Red = x = 0, Green = y = 0, Blue = z = 0.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <param name="z">The z coordinate.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderLightSpotPNTA.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotPNTA.Enable">
+            <summary>
+            Enables or disables the light. Default to false.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotPNTA.InnerDegAngle">
+            <summary>
+            Gets or sets the inner angle of light in degrees. Default to 0.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotPNTA.OuterDegAngle">
+            <summary>
+            Gets or sets the outer angle of light in degrees. Default to 0.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotPNTA.InnerRadAngle">
+            <summary>
+            Gets or sets the inner angle of light in radians. Default to 0.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotPNTA.OuterRadAngle">
+            <summary>
+            Gets or sets the outer angle of light in radians. Default to 0.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotPNTA.Range">
+            <summary>
+            Gets or sets the range of light.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotPNTA.Intensity">
+            <summary>
+            Gets or sets light intensity from the range 0 - 2. Default to 1.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotPNTA.SpecularPower">
+            <summary>
+            Gets or sets the specular power of the light.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotPNTA.Alpha">
+            <summary>
+            Gets or sets the transparency factor.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotPNTA.EnableTexture">
+            <summary>
+            Enables or disables reading the texture.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotPNTA.EnableTwoSidedNormals">
+            <summary>
+            Enables or disables two-sided normal vectors for material.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotPNTA.Texture">
+            <summary>
+            Gets or sets the texture.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderLightSpotPNTA.EnableScaleNormals">
+            <summary>
+            Enables or disables scaling of the normal vectors.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.RenderClearTextureDeferredQuadP">
+            <summary>
+            Shader clears the content of the graphics buffer of deferred rendering with texture for vertices of the quadrilateral in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderClearTextureDeferredQuadP.#ctor">
+            <summary>
+            Creates shader, which clears the content of the graphics buffer of deferred rendering with texture for vertices of the quadrilateral in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderClearTextureDeferredQuadP.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderClearTextureDeferredQuadP.Width">
+            <summary>
+            Gets or sets screen width.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderClearTextureDeferredQuadP.Height">
+            <summary>
+            Gets or sets screen height.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderClearTextureDeferredQuadP.ColorTexture">
+            <summary>
+            Gets or sets the texture of colors.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.RenderPC">
+            <summary>
+            Shader for vertices in the format position (P), color (C).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPC.#ctor">
+            <summary>
+            Creates shader for vertices in the format position (P), color (C).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPC.GetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Gets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPC.GetView(OpenTK.Matrix4@)">
+            <summary>
+            Gets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPC.GetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Gets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPC.SetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPC.SetWorld(OpenTK.Matrix4)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPC.SetView(OpenTK.Matrix4@)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPC.SetView(OpenTK.Matrix4)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPC.SetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPC.SetProjection(OpenTK.Matrix4)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderPC.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.RenderCubeP">
+            <summary>
+            Cube mapping shader for vertices in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderCubeP.#ctor">
+            <summary>
+            Creates cube mapping shader for vertices in the format position (P).
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.RenderCubeP.GetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Gets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderCubeP.GetView(OpenTK.Matrix4@)">
+            <summary>
+            Gets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderCubeP.GetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Gets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderCubeP.SetWorld(OpenTK.Matrix4@)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderCubeP.SetWorld(OpenTK.Matrix4)">
+            <summary>
+            Sets the transform matrix. 
+            </summary>
+            <param name="world">The transform matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderCubeP.SetView(OpenTK.Matrix4@)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderCubeP.SetView(OpenTK.Matrix4)">
+            <summary>
+            Sets the view matrix. 
+            </summary>
+            <param name="view">The view matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderCubeP.SetProjection(OpenTK.Matrix4@)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderCubeP.SetProjection(OpenTK.Matrix4)">
+            <summary>
+            Sets the projection matrix. 
+            </summary>
+            <param name="projection">The projection matrix.</param>
+        </member>
+        <member name="M:Komires.MataliRender.RenderCubeP.Apply">
+            <summary>
+            Applies the shader.
+            </summary>
+        </member>
+        <member name="P:Komires.MataliRender.RenderCubeP.Texture">
+            <summary>
+            Gets or sets the texture.
+            </summary>
+        </member>
+        <member name="T:Komires.MataliRender.VertexPositionColor">
+            <summary>
+            The VertexPositionColor structure. 
+            </summary>
+        </member>
+        <member name="F:Komires.MataliRender.VertexPositionColor.Position">
+            <summary>
+            Position.
+            </summary>
+        </member>
+        <member name="F:Komires.MataliRender.VertexPositionColor.Color">
+            <summary>
+            Color.
+            </summary>
+        </member>
+        <member name="M:Komires.MataliRender.VertexPositionColor.#ctor(OpenTK.Vector3,System.Int32)">
+            <summary>
+            Constructor of the VertexPositionColor.
+            </summary>
+            <param name="position">Position.</param>
+            <param name="color">Color.</param>
+        </member>
+        <member name="P:Komires.MataliRender.VertexPositionColor.SizeInBytes">
+            <summary>
+            Gets the size of the structure in bytes.
+            </summary>
+        </member>
+    </members>
+</doc>
