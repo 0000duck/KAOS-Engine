@@ -40,6 +40,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\AssimpNet\Net45-Debug\AssimpNet.dll</HintPath>
     </Reference>
+    <Reference Include="MataliPhysics">
+      <HintPath>..\Dependencies\MataliPhysicsBasic\MataliPhysicsOpenTK\Mono\MataliPhysics\AnyCPU\MataliPhysics.dll</HintPath>
+    </Reference>
+    <Reference Include="MataliRender">
+      <HintPath>..\Dependencies\MataliPhysicsBasic\MataliPhysicsOpenTK\Mono\MataliPhysics\AnyCPU\MataliRender.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
