@@ -26,7 +26,7 @@ namespace KAOS
         
         public KAOSEngine(int height, int width, int major, int minor)
             : base(height, width, new GraphicsMode(32, 16, 0, 4), KAOSEngine.AppName, GameWindowFlags.Default, 
-            DisplayDevice.Default, major, minor, GraphicsContextFlags.Default)
+            DisplayDevice.Default, major, minor, GraphicsContextFlags.Default | GraphicsContextFlags.ForwardCompatible)
         { }
 
         // Load everything here
