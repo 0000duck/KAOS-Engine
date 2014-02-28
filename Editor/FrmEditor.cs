@@ -17,12 +17,13 @@ namespace Editor
     {
         bool glControlLoaded = false;
         int x = 0;
-        Bitmap TextBitmap;
 
         public Editor()
         {
             InitializeComponent();
         }
+
+        #region OnLoad
 
         Stopwatch sw = new Stopwatch();
         private void glControl1_Load(object sender, EventArgs e)
@@ -39,6 +40,7 @@ namespace Editor
             sw.Start();
         }
 
+        Bitmap TextBitmap;
         private void SetupTextDisplayBitmap()
         {
             if (TextBitmap != null)
@@ -49,6 +51,8 @@ namespace Editor
 
             TextBitmap = new Bitmap(glControl1.Width, glControl1.Height);
         }
+
+        #endregion
 
         #region OnClosing
 
@@ -103,6 +107,8 @@ namespace Editor
 
         #endregion
 
+        #region glControl1_Events
+
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
             if (!glControlLoaded) // Play nice
@@ -125,6 +131,7 @@ namespace Editor
             Renderer.Resize(ref glControl1);
         }
 
+        #endregion
     }
 
     static class Renderer
