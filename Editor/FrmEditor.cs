@@ -17,6 +17,7 @@ namespace Editor
     {
         bool glControlLoaded = false;
         int x = 0;
+        Bitmap TextBitmap;
 
         public Editor()
         {
@@ -32,9 +33,35 @@ namespace Editor
             Renderer.Load();
             Renderer.SetupViewport(ref glControl1);
 
+            SetupTextDisplayBitmap();
+
             Application.Idle += Application_Idle; // press TAB twice after +=
             sw.Start();
         }
+
+        private void SetupTextDisplayBitmap()
+        {
+            if (TextBitmap != null)
+            {
+                TextBitmap.Dispose();
+                TextBitmap = null;
+            }
+
+            TextBitmap = new Bitmap(glControl1.Width, glControl1.Height);
+        }
+
+        #region OnClosing
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            Application.Idle -= Application_Idle;
+
+            base.OnClosing(e);
+        }
+
+        #endregion
+
+        #region Application_Idle event
 
         void Application_Idle(object sender, EventArgs e)
         {
@@ -73,6 +100,8 @@ namespace Editor
                 idleCounter = 0; // don't forget to reset the counter!
             }
         }
+
+        #endregion
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
