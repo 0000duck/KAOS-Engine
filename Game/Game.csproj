@@ -38,6 +38,12 @@
     <StartupObject>Game.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MataliPhysics">
+      <HintPath>..\Dependencies\MataliPhysicsBasic\MataliPhysicsOpenTK\Mono\MataliPhysics\AnyCPU\MataliPhysics.dll</HintPath>
+    </Reference>
+    <Reference Include="MataliRender">
+      <HintPath>..\Dependencies\MataliPhysicsBasic\MataliPhysicsOpenTK\Mono\MataliPhysics\AnyCPU\MataliRender.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\packages\OpenTK.1.1.1508.5724\lib\NET40\OpenTK.dll</HintPath>
     </Reference>
