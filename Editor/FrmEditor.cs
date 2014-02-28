@@ -27,8 +27,11 @@ namespace Editor
         private void glControl1_Load(object sender, EventArgs e)
         {
             glControlLoaded = true;
+
+            Text = Renderer.GetVersionInfo();
             Renderer.Load();
             Renderer.SetupViewport(ref glControl1);
+
             Application.Idle += Application_Idle; // press TAB twice after +=
             sw.Start();
         }
@@ -65,7 +68,7 @@ namespace Editor
             accumulator += milliseconds;
             if (accumulator > 1000)
             {
-                Text = idleCounter.ToString();
+                Text = Renderer.GetVersionInfo() + ": " + idleCounter.ToString() + "fps";
                 accumulator -= 1000;
                 idleCounter = 0; // don't forget to reset the counter!
             }
@@ -108,40 +111,91 @@ namespace Editor
         {
             int w = glControl1.Width;
             int h = glControl1.Height;
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(0, w, 0, h, -1, 1); // Bottom-left corner pixel has coordinate (0, 0)
+            
             GL.Viewport(0, 0, w, h); // Use all of the glControl painting area
+
+            float aspect_ratio = w / (float)h;
+            Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref perpective);
         }
 
         internal static void DefaultRender(ref OpenTK.GLControl glControl1, int x, float rotation)
         {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
+            Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-
-            GL.Translate(x, 0, 0); // position triangle according to our x variable
+            GL.LoadMatrix(ref lookat);
 
             if (glControl1.Focused) // Simple enough :)
                 GL.Color3(Color.Yellow);
             else
                 GL.Color3(Color.Blue);
 
-            GL.Rotate(rotation, Vector3.UnitZ); // OpenTK has this nice Vector3 class!
+            GL.Rotate(rotation, Vector3.UnitY); // OpenTK has this nice Vector3 class!
 
-            GL.Begin(PrimitiveType.Triangles);
-            GL.Vertex2(10, 20);
-            GL.Vertex2(100, 20);
-            GL.Vertex2(100, 50);
-            GL.End();
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            DrawCube();
 
             glControl1.SwapBuffers();
         }
+        
+        private static void DrawCube()
+        {
+            GL.Begin(PrimitiveType.Quads);
+
+            GL.Color3(Color.Silver);
+            GL.Vertex3(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3(-1.0f, 1.0f, -1.0f);
+            GL.Vertex3(1.0f, 1.0f, -1.0f);
+            GL.Vertex3(1.0f, -1.0f, -1.0f);
+
+            GL.Color3(Color.Honeydew);
+            GL.Vertex3(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3(1.0f, -1.0f, -1.0f);
+            GL.Vertex3(1.0f, -1.0f, 1.0f);
+            GL.Vertex3(-1.0f, -1.0f, 1.0f);
+
+            GL.Color3(Color.Moccasin);
+
+            GL.Vertex3(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3(-1.0f, -1.0f, 1.0f);
+            GL.Vertex3(-1.0f, 1.0f, 1.0f);
+            GL.Vertex3(-1.0f, 1.0f, -1.0f);
+
+            GL.Color3(Color.IndianRed);
+            GL.Vertex3(-1.0f, -1.0f, 1.0f);
+            GL.Vertex3(1.0f, -1.0f, 1.0f);
+            GL.Vertex3(1.0f, 1.0f, 1.0f);
+            GL.Vertex3(-1.0f, 1.0f, 1.0f);
+
+            GL.Color3(Color.PaleVioletRed);
+            GL.Vertex3(-1.0f, 1.0f, -1.0f);
+            GL.Vertex3(-1.0f, 1.0f, 1.0f);
+            GL.Vertex3(1.0f, 1.0f, 1.0f);
+            GL.Vertex3(1.0f, 1.0f, -1.0f);
+
+            GL.Color3(Color.ForestGreen);
+            GL.Vertex3(1.0f, -1.0f, -1.0f);
+            GL.Vertex3(1.0f, 1.0f, -1.0f);
+            GL.Vertex3(1.0f, 1.0f, 1.0f);
+            GL.Vertex3(1.0f, -1.0f, 1.0f);
+
+            GL.End();
+        }
+
 
         internal static void Load()
         {
-            GL.ClearColor(Color.SkyBlue);
+            GL.ClearColor(Color.MidnightBlue);
+            GL.Enable(EnableCap.DepthTest);
+        }
+
+        internal static string GetVersionInfo()
+        {
+            return GL.GetString(StringName.Vendor) + " " +
+                GL.GetString(StringName.Renderer) + " " +
+                GL.GetString(StringName.Version);
         }
     }
 }
