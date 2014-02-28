@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenTK.Graphics.OpenGL;
+using OpenTK;
+using System.Diagnostics;
 
 namespace Editor
 {
@@ -21,11 +23,52 @@ namespace Editor
             InitializeComponent();
         }
 
+        Stopwatch sw = new Stopwatch();
         private void glControl1_Load(object sender, EventArgs e)
         {
             glControlLoaded = true;
             Renderer.Load();
             Renderer.SetupViewport(ref glControl1);
+            Application.Idle += Application_Idle; // press TAB twice after +=
+            sw.Start();
+        }
+
+        void Application_Idle(object sender, EventArgs e)
+        {
+            double milliseconds = ComputeTimeSlice();
+            Accumulate(milliseconds);
+            Animate(milliseconds);
+        }
+
+        private double ComputeTimeSlice()
+        {
+            sw.Stop();
+            double timeslice = sw.Elapsed.TotalMilliseconds;
+            sw.Reset();
+            sw.Start();
+            return timeslice;
+        }
+
+        float rotation = 0;
+        private void Animate(double milliseconds)
+        {
+            float deltaRotation = (float)milliseconds / 20.0f;
+            rotation += deltaRotation;
+            glControl1.Invalidate();
+        }
+
+        double accumulator = 0;
+        int idleCounter = 0;
+        private void Accumulate(double milliseconds)
+        {
+            idleCounter++;
+            accumulator += milliseconds;
+            if (accumulator > 1000)
+            {
+                Text = idleCounter.ToString();
+                accumulator -= 1000;
+                idleCounter = 0; // don't forget to reset the counter!
+            }
         }
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
@@ -33,7 +76,7 @@ namespace Editor
             if (!glControlLoaded) // Play nice
                 return;
 
-            Renderer.DefaultRender(ref glControl1, x);
+            Renderer.DefaultRender(ref glControl1, x, rotation);
         }
 
         private void glControl1_KeyDown(object sender, KeyEventArgs e)
@@ -71,7 +114,7 @@ namespace Editor
             GL.Viewport(0, 0, w, h); // Use all of the glControl painting area
         }
 
-        internal static void DefaultRender(ref OpenTK.GLControl glControl1, int x)
+        internal static void DefaultRender(ref OpenTK.GLControl glControl1, int x, float rotation)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -84,6 +127,8 @@ namespace Editor
                 GL.Color3(Color.Yellow);
             else
                 GL.Color3(Color.Blue);
+
+            GL.Rotate(rotation, Vector3.UnitZ); // OpenTK has this nice Vector3 class!
 
             GL.Begin(PrimitiveType.Triangles);
             GL.Vertex2(10, 20);
