@@ -1,4 +1,5 @@
-﻿using KAOS;
+﻿using Game.States;
+using KAOS;
 using KAOS.Managers;
 using KAOS.States;
 using System;
@@ -18,12 +19,13 @@ namespace Game
         public override void Initialise()
         {
             SetupStates();
-            stateManager.ChangeState("skybox");
+            stateManager.ChangeState("SplashScreen");
         }
 
         private void SetupStates()
         {
-            stateManager.AddState("skybox", new Skyboxstate(stateManager));
+            stateManager.AddState("SplashScreen", new SplashScreen(stateManager));
+            stateManager.AddState("TestScene", new TestScene(stateManager));
         }
 
         private void SetState(string stateToLoad)
