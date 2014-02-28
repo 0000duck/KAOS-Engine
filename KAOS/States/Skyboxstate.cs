@@ -19,11 +19,11 @@ namespace KAOS.States
         string[] skyboxFaces = new String[]
         {
             defaultSkyboxPath + "pos_x.bmp",
-            defaultSkyboxPath + "neg_z.bmp",
+            defaultSkyboxPath + "neg_x.bmp",
             defaultSkyboxPath + "pos_y.bmp",
             defaultSkyboxPath + "neg_y.bmp",
             defaultSkyboxPath + "pos_z.bmp",
-            defaultSkyboxPath + "neg_x.bmp",
+            defaultSkyboxPath + "neg_z.bmp",
         };
 
         float _rotation;
