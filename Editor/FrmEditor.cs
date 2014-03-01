@@ -391,10 +391,7 @@ namespace Editor
 
         private void glControl1_Resize(object sender, EventArgs e)
         {
-            OpenTK.GLControl c = sender as OpenTK.GLControl;
-
-            viewport_changed = true;
-            //Renderer.Resize(ref glControl1);
+            Renderer.Resize(ref glControl1, ref viewport_changed);
         }
 
         private void glControl1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -408,14 +405,15 @@ namespace Editor
         }
 
         #endregion
+
     }
 
     static class Renderer
     {
 
-        internal static void Resize(ref OpenTK.GLControl glControl1)
+        internal static void Resize(ref OpenTK.GLControl glControl1, ref bool viewport_changed)
         {
-            //SetupViewport(ref glControl1);
+            viewport_changed = true;
             glControl1.Invalidate();
         }
 
@@ -425,35 +423,25 @@ namespace Editor
             int h = glControl1.Height;
             
             GL.Viewport(0, 0, w, h); // Use all of the glControl painting area
-
-            //float aspect_ratio = w / (float)h;
-            //Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
-            //GL.MatrixMode(MatrixMode.Projection);
-            //GL.LoadMatrix(ref perpective);
         }
 
         internal static void DefaultRender(ref OpenTK.GLControl glControl1, int x, float rotation, Bitmap TextBitmap, ref bool viewport_changed)
         {
-            TextBitmap.Save("RendererTextBitmap.bmp");
-            //if (glControl1.Focused) // Simple enough :)
-                //GL.Color3(Color.Yellow);
-            //else
-                //GL.Color3(Color.Blue);
-
-            // GL.Rotate(rotation, Vector3.UnitY); // OpenTK has this nice Vector3 class!
 
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
             if (viewport_changed)
             {
                 viewport_changed = false;
-                GL.Viewport(0, 0, glControl1.Width, glControl1.Height);
+                SetupViewport(ref glControl1);
             }
 
             DrawText(ref glControl1, TextBitmap);
 
-            DrawMovingObjects();
-            //DrawCube(glControl1.Width / (float) glControl1.Height);
+            GL.Clear(ClearBufferMask.DepthBufferBit);
+
+            //DrawMovingObjects();
+            DrawCube(glControl1.Width / (float) glControl1.Height);
 
             glControl1.SwapBuffers();
         }
@@ -523,9 +511,11 @@ namespace Editor
         
         private static void DrawCube(float aspect_ratio)
         {
-            //Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
-            //GL.MatrixMode(MatrixMode.Projection);
-            //GL.LoadMatrix(ref perpective);
+            GL.Enable(EnableCap.DepthTest);
+
+            Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref perpective);
 
             Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
@@ -571,6 +561,8 @@ namespace Editor
             GL.Vertex3(1.0f, -1.0f, 1.0f);
 
             GL.End();
+
+            GL.Disable(EnableCap.DepthTest);
         }
 
         internal static void Load()
