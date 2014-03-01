@@ -34,7 +34,7 @@ namespace Editor
             LoadDebugDisplay();
         }
 
-        internal static void Resize(ref OpenTK.GLControl glControl1)
+        internal static void Resize(ref ModernGLControl glControl1)
         {
             viewport_changed = true;
 

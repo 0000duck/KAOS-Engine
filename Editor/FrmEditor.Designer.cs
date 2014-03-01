@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.glControl1 = new OpenTK.GLControl();
+            this.glControl1 = new ModernGLControl();
             this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -74,7 +74,7 @@
 
         #endregion
 
-        private OpenTK.GLControl glControl1;
+        private ModernGLControl glControl1;
         private System.Windows.Forms.Button button1;
     }
 }

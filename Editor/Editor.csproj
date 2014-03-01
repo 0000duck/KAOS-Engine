@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModernGLControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Renderer.cs" />
     <Compile Include="FrmEditor.cs">
       <SubType>Form</SubType>
