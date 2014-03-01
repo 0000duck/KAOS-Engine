@@ -8,18 +8,9 @@ namespace Editor
     public partial class Editor : Form
     {
         bool glControlLoaded = false;
-        int x = 0;
 
         // time drift
         public static Stopwatch watch = new Stopwatch();
-        double update_time, render_time;
-
-        // timing information
-        double timestamp;
-        int update_count;
-        int update_fps;
-        int render_count;
-        int render_fps;
 
         #region --- Constructor ---
 
@@ -113,14 +104,13 @@ namespace Editor
             if (!glControlLoaded) // Play nice
                 return;
 
-            Renderer.DefaultRender(x, rotation);
+            Renderer.DefaultRender(rotation);
         }
 
         private void glControl1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
             {
-                x++;
                 glControl1.Invalidate();
             }
         }
