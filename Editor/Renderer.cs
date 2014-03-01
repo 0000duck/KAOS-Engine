@@ -28,6 +28,12 @@ namespace Editor
         static int update_count, update_fps, render_count, render_fps;
         #endregion
 
+        internal static void Load()
+        {
+            GL.ClearColor(Color.MidnightBlue);
+            LoadDebugDisplay();
+        }
+
         internal static void Resize(ref OpenTK.GLControl glControl1)
         {
             viewport_changed = true;
@@ -44,6 +50,7 @@ namespace Editor
             GL.Viewport(0, 0, viewportWidth, viewportHeight); // Use all of the glControl painting area
         }
 
+        #region Immediate Mode
         internal static void DefaultRender(float rotation)
         {
 
@@ -182,12 +189,9 @@ namespace Editor
 
             GL.Disable(EnableCap.DepthTest);
         }
+        #endregion
 
-        internal static void Load()
-        {
-            GL.ClearColor(Color.MidnightBlue);
-            LoadDebugDisplay();
-        }
+        #region Debug Text Rendering Methods
 
         private static void LoadDebugDisplay()
         {
@@ -203,8 +207,6 @@ namespace Editor
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Nearest);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Nearest);
         }
-
-        #region Debug Text Rendering Methods
 
         internal static void UpdateTextDisplay(ref Stopwatch watch)
         {
