@@ -10,6 +10,8 @@ namespace KAOS.Utilities
 {
     public struct VertexBuffer
     {
+        #region Public Buffer Pointer IDs
+
         public int VaoID { get; set; }
 
         public int VboID { get; set; }
@@ -25,6 +27,8 @@ namespace KAOS.Utilities
         public Color4[] ColorData { get; set; }
 
         public uint[] IndicesData { get; set; }
+
+        #endregion
 
         public VertexBuffer(int vaoId, int vboId, int iboId, int vPosition, int vNormals, int vColor, 
             Vector3[] vPositionData, Vector3[] vNormalsData, Color4[] vColorData, PrimitiveType primitiveType, uint[] indicesData) :this()
