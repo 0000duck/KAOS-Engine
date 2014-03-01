@@ -22,6 +22,12 @@ namespace Editor
         internal static bool mouse_in_glControl = false;
         internal static bool viewport_changed = true;
 
+        #region Text Debug Example       
+        // timing information
+        static double update_time, render_time, timestamp;
+        static int update_count, update_fps, render_count, render_fps;
+        #endregion
+
         internal static void Resize(ref OpenTK.GLControl glControl1)
         {
             viewport_changed = true;
@@ -38,7 +44,7 @@ namespace Editor
             GL.Viewport(0, 0, viewportWidth, viewportHeight); // Use all of the glControl painting area
         }
 
-        internal static void DefaultRender(int x, float rotation)
+        internal static void DefaultRender(float rotation)
         {
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
