@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Renderer.cs" />
     <Compile Include="FrmEditor.cs">
       <SubType>Form</SubType>
     </Compile>
