@@ -20,15 +20,8 @@ namespace Editor
         bool glControlLoaded = false;
         int x = 0;
 
-        static readonly Font TextFont = new Font(FontFamily.GenericSansSerif, 11);
-        Bitmap TextBitmap;
-        StringBuilder TypedText = new StringBuilder();
-        int texture;
-        bool mouse_in_glControl = false;
-        bool viewport_changed = true;
-
         // time drift
-        Stopwatch watch = new Stopwatch();
+        public static Stopwatch watch = new Stopwatch();
         double update_time, render_time;
 
         // timing information
@@ -54,32 +47,15 @@ namespace Editor
             glControlLoaded = true;
 
             Text = Renderer.GetVersionInfo();
+            
             Renderer.Load();
             //Renderer.SetupViewport(ref glControl1);
 
-            glControl1.MouseEnter += delegate { mouse_in_glControl = true; };
-            glControl1.MouseLeave += delegate { mouse_in_glControl = false; };
-
-            SetupTextDisplayBitmap();
-
-            GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcColor);
-
-            texture = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2D, texture);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, TextBitmap.Width, TextBitmap.Height,
-                0, PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Nearest);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Nearest);
+            glControl1.MouseEnter += delegate { Renderer.mouse_in_glControl = true; };
+            glControl1.MouseLeave += delegate { Renderer.mouse_in_glControl = false; };
 
             Application.Idle += Application_Idle; // press TAB twice after +=
             watch.Start();
-        }
-
-        private void SetupTextDisplayBitmap()
-        {
-            TextBitmap = new Bitmap(glControl1.Width, glControl1.Height);
         }
 
         #endregion
@@ -119,7 +95,7 @@ namespace Editor
             float deltaRotation = (float)milliseconds / 20.0f;
             rotation += deltaRotation;
 
-            UpdateTextDisplay();
+            Renderer.UpdateTextDisplay(ref watch);
 
             glControl1.Invalidate();
         }
@@ -140,14 +116,240 @@ namespace Editor
 
         #endregion
 
+        #region glControl1_Events
+
+        private void glControl1_Paint(object sender, PaintEventArgs e)
+        {
+            if (!glControlLoaded) // Play nice
+                return;
+
+            Renderer.DefaultRender(x, rotation);
+        }
+
+        private void glControl1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space)
+            {
+                x++;
+                glControl1.Invalidate();
+            }
+        }
+
+        private void glControl1_Resize(object sender, EventArgs e)
+        {
+            Renderer.Resize(ref glControl1);
+        }
+
+        private void glControl1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+
+        }
+
+        private void glControl1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+    }
+
+    static class Renderer
+    {
+        internal static int texture;
+        internal static readonly Font TextFont = new Font(FontFamily.GenericSansSerif, 11);
+        internal static Bitmap TextBitmap;
+        internal static StringBuilder TypedText = new StringBuilder();
+        internal static int viewportWidth = 0;
+        internal static int viewportHeight = 0;
+        internal static OpenTK.GLControl renderView;
+        internal static bool mouse_in_glControl = false;
+        internal static bool viewport_changed = true;
+
+        internal static void Resize(ref OpenTK.GLControl glControl1)
+        {
+            viewport_changed = true;
+
+            renderView = glControl1;
+            viewportWidth = renderView.Width;
+            viewportHeight = renderView.Height;
+
+            renderView.Invalidate();
+        }
+
+        internal static void SetupViewport()
+        {
+            GL.Viewport(0, 0, viewportWidth, viewportHeight); // Use all of the glControl painting area
+        }
+
+        internal static void DefaultRender(int x, float rotation)
+        {
+
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            if (viewport_changed)
+            {
+                viewport_changed = false;
+                SetupViewport();
+            }
+
+            DrawText();
+
+            DrawCube(viewportWidth / (float)viewportHeight, rotation);
+
+            renderView.SwapBuffers();
+        }
+
+        // Uploads our text Bitmap to an OpenGL texture
+        // and displays is to screen.
+        private static void DrawText()
+        {
+            System.Drawing.Imaging.BitmapData data = TextBitmap.LockBits(
+                new System.Drawing.Rectangle(0, 0, TextBitmap.Width, TextBitmap.Height),
+                System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            GL.TexSubImage2D(TextureTarget.Texture2D, 0, 0, 0, TextBitmap.Width, TextBitmap.Height, PixelFormat.Bgra,
+                PixelType.UnsignedByte, data.Scan0);
+            TextBitmap.UnlockBits(data);
+
+            Matrix4 text_projection = Matrix4.CreateOrthographicOffCenter(0, viewportWidth, viewportHeight, 0, -1, 1);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref text_projection);
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+
+            GL.Color4(Color4.White);
+            GL.Enable(EnableCap.Texture2D);
+            GL.Begin(PrimitiveType.Quads);
+            GL.TexCoord2(0, 0); GL.Vertex2(0, 0);
+            GL.TexCoord2(1, 0); GL.Vertex2(TextBitmap.Width, 0);
+            GL.TexCoord2(1, 1); GL.Vertex2(TextBitmap.Width, TextBitmap.Height);
+            GL.TexCoord2(0, 1); GL.Vertex2(0, TextBitmap.Height);
+            GL.End();
+            GL.Disable(EnableCap.Texture2D);
+        }
+
+        private static void DrawMovingObjects()
+        {
+            Matrix4 thing_projection = Matrix4.CreateOrthographic(2, 2, -1, 1);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref thing_projection);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            GL.Translate(0, -0.2, 0);
+            GL.Color4(Color4.Red);
+            DrawRectangle();
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            GL.Translate(0, -0.4, 0);
+            GL.Color4(Color4.DarkGoldenrod);
+            DrawRectangle();
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            GL.Translate(0, -0.8, 0);
+            GL.Color4(Color4.DarkGreen);
+            DrawRectangle();
+        }
+
+        private static void DrawRectangle()
+        {
+            GL.Begin(PrimitiveType.Quads);
+            GL.Vertex2(-0.05, -0.05);
+            GL.Vertex2(+0.05, -0.05);
+            GL.Vertex2(+0.05, +0.05);
+            GL.Vertex2(-0.05, +0.05);
+            GL.End();
+        }
+        
+        private static void DrawCube(float aspect_ratio, float rotation)
+        {
+            Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref perpective);
+
+            GL.Enable(EnableCap.DepthTest);
+
+            Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadMatrix(ref lookat);
+
+            GL.Rotate(rotation, Vector3.UnitY);
+
+            GL.Begin(PrimitiveType.Quads);
+
+            GL.Color3(Color.Silver);
+            GL.Vertex3(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3(-1.0f, 1.0f, -1.0f);
+            GL.Vertex3(1.0f, 1.0f, -1.0f);
+            GL.Vertex3(1.0f, -1.0f, -1.0f);
+
+            GL.Color3(Color.Honeydew);
+            GL.Vertex3(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3(1.0f, -1.0f, -1.0f);
+            GL.Vertex3(1.0f, -1.0f, 1.0f);
+            GL.Vertex3(-1.0f, -1.0f, 1.0f);
+
+            GL.Color3(Color.Moccasin);
+
+            GL.Vertex3(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3(-1.0f, -1.0f, 1.0f);
+            GL.Vertex3(-1.0f, 1.0f, 1.0f);
+            GL.Vertex3(-1.0f, 1.0f, -1.0f);
+
+            GL.Color3(Color.IndianRed);
+            GL.Vertex3(-1.0f, -1.0f, 1.0f);
+            GL.Vertex3(1.0f, -1.0f, 1.0f);
+            GL.Vertex3(1.0f, 1.0f, 1.0f);
+            GL.Vertex3(-1.0f, 1.0f, 1.0f);
+
+            GL.Color3(Color.PaleVioletRed);
+            GL.Vertex3(-1.0f, 1.0f, -1.0f);
+            GL.Vertex3(-1.0f, 1.0f, 1.0f);
+            GL.Vertex3(1.0f, 1.0f, 1.0f);
+            GL.Vertex3(1.0f, 1.0f, -1.0f);
+
+            GL.Color3(Color.ForestGreen);
+            GL.Vertex3(1.0f, -1.0f, -1.0f);
+            GL.Vertex3(1.0f, 1.0f, -1.0f);
+            GL.Vertex3(1.0f, 1.0f, 1.0f);
+            GL.Vertex3(1.0f, -1.0f, 1.0f);
+
+            GL.End();
+            
+            GL.Disable(EnableCap.DepthTest);
+        }
+
+        internal static void Load()
+        {
+            GL.ClearColor(Color.MidnightBlue);
+            LoadDebugDisplay();    
+        }
+
+        private static void LoadDebugDisplay()
+        {
+            GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcColor);
+
+            TextBitmap = new Bitmap(viewportWidth, viewportHeight);
+            texture = GL.GenTexture();
+            GL.BindTexture(TextureTarget.Texture2D, texture);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, TextBitmap.Width, TextBitmap.Height,
+                0, PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Nearest);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Nearest);
+        }
+
         #region Debug Text Rendering Methods
 
-        private void UpdateTextDisplay()
+        internal static void UpdateTextDisplay(ref Stopwatch watch)
         {
             double clock_time = watch.Elapsed.TotalSeconds;
             //update_time += e.Time;
             //timestamp += e.Time;
-            update_count++;
+            //update_count++;
 
             using (Graphics gfx = Graphics.FromImage(TextBitmap))
             {
@@ -157,24 +359,24 @@ namespace Editor
                 gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
                 // OpenGL information
-                DrawString(gfx, GL.GetString(StringName.Renderer), line++);
-                DrawString(gfx, GL.GetString(StringName.Version), line++);
-                DrawString(gfx, glControl1.GraphicsMode.ToString(), line++);
+                DrawString(gfx, Renderer.GetVendor(), line++);
+                DrawString(gfx, Renderer.GetVerion(), line++);
+                DrawString(gfx, renderView.GraphicsMode.ToString(), line++);
 
                 // GameWindow information
                 line++;
                 DrawString(gfx, "GLControl:", line++);
 
-                DrawString(gfx, String.Format("[V]: VSync.{0}.", glControl1.VSync), line++);
-                DrawString(gfx, String.Format("Bounds: {0}", glControl1.Bounds), line++);
-                DrawString(gfx, String.Format("ClientRectangle: {0}", glControl1.ClientRectangle), line++);
+                DrawString(gfx, String.Format("[V]: VSync.{0}.", renderView.VSync), line++);
+                DrawString(gfx, String.Format("Bounds: {0}", renderView.Bounds), line++);
+                DrawString(gfx, String.Format("ClientRectangle: {0}", renderView.ClientRectangle), line++);
                 DrawString(gfx, String.Format("Mouse {0}: {1}.",
                     mouse_in_glControl ? "inside" : "outside",
-                    glControl1.Focused ? "Focused" : "Not focused"), line++);
+                    renderView.Focused ? "Focused" : "Not focused"), line++);
                 DrawString(gfx, String.Format("Mouse coordinates: {0}", new Vector3(
-                    OpenTK.Input.Mouse.GetState().X, 
-                    OpenTK.Input.Mouse.GetState().Y, 
-                    OpenTK.Input.Mouse.GetState().WheelPrecise)), 
+                    OpenTK.Input.Mouse.GetState().X,
+                    OpenTK.Input.Mouse.GetState().Y,
+                    OpenTK.Input.Mouse.GetState().WheelPrecise)),
                     line++
                     );
 
@@ -230,18 +432,18 @@ namespace Editor
              * */
         }
 
-        private float DrawString(Graphics gfx, string str, int line)
+        private static float DrawString(Graphics gfx, string str, int line)
         {
             return DrawString(gfx, str, line, 0);
         }
 
-        private float DrawString(Graphics gfx, string str, int line, float offset)
+        private static float DrawString(Graphics gfx, string str, int line, float offset)
         {
             gfx.DrawString(str, TextFont, Brushes.White, new PointF(offset, line * TextFont.Height));
             return offset + gfx.MeasureString(str, TextFont).Width;
         }
 
-        private int DrawKeyboards(Graphics gfx, int line)
+        private static int DrawKeyboards(Graphics gfx, int line)
         {
             line++;
             DrawString(gfx, "Keyboard:", line++);
@@ -268,7 +470,7 @@ namespace Editor
             return line;
         }
 
-        private int DrawMice(Graphics gfx, int line)
+        private static int DrawMice(Graphics gfx, int line)
         {
             line++;
             DrawString(gfx, "Mouse:", line++);
@@ -297,7 +499,7 @@ namespace Editor
             return line;
         }
 
-        int DrawJoysticks(Graphics gfx, int line)
+        private static int DrawJoysticks(Graphics gfx, int line)
         {
             line++;
             DrawString(gfx, "GamePad:", line++);
@@ -328,7 +530,7 @@ namespace Editor
             return line;
         }
 
-        private int DrawLegacyJoysticks(Graphics gfx, IList<JoystickDevice> joysticks, int line)
+        private static int DrawLegacyJoysticks(Graphics gfx, IList<JoystickDevice> joysticks, int line)
         {
             line++;
             DrawString(gfx, "Legacy Joystick:", line++);
@@ -365,217 +567,28 @@ namespace Editor
 
         #endregion
 
-        #region glControl1_Events
-
-        private void glControl1_Paint(object sender, PaintEventArgs e)
-        {
-            if (!glControlLoaded) // Play nice
-                return;
-            if (viewport_changed)
-            {
-                viewport_changed = false;
-                GL.Viewport(0, 0, glControl1.Width, glControl1.Height);
-            }
-
-            Renderer.DefaultRender(ref glControl1, x, rotation, TextBitmap, ref viewport_changed);
-        }
-
-        private void glControl1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Space)
-            {
-                x++;
-                glControl1.Invalidate();
-            }
-        }
-
-        private void glControl1_Resize(object sender, EventArgs e)
-        {
-            Renderer.Resize(ref glControl1, ref viewport_changed);
-        }
-
-        private void glControl1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-
-        }
-
-        private void glControl1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-
-        }
-
-        #endregion
-
-    }
-
-    static class Renderer
-    {
-
-        internal static void Resize(ref OpenTK.GLControl glControl1, ref bool viewport_changed)
-        {
-            viewport_changed = true;
-            glControl1.Invalidate();
-        }
-
-        internal static void SetupViewport(ref OpenTK.GLControl glControl1)
-        {
-            int w = glControl1.Width;
-            int h = glControl1.Height;
-            
-            GL.Viewport(0, 0, w, h); // Use all of the glControl painting area
-        }
-
-        internal static void DefaultRender(ref OpenTK.GLControl glControl1, int x, float rotation, Bitmap TextBitmap, ref bool viewport_changed)
-        {
-
-            GL.Clear(ClearBufferMask.ColorBufferBit);
-
-            if (viewport_changed)
-            {
-                viewport_changed = false;
-                SetupViewport(ref glControl1);
-            }
-
-            DrawText(ref glControl1, TextBitmap);
-
-            GL.Clear(ClearBufferMask.DepthBufferBit);
-
-            //DrawMovingObjects();
-            DrawCube(glControl1.Width / (float) glControl1.Height);
-
-            glControl1.SwapBuffers();
-        }
-
-        // Uploads our text Bitmap to an OpenGL texture
-        // and displays is to screen.
-        private static void DrawText(ref OpenTK.GLControl glControl1, Bitmap TextBitmap)
-        {
-            System.Drawing.Imaging.BitmapData data = TextBitmap.LockBits(
-                new System.Drawing.Rectangle(0, 0, TextBitmap.Width, TextBitmap.Height),
-                System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            GL.TexSubImage2D(TextureTarget.Texture2D, 0, 0, 0, TextBitmap.Width, TextBitmap.Height, PixelFormat.Bgra,
-                PixelType.UnsignedByte, data.Scan0);
-            TextBitmap.UnlockBits(data);
-
-            Matrix4 text_projection = Matrix4.CreateOrthographicOffCenter(0, glControl1.Width, glControl1.Height, 0, -1, 1);
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref text_projection);
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-
-            GL.Color4(Color4.White);
-            GL.Enable(EnableCap.Texture2D);
-            GL.Begin(PrimitiveType.Quads);
-            GL.TexCoord2(0, 0); GL.Vertex2(0, 0);
-            GL.TexCoord2(1, 0); GL.Vertex2(TextBitmap.Width, 0);
-            GL.TexCoord2(1, 1); GL.Vertex2(TextBitmap.Width, TextBitmap.Height);
-            GL.TexCoord2(0, 1); GL.Vertex2(0, TextBitmap.Height);
-            GL.End();
-            GL.Disable(EnableCap.Texture2D);
-        }
-
-        private static void DrawMovingObjects()
-        {
-            Matrix4 thing_projection = Matrix4.CreateOrthographic(2, 2, -1, 1);
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref thing_projection);
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            GL.Translate(0, -0.2, 0);
-            GL.Color4(Color4.Red);
-            DrawRectangle();
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            GL.Translate(0, -0.4, 0);
-            GL.Color4(Color4.DarkGoldenrod);
-            DrawRectangle();
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            GL.Translate(0, -0.8, 0);
-            GL.Color4(Color4.DarkGreen);
-            DrawRectangle();
-        }
-
-        private static void DrawRectangle()
-        {
-            GL.Begin(PrimitiveType.Quads);
-            GL.Vertex2(-0.05, -0.05);
-            GL.Vertex2(+0.05, -0.05);
-            GL.Vertex2(+0.05, +0.05);
-            GL.Vertex2(-0.05, +0.05);
-            GL.End();
-        }
-        
-        private static void DrawCube(float aspect_ratio)
-        {
-            GL.Enable(EnableCap.DepthTest);
-
-            Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref perpective);
-
-            Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadMatrix(ref lookat);
-
-            GL.Begin(PrimitiveType.Quads);
-
-            GL.Color3(Color.Silver);
-            GL.Vertex3(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3(1.0f, 1.0f, -1.0f);
-            GL.Vertex3(1.0f, -1.0f, -1.0f);
-
-            GL.Color3(Color.Honeydew);
-            GL.Vertex3(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3(1.0f, -1.0f, -1.0f);
-            GL.Vertex3(1.0f, -1.0f, 1.0f);
-            GL.Vertex3(-1.0f, -1.0f, 1.0f);
-
-            GL.Color3(Color.Moccasin);
-
-            GL.Vertex3(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3(-1.0f, 1.0f, -1.0f);
-
-            GL.Color3(Color.IndianRed);
-            GL.Vertex3(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3(1.0f, -1.0f, 1.0f);
-            GL.Vertex3(1.0f, 1.0f, 1.0f);
-            GL.Vertex3(-1.0f, 1.0f, 1.0f);
-
-            GL.Color3(Color.PaleVioletRed);
-            GL.Vertex3(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3(1.0f, 1.0f, 1.0f);
-            GL.Vertex3(1.0f, 1.0f, -1.0f);
-
-            GL.Color3(Color.ForestGreen);
-            GL.Vertex3(1.0f, -1.0f, -1.0f);
-            GL.Vertex3(1.0f, 1.0f, -1.0f);
-            GL.Vertex3(1.0f, 1.0f, 1.0f);
-            GL.Vertex3(1.0f, -1.0f, 1.0f);
-
-            GL.End();
-
-            GL.Disable(EnableCap.DepthTest);
-        }
-
-        internal static void Load()
-        {
-            GL.ClearColor(Color.MidnightBlue);
-            //GL.Enable(EnableCap.DepthTest);
-        }
+        #region Version Info
 
         internal static string GetVersionInfo()
         {
-            return GL.GetString(StringName.Vendor) + " " +
-                GL.GetString(StringName.Renderer) + " " +
-                GL.GetString(StringName.Version);
+            return GetVendor() + " " + GetRenderer() + " " + GetVerion();
         }
+
+        internal static string GetVendor()
+        {
+            return GL.GetString(StringName.Vendor);
+        }
+
+        internal static string GetRenderer()
+        {
+            return GL.GetString(StringName.Renderer);
+        }
+
+        internal static string GetVerion()
+        {
+            return GL.GetString(StringName.Version);
+        }
+
+        #endregion
     }
 }
