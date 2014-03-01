@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.glControl1 = new ModernGLControl();
+            this.glControl1 = new ModernGLControl(); // modified a.woodward !
             this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
