@@ -64,7 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IGameObject.cs" />
-    <Compile Include="Managers\BufferObjectManager.cs" />
+    <Compile Include="Managers\VertexBufferManager.cs" />
     <Compile Include="Interfaces\IDrawableShape.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\ShaderManager.cs" />
@@ -108,7 +108,7 @@
     </Compile>
     <Compile Include="States\Skyboxstate.cs" />
     <Compile Include="States\SplashScreenState.cs" />
-    <Compile Include="Utilities\BufferObject.cs" />
+    <Compile Include="Utilities\VertexBuffer.cs" />
     <Compile Include="Utilities\Camera.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Logger.cs" />
