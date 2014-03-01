@@ -31,7 +31,7 @@ namespace KAOS.Utilities
             GL.Vertex3(position);
         }
 
-        public static void DrawSkyBox(TextureManager textureManager, BufferObject bufferObject)
+        public static void DrawSkyBox(TextureManager textureManager, VertexBuffer bufferObject)
         {
             GL.UseProgram(ShaderManager.Skybox.ID);
             GL.ActiveTexture(TextureUnit.Texture0);
@@ -47,7 +47,7 @@ namespace KAOS.Utilities
             GL.Enable(EnableCap.DepthTest);
         }
 
-        public static void DrawObject(TextureManager textureManager, BufferObject bufferObject)
+        public static void DrawObject(TextureManager textureManager, VertexBuffer bufferObject)
         {
             GL.UseProgram(ShaderManager.Render.ID);
             GL.BindVertexArray(bufferObject.VaoID);

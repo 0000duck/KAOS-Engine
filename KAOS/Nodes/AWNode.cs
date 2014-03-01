@@ -9,7 +9,7 @@ namespace KAOS.Nodes
 {
     public abstract class AWNode
     {
-        protected BufferObjectManager m_BufferManager;
+        protected VertexBufferManager m_BufferManager;
 
         protected AWNode()
         {

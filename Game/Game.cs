@@ -25,7 +25,7 @@ namespace Game
         private void SetupStates()
         {
             stateManager.AddState("SplashScreen", new SplashScreen(stateManager));
-            stateManager.AddState("TestScene", new TestScene(stateManager));
+            stateManager.AddState("TestScene", new Skyboxstate(stateManager));
         }
 
         private void SetState(string stateToLoad)

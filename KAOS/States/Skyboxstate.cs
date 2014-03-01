@@ -11,7 +11,7 @@ namespace KAOS.States
 {
     public class Skyboxstate : IDisposable, IGameObject
     {
-        private BufferObjectManager m_bufferManager;
+        private VertexBufferManager m_bufferManager;
         private StateManager m_stateManager;
         private TextureManager m_textureManager;
 
@@ -30,7 +30,7 @@ namespace KAOS.States
 
         public Skyboxstate(StateManager stateManager)
         {
-            m_bufferManager = new BufferObjectManager();
+            m_bufferManager = new VertexBufferManager();
             m_stateManager = stateManager;
             m_textureManager = new TextureManager();
 
@@ -64,9 +64,9 @@ namespace KAOS.States
 
         private void LoadTestObject()
         {
-            m_bufferManager.AddBufferObject("SkyCube", new Cube(0, 0, 0), ShaderManager.Skybox.ID);
-            m_bufferManager.AddBufferObject("MengerSponge", new MengerSponge(1.0, Shapes.MengerSponge.eSubdivisions.Two, true ), ShaderManager.Render.ID);
-            m_bufferManager.AddBufferObject("Sphere", new SlicedSphere(2.0f, Vector3d.Zero, SlicedSphere.eSubdivisions.Eight, new SlicedSphere.eDir[] { SlicedSphere.eDir.All }, false), ShaderManager.Render.ID); 
+            m_bufferManager.GenerateVertexBuffer("SkyCube", new Cube(0, 0, 0), ShaderManager.Skybox.ID);
+            m_bufferManager.GenerateVertexBuffer("MengerSponge", new MengerSponge(1.0, Shapes.MengerSponge.eSubdivisions.Two, true ), ShaderManager.Render.ID);
+            m_bufferManager.GenerateVertexBuffer("Sphere", new SlicedSphere(2.0f, Vector3d.Zero, SlicedSphere.eSubdivisions.Eight, new SlicedSphere.eDir[] { SlicedSphere.eDir.All }, false), ShaderManager.Render.ID); 
         }
 
         public void Update(float elapsedTime, float aspect)
