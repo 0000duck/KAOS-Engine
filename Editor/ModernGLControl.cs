@@ -13,7 +13,7 @@ namespace Editor
         // 32bpp color, 24bpp z-depth, 8bpp stencil and 4x antialiasing
         // OpenGL version is major=3, minor=3
         public ModernGLControl()
-            : base(new GraphicsMode(32, 24, 8, 4), 3, 3, GraphicsContextFlags.Default)
+            : base(new GraphicsMode(32, 24, 8, 4), 3, 3, GraphicsContextFlags.ForwardCompatible)
         { }
     }
 }
