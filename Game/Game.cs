@@ -19,7 +19,7 @@ namespace Game
         public override void Initialise()
         {
             SetupStates();
-            stateManager.ChangeState("SplashScreen");
+            SetState("SplashScreen");
         }
 
         private void SetupStates()
