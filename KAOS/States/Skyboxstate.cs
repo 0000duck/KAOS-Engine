@@ -9,12 +9,8 @@ using System;
 
 namespace KAOS.States
 {
-    public class Skyboxstate : IDisposable, IGameObject
+    public class Skyboxstate : AbstractState, IGameObject
     {
-        private VertexBufferManager m_bufferManager;
-        private StateManager m_stateManager;
-        private TextureManager m_textureManager;
-
         static string defaultSkyboxPath = "Data/Textures/skybox/";
         string[] skyboxFaces = new String[]
         {
@@ -83,11 +79,6 @@ namespace KAOS.States
         {
             Renderer.DrawSkyBox(m_textureManager, m_bufferManager.GetBuffer("SkyCube"));
             Renderer.DrawObject(m_textureManager, m_bufferManager.GetBuffer("MengerSponge"));
-        }
-
-        public void Dispose()
-        {
-            m_textureManager.Dispose();
         }
     }
 }
