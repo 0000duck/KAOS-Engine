@@ -79,14 +79,6 @@ namespace KAOS.States
         {
             Renderer.DrawSkyBox(m_textureManager, m_bufferManager.GetBuffer("SkyCube"));
             Renderer.DrawObject(m_textureManager, m_bufferManager.GetBuffer("Sphere"));
-<<<<<<< HEAD
-=======
-        }
-
-        public void Dispose()
-        {
-            m_textureManager.Dispose();
->>>>>>> 9808fbe0d81ff635a82fac23c6b8aec7cbc670dc
         }
     }
 }
