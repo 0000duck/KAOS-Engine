@@ -200,6 +200,22 @@
     <Content Include="Data\Textures\metal.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\Textures\sundown\neg_z.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\sundown\pos_z.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\sundown\jajsundown1_left.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\sundown\jajsundown1_right.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\sundown\pos_y.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Textures\sundown\Note.txt" />
     <Content Include="Data\Textures\Swizzled Textures License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

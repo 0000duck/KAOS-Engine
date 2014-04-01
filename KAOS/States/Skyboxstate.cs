@@ -82,7 +82,7 @@ namespace KAOS.States
         public void Render()
         {
             Renderer.DrawSkyBox(m_textureManager, m_bufferManager.GetBuffer("SkyCube"));
-            Renderer.DrawObject(m_textureManager, m_bufferManager.GetBuffer("MengerSponge"));
+            Renderer.DrawObject(m_textureManager, m_bufferManager.GetBuffer("Sphere"));
         }
 
         public void Dispose()
