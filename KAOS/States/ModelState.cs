@@ -417,7 +417,7 @@ namespace KAOS.States
 	        uint n = 0, t;
 
 	        for (; n < nd.MeshCount; ++n) {
-                const Assimp.Mesh mesh = scene.Meshes[nd.Children[n]];  //mMeshes[nd->mMeshes[n]];    //////////////////////////////////////////////////////////////////////////
+                Assimp.Mesh mesh = scene.Meshes[nd.Children.IndexOf(n)];  //mMeshes[nd->mMeshes[n]];    //////////////////////////////////////////////////////////////////////////
 		        for (t = 0; t < mesh->mNumVertices; ++t) {
 
 			        aiVector3D tmp = mesh->mVertices[t];
