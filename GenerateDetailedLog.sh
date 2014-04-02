@@ -1,4 +1,3 @@
-#The following command generates a report from the git log history.
-
+# [WIP] The following command generates a  html report from the git log history and can be tailored in quite a few useful ways.
 
 git log --pretty=format:'<div><p><a href="http://github.com/stomppah/KAOS-Engine/commit/%H">%s</a>  -  %h</p><p>authored by %an, %ar</p></div><pre>' --shortstat -p -U1 --date-order --reverse --decorate -- *.cs *.glsl --dense --ancestry-path | grep -v -- Properties/ > ../DetailedLog-Ancestry-Path.html
