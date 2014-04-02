@@ -2,6 +2,7 @@
 using Assimp.Configs;
 using KAOS.Interfaces;
 using KAOS.Managers;
+using KAOS.Utilities;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -36,6 +37,12 @@ namespace KAOS.States
             AssimpContext importer = new AssimpContext();
             importer.SetConfig(new NormalSmoothingAngleConfig(66.0f));
             m_model = importer.ImportFile(fileName, PostProcessPreset.TargetRealTimeMaximumQuality);
+
+            if (m_model == null)
+            {
+                Logger.WriteLine("Import failed.");
+            }
+
             ComputeBoundingBox();
         }
 
