@@ -31,7 +31,7 @@ namespace KAOS.States
             m_bufferManager = new VertexBufferManager();
             m_stateManager = stateManager;
             m_textureManager = new TextureManager();
-            String fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Content\\Models\\Characters\\Duck\\duck.dae");
+            String fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Content\\Models\\Characters\\bunny\\reconstruction\\bun_zipper.ply");
 
             AssimpContext importer = new AssimpContext();
             importer.SetConfig(new NormalSmoothingAngleConfig(66.0f));
@@ -92,10 +92,6 @@ namespace KAOS.States
             {
                 m_angle = 0.0f;
             }
-            //if (Keyboard[OpenTK.Input.Key.Escape])
-            //{
-            //    this.Exit();
-            //}
         }
 
         public void Render()

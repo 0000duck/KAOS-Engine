@@ -11,7 +11,7 @@ namespace Game.States
     class SplashScreen : IGameObject
     {
         double currentRotation = 0;
-        double delay = 300;
+        double delay = 100;
 
         StateManager m_stateManager;
         public SplashScreen(StateManager stateManager)

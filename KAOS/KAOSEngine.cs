@@ -74,7 +74,9 @@ namespace KAOS
                 ResetCursor();
             }
 
-            UpdateFrame(m_Timer.GetElapsedTime());
+            double time = e.Time;
+
+            UpdateFrame((float)time);
         }
 
         new public abstract void UpdateFrame(float elapsedTime);
@@ -107,6 +109,10 @@ namespace KAOS
             GL.Viewport(0, 0, ScreenWidth, ScreenHeight);
 
             float aspect = ScreenWidth / (float)ScreenHeight;
+
+            Matrix4 perspective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect, 1, 64);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref perspective);
         }
         
         // Input Control
