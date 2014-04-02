@@ -135,6 +135,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Data\Shaders\assimp-vs.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\assimp-fs.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Shaders\render-fs.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

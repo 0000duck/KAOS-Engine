@@ -58,6 +58,7 @@ namespace KAOS
         {
             ShaderManager.LoadDefaultSkyboxShader();
             ShaderManager.LoadDefaultRenderShader();
+            ShaderManager.LoadDefaultAssimpShader();
         }
 
         public abstract void Initialise();

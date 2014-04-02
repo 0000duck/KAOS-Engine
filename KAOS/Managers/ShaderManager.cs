@@ -39,6 +39,16 @@ namespace KAOS.Managers
             m_shaderStorage.Add("render", new Shader(m_programHandle));
         }
 
+        internal static void LoadDefaultAssimpShader()
+        {
+            m_vertexShaderFile = "assimp-vs";
+            m_fragmentShaderFile = "assimp-fs";
+            if (m_shaderStorage == null)
+                m_shaderStorage = new Dictionary<string, Shader>();
+            m_programHandle = BuildProgram();
+            m_shaderStorage.Add("assimp", new Shader(m_programHandle));
+        }
+
         public static void LoadCustomProgram(string shaderID, string vertexShaderPath, string fragmentShaderPath)
         {
             m_vertexShaderFile = vertexShaderPath;
@@ -61,6 +71,14 @@ namespace KAOS.Managers
             get
             {
                 return Get("render");
+            }
+        }
+
+        public static Shader Assimp
+        {
+            get
+            {
+                return Get("assimp");
             }
         }
 
