@@ -3,16 +3,9 @@ KAOS-ENGINE
 
 Welcome to my final year university project. I have come to consider this as a testbed in which to experiment and learn OpenGL. 
 
-The goal for this engine is to implement a a nice and declarative interface for accessing the graphics pipeline. 
-Initially targeting opengl through experimentation and heavy prototyping.
+History
+====
 
-
-
-
-
-[draft]
-
-[History]
 ![alt tag](https://raw.github.com/stomppah/K.A.O.S/master/Screenshots/new-years-eve-sierpinski-neokabuto.png)
 
 ![alt tag](https://raw.github.com/stomppah/K.A.O.S/master/Screenshots/2014-01-04.png)
