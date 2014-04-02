@@ -17,7 +17,7 @@ Initially targeting opengl through experimentation and heavy prototyping.
 
 ![alt tag](https://raw.github.com/stomppah/K.A.O.S/master/Screenshots/2014-01-04.png)
 
-![alt tag](https://raw.github.com/stomppah/K.A.O.S/master/Screenshots/2014-02-15 20-31-58-87.png)
+![alt tag](https://raw.github.com/stomppah/K.A.O.S/master/Screenshots/2014-02-15 20-31-58-87.bmp)
 
 ![alt tag](https://raw.github.com/stomppah/K.A.O.S/master/Screenshots/2014-02-17 16-53-23-52.bmp)
 
