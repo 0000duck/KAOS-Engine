@@ -31,7 +31,7 @@ namespace KAOS.States
             m_bufferManager = new VertexBufferManager();
             m_stateManager = stateManager;
             m_textureManager = new TextureManager();
-            String fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "duck.dae");
+            String fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Content\\Models\\Characters\\Duck\\duck.dae");
 
             AssimpContext importer = new AssimpContext();
             importer.SetConfig(new NormalSmoothingAngleConfig(66.0f));
@@ -87,7 +87,7 @@ namespace KAOS.States
 
         public void Update(float elapsedTime, float aspect)
         {
-            m_angle += 25f * (float)e.Time;
+            m_angle += 25f * elapsedTime;
             if (m_angle > 360)
             {
                 m_angle = 0.0f;
