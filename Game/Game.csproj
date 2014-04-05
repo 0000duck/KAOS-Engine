@@ -60,9 +60,7 @@
     <None Include="Content\Models\Buildings\house4\CH_building1.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Content\Models\Buildings\house4\CH_building1.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Content\Models\Buildings\house4\CH_building1.obj" />
     <None Include="Content\Models\Buildings\med_house04\med_house_final.lwo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -75,9 +73,7 @@
     <None Include="Content\Models\Buildings\med_house04\med_house_final.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Content\Models\Buildings\med_house04\med_house_final.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Content\Models\Buildings\med_house04\med_house_final.obj" />
     <None Include="Content\Models\Buildings\med_house04\model\med_house\arenastonegrey08.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -178,9 +174,7 @@
     <None Include="Content\Models\Characters\Dragon\dragon.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Content\Models\Characters\Dragon\dragon.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Content\Models\Characters\Dragon\dragon.obj" />
     <None Include="Content\Models\Characters\Duck\duck.dae">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -202,9 +196,7 @@
     <None Include="Content\Models\Characters\Leon\Leon_kennedy.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Content\Models\Characters\Leon\Leon_kennedy.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Content\Models\Characters\Leon\Leon_kennedy.obj" />
     <None Include="Content\Models\Characters\Leon\leon_tex.tga">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -247,9 +239,7 @@
     <None Include="Content\Models\Characters\Trex\T-Rex.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Content\Models\Characters\Trex\T-Rex.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Content\Models\Characters\Trex\T-Rex.obj" />
     <None Include="Content\Models\Characters\Trex\T-Rex_2009.max">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -257,18 +247,14 @@
     <None Include="Content\Models\Clutter\bamboo\bamboo.FBX">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Content\Models\Clutter\bamboo\bamboo.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Content\Models\Clutter\bamboo\bamboo.obj" />
     <None Include="Content\Models\Clutter\bamboo\diffuse.tga">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Content\Models\Clutter\bush\bush.FBX">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Content\Models\Clutter\bush\bush.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Content\Models\Clutter\bush\bush.obj" />
     <None Include="Content\Models\Clutter\bush\dffuse.tga">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -278,30 +264,22 @@
     <None Include="Content\Models\Clutter\hemp\hemp.FBX">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Content\Models\Clutter\hemp\hemp.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Content\Models\Clutter\hemp\hemp.obj" />
     <None Include="Content\Models\Clutter\swirl\diffuse.tga">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Content\Models\Clutter\swirl\swirl.FBX">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Content\Models\Clutter\swirl\swirl.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\Models\Clutter\tresor.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Content\Models\Clutter\swirl\swirl.obj" />
+    <None Include="Content\Models\Clutter\tresor.obj" />
     <None Include="Content\Models\Clutter\white flower\diffuse.tga">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Content\Models\Clutter\white flower\white_flower.FBX">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Content\Models\Clutter\white flower\white_flower.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Content\Models\Clutter\white flower\white_flower.obj" />
     <None Include="Content\Models\desert_scene_plain.blend">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -326,9 +304,7 @@
     <None Include="Content\Models\Vehicles\Jupiter2\jupe2\Jupiter 2 Funky.cr2">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Content\Models\Vehicles\Jupiter2\jupe2\Jupiter 2 Plus.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Content\Models\Vehicles\Jupiter2\jupe2\Jupiter 2 Plus.obj" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KAOS\KAOS.csproj">
