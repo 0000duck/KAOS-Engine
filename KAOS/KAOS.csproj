@@ -141,6 +141,12 @@
     <None Include="Data\Shaders\assimp-fs.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Shaders\fractal-fs.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\fractal-vs.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Shaders\render-fs.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
