@@ -107,9 +107,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="States\AbstractState.cs" />
+    <Compile Include="States\MandelbrotState.cs" />
     <Compile Include="States\ModelState.cs" />
     <Compile Include="States\Skyboxstate.cs" />
-    <Compile Include="States\SplashScreenState.cs" />
     <Compile Include="Utilities\VertexBuffer.cs" />
     <Compile Include="Utilities\Camera.cs" />
     <Compile Include="Utilities\Extensions.cs" />
