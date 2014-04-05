@@ -89,7 +89,7 @@ namespace KAOS.States
         Assimp.AssimpContext importer;
 
         // the global Assimp scene object
-        const Assimp.Scene scene = NULL;
+        Assimp.Scene scene;
 
         // scale factor for the model to fit in the window
         float scaleFactor;
@@ -413,28 +413,28 @@ namespace KAOS.States
         void get_bounding_box_for_node (Assimp.Node nd, Vector3 min, Vector3 max)
 	
         {
-	        Matrix4x4 prev;
-	        uint n = 0, t;
+            //Matrix4x4 prev;
+            //uint n = 0, t;
 
-	        for (; n < nd.MeshCount; ++n) {
-                Assimp.Mesh mesh = scene.Meshes[nd.Children.IndexOf(n)];  //mMeshes[nd->mMeshes[n]];    //////////////////////////////////////////////////////////////////////////
-		        for (t = 0; t < mesh->mNumVertices; ++t) {
+            //for (; n < nd.MeshCount; ++n) {
+            //    Assimp.Mesh mesh = scene.Meshes[nd.Children.IndexOf(n)];  //mMeshes[nd->mMeshes[n]];    //////////////////////////////////////////////////////////////////////////
+            //    for (t = 0; t < mesh->mNumVertices; ++t) {
 
-			        aiVector3D tmp = mesh->mVertices[t];
+            //        aiVector3D tmp = mesh->mVertices[t];
 
-			        min->x = aisgl_min(min->x,tmp.x);
-			        min->y = aisgl_min(min->y,tmp.y);
-			        min->z = aisgl_min(min->z,tmp.z);
+            //        min->x = aisgl_min(min->x,tmp.x);
+            //        min->y = aisgl_min(min->y,tmp.y);
+            //        min->z = aisgl_min(min->z,tmp.z);
 
-			        max->x = aisgl_max(max->x,tmp.x);
-			        max->y = aisgl_max(max->y,tmp.y);
-			        max->z = aisgl_max(max->z,tmp.z);
-		        }
-	        }
+            //        max->x = aisgl_max(max->x,tmp.x);
+            //        max->y = aisgl_max(max->y,tmp.y);
+            //        max->z = aisgl_max(max->z,tmp.z);
+            //    }
+            //}
 
-	        for (n = 0; n < nd->mNumChildren; ++n) {
-		        get_bounding_box_for_node(nd->mChildren[n],min,max);
-	        }
+            //for (n = 0; n < nd->mNumChildren; ++n) {
+            //    get_bounding_box_for_node(nd->mChildren[n],min,max);
+            //}
         }
 
         #endregion
