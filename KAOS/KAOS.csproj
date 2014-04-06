@@ -70,6 +70,8 @@
     <Compile Include="Managers\ShaderManager.cs" />
     <Compile Include="Managers\StateManager.cs" />
     <Compile Include="Managers\TextureManager.cs" />
+    <Compile Include="Nodes\AWGraphLines.cs" />
+    <Compile Include="Nodes\AWPolygon.cs" />
     <Compile Include="Shapes\Capsule.cs">
       <SubType>Code</SubType>
     </Compile>
