@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace KAOS.States
 {
-    public class ModelState : AbstractState, IGameObject
+    public class ModelState : AbstractState
     {
         private Scene m_model;
         private Vector3 m_sceneCenter, m_sceneMin, m_sceneMax;
@@ -507,8 +507,9 @@ namespace KAOS.States
             trafo = prev;
         }
 
-        public void Update(float elapsedTime, float aspect)
+        public override void Update(float elapsedTime, float aspect)
         {
+            ProcessAutomaticDelay();
             m_angle += 25f * elapsedTime;
             if (m_angle > 360)
             {
@@ -516,7 +517,7 @@ namespace KAOS.States
             }
         }
 
-        public void Render()
+        public override void Render()
         {
             GL.Enable(EnableCap.Texture2D);
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);

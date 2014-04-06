@@ -9,7 +9,7 @@ using System;
 
 namespace KAOS.States
 {
-    public class Skyboxstate : AbstractState, IGameObject
+    public class Skyboxstate : AbstractState
     {
         internal static string defaultSkyboxPath = "Data/Textures/skybox/";
         internal string[] skyboxFaces = new String[]
@@ -23,7 +23,6 @@ namespace KAOS.States
         };
 
         internal float _rotation;
-        internal double delay = 1000;
 
         public Skyboxstate(StateManager stateManager)
         {
@@ -66,8 +65,9 @@ namespace KAOS.States
             m_bufferManager.GenerateVertexBuffer("Sphere", new SlicedSphere(2.0f, Vector3d.Zero, SlicedSphere.eSubdivisions.Eight, new SlicedSphere.eDir[] { SlicedSphere.eDir.All }, false), ShaderManager.Render.ID); 
         }
 
-        public void Update(float elapsedTime, float aspect)
+        public override void Update(float elapsedTime, float aspect)
         {
+            ProcessAutomaticDelay();
             Renderer.projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90.0f), aspect, 0.1f, 100.0f);
 
             Renderer.viewMatrix = Matrix4.Mult(Matrix4.Identity, Camera.GetViewMatrix());
@@ -76,7 +76,7 @@ namespace KAOS.States
             Renderer.eyePosition = Camera.Position;
         }
 
-        public void Render()
+        public override void Render()
         {
             Renderer.DrawSkyBox(m_textureManager, m_bufferManager.GetBuffer("SkyCube"));
             Renderer.DrawObject(m_textureManager, m_bufferManager.GetBuffer("MengerSponge"));

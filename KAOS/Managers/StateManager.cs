@@ -1,4 +1,5 @@
 ﻿using KAOS.Interfaces;
+using KAOS.States;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -9,8 +10,8 @@ namespace KAOS.Managers
     /// </summary>
     public class StateManager
     {
-        private Dictionary<string, IGameObject> stateStore = new Dictionary<string, IGameObject>();
-        IGameObject currentState = null;
+        private Dictionary<string, AbstractState> stateStore = new Dictionary<string, AbstractState>();
+        AbstractState currentState = null;
 
         public void Update(float elapsedTime, float aspect)
         {
@@ -26,7 +27,7 @@ namespace KAOS.Managers
             currentState.Render();
         }
 
-        public void AddState(string stateName, IGameObject state)
+        public void AddState(string stateName, AbstractState state)
         {
             Debug.Assert( Exists(stateName) == false );
             stateStore.Add(stateName, state);

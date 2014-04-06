@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KAOS.States
 {
-    public class MandelbrotState : AbstractState, IGameObject
+    public class MandelbrotState : AbstractState
     {
         #region Contructors
 
@@ -21,18 +21,15 @@ namespace KAOS.States
 
         #endregion
 
-        #region IGameObject Implementation
-
-        public void Update(float elapsedTime, float aspect)
+        public override void Update(float elapsedTime, float aspect)
         {
+            ProcessAutomaticDelay();
             throw new NotImplementedException();
         }
 
-        public void Render()
+        public override void Render()
         {
             throw new NotImplementedException();
         }
-
-        #endregion
     }
 }

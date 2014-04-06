@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace KAOS.States
 {
-    public class VoxelState : AbstractState, IGameObject
+    public class VoxelState : AbstractState
     {
-        public void Update(float elapsedTime, float aspect)
+        public override void Update(float elapsedTime, float aspect)
         {
+            ProcessAutomaticDelay();
             throw new NotImplementedException();
         }
 
-        public void Render()
+        public override void Render()
         {
             throw new NotImplementedException();
         }

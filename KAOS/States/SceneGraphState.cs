@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace KAOS.States
 {
-    public class SceneGraphState : AbstractState, IGameObject
+    public class SceneGraphState : AbstractState
     {
         private AWNode m_sceneGraph;
         private AWGroupNode m_hook1, m_hook2;
@@ -86,20 +86,13 @@ namespace KAOS.States
             m_hook2 = rt2;
         }
 
-        //public override void Resize(EventArgs e)
-        //{
-        //    float aspect_ratio = Width / (float)Height;
-        //    Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
-        //    GL.MatrixMode(MatrixMode.Projection);
-        //    GL.LoadMatrix(ref perpective);
-        //}
-
-        public void Update(float elapsedTime, float aspect)
+        public override void Update(float elapsedTime, float aspect)
         {
+            ProcessAutomaticDelay();
             m_elapsedTime = elapsedTime;
         }
 
-        public void Render()
+        public override void Render()
         {
             m_spinangle += m_rotationspeed * m_elapsedTime;
             if (m_spinangle > 360)
