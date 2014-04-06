@@ -13,13 +13,15 @@ namespace KAOS.Managers
     /// </summary>
     public class VertexBufferManager
     {
-        Dictionary<string, VertexBuffer> m_bufferStore = new Dictionary<string, VertexBuffer>();
-        int gpuHandle, sizeOfPositionData, sizeOfNormalsData;
-        IntPtr vertexBufferSize, noOffset;
-        VertexBuffer vertexBuffer = new VertexBuffer();
-        VertexT2fN3fV3f[] vertexData;
-        uint[] indices;
-        PrimitiveType type;
+        #region Class Fields
+        private Dictionary<string, VertexBuffer> m_bufferStore = new Dictionary<string, VertexBuffer>();
+        private int gpuHandle, sizeOfPositionData, sizeOfNormalsData;
+        private IntPtr vertexBufferSize, noOffset;
+        private VertexBuffer vertexBuffer = new VertexBuffer();
+        private VertexT2fN3fV3f[] vertexData;
+        private uint[] indices;
+        private PrimitiveType type;
+        #endregion
 
         public void GenerateVertexBuffer(string name, IDrawableShape shape, int program)
         {
@@ -55,18 +57,13 @@ namespace KAOS.Managers
         {
             sizeOfPositionData = Vector3.SizeInBytes * vertexBuffer.PositionData.Length;
             sizeOfNormalsData = Vector3.SizeInBytes * vertexBuffer.NormalsData.Length;
-            //sizeOfColorData = Marshal.SizeOf(new Color4()) * bufferObject.ColorData.Length;
             vertexBufferSize = new IntPtr(sizeOfPositionData + sizeOfNormalsData);
             noOffset = new IntPtr(0);
         }
 
         private void LoadBufferData(IDrawableShape shape)
         {
-            //bufferObject.PositionData = new Vector3d[1];
-            //bufferObject.NormalsData = new Vector3d[1];
-
             shape.GetArraysforVBO(out type, out vertexData, out indices);
-
             vertexBuffer.PositionData = shape.Vertices;
             vertexBuffer.NormalsData = shape.Normals;
             vertexBuffer.IndicesData = shape.Indices;
@@ -107,7 +104,7 @@ namespace KAOS.Managers
         private void GenerateVertexArray()
         {
 
-            // GL3 allows us to store the vertex layout in a "vertex array object" (VAO).
+            // GL3+ allows us to store the vertex layout in a "vertex array object" (VAO).
             // This means we do not have to re-issue VertexAttribPointer calls
             // every time we try to use a different vertex layout - these calls are
             // stored in the VAO so we simply need to bind the correct VAO.

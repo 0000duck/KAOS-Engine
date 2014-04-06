@@ -24,7 +24,7 @@ namespace Game.States
             delay--;
             if (delay <= 0){
                 delay = 3;
-                m_stateManager.ChangeState("ModelScene");
+                m_stateManager.ChangeState("SkyboxScene");
             }
             currentRotation = 10 * elapsedTime;
         }

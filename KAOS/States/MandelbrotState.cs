@@ -17,8 +17,6 @@ namespace KAOS.States
             m_bufferManager = new VertexBufferManager();
             m_stateManager = stateManager;
             m_textureManager = new TextureManager();
-
-            LoadQuad();
         }
 
         #endregion

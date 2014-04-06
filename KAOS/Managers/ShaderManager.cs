@@ -10,8 +10,8 @@ namespace KAOS.Managers
     /// </summary>
     public static class ShaderManager
     {
-        #region Private Members
-        private static Dictionary<string, Shader> m_shaderStorage;// = new Dictionary<string, Shader>();
+        #region Class Fields
+        private static Dictionary<string, Shader> m_shaderStorage;
 
         // Handles
         private static int m_vertexShaderHandle, m_fragmentShaderHandle, m_programHandle;
@@ -21,6 +21,7 @@ namespace KAOS.Managers
         private static string m_fragmentShaderFile = "skybox-fs";
         #endregion
 
+        #region Default Loaders
         internal static void LoadDefaultSkyboxShader()
         {
             if (m_shaderStorage == null)
@@ -48,6 +49,7 @@ namespace KAOS.Managers
             m_programHandle = BuildProgram();
             m_shaderStorage.Add("assimp", new Shader(m_programHandle));
         }
+        #endregion
 
         public static void LoadCustomProgram(string shaderID, string vertexShaderPath, string fragmentShaderPath)
         {
@@ -56,35 +58,6 @@ namespace KAOS.Managers
             m_programHandle = BuildProgram();
 
             m_shaderStorage.Add(shaderID, new Shader(m_programHandle));
-        }
-
-        public static Shader Skybox
-        {
-            get
-            {
-                return Get("skybox");
-            }
-        }
-
-        public static Shader Render
-        {
-            get
-            {
-                return Get("render");
-            }
-        }
-
-        public static Shader Assimp
-        {
-            get
-            {
-                return Get("assimp");
-            }
-        }
-
-        public static Shader Get(string shaderID)
-        {
-            return m_shaderStorage[shaderID];
         }
 
         #region Shader and Program Contruction Methods
@@ -155,5 +128,37 @@ namespace KAOS.Managers
         }
         #endregion
 
+        #region Public Accessors
+
+        public static Shader Skybox
+        {
+            get
+            {
+                return Get("skybox");
+            }
+        }
+
+        public static Shader Render
+        {
+            get
+            {
+                return Get("render");
+            }
+        }
+
+        public static Shader Assimp
+        {
+            get
+            {
+                return Get("assimp");
+            }
+        }
+
+        public static Shader Get(string shaderID)
+        {
+            return m_shaderStorage[shaderID];
+        }
+
+        #endregion
     }
 }
