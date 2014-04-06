@@ -11,8 +11,8 @@ namespace KAOS.States
 {
     public class Skyboxstate : AbstractState, IGameObject
     {
-        static string defaultSkyboxPath = "Data/Textures/skybox/";
-        string[] skyboxFaces = new String[]
+        internal static string defaultSkyboxPath = "Data/Textures/skybox/";
+        internal string[] skyboxFaces = new String[]
         {
             defaultSkyboxPath + "pos_x.bmp",
             defaultSkyboxPath + "neg_x.bmp",
@@ -22,7 +22,8 @@ namespace KAOS.States
             defaultSkyboxPath + "neg_z.bmp",
         };
 
-        float _rotation;
+        internal float _rotation;
+        internal double delay = 1000;
 
         public Skyboxstate(StateManager stateManager)
         {
@@ -30,7 +31,7 @@ namespace KAOS.States
             m_stateManager = stateManager;
             m_textureManager = new TextureManager();
 
-            //m_textureManager.LoadTexture1D("1d", "pal.bmp");
+            m_textureManager.LoadTexture1D("1d", "pal.bmp");
 
             LoadCubeMap();
             QueryShaders();
