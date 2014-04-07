@@ -13,33 +13,31 @@ namespace KAOS.States
         protected VertexBufferManager m_bufferManager;
         protected StateManager m_stateManager;
         protected TextureManager m_textureManager;
-        protected double delay = 1000;
-        protected int stateIndex;
-        protected String[] states = new String[]
-        {
-            "SceneGraphScene",
-            "ModelScene",
-            "SkyboxScene"
-        };
 
-        public void Dispose()
-        {
-            m_textureManager.Dispose();
-        }
+        private double stateChangeDelay = 500;
+        public int stateIndex;
+        private String[] states = new String[] { "SceneGraphScene", "ModelScene", "SkyboxScene" };
 
-        protected void ProcessAutomaticDelay()
+        public void ProcessAutomaticDelay()
         {
-            delay--;
-            if (delay <= 0)
+            stateChangeDelay--;
+            if (stateChangeDelay <= 0)
             {
-                
-                delay = 1000;
+                stateChangeDelay = 1000;
                 stateIndex++;
-                m_stateManager.ChangeState(states[stateIndex]);
+                if (!(stateIndex + 1 > states.Length))
+                {
+                    m_stateManager.ChangeState(states[stateIndex]);
+                }
             }
         }
 
         public abstract void Update(float elapsedTime, float aspect);
         public abstract void Render();
+
+        public void Dispose()
+        {
+            m_textureManager.Dispose();
+        }
     }
 }
