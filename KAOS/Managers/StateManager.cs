@@ -11,7 +11,7 @@ namespace KAOS.Managers
     public class StateManager
     {
         private Dictionary<string, AbstractState> stateStore = new Dictionary<string, AbstractState>();
-        AbstractState currentState = null;
+        private AbstractState currentState = null;
 
         public void Update(float elapsedTime, float aspect)
         {

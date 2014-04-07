@@ -11,14 +11,12 @@ namespace Game
 {
     class Game : KAOSEngine
     {
-        public StateManager stateManager = new StateManager();
-
         public Game(int width, int height, int major, int minor) : base(width, height, major, minor) { }
 
         public override void Initialise()
         {
             SetupStates();
-            SetState("SceneGraphScene");
+            SetState("ModelScene");
         }
 
         private void SetupStates()
@@ -26,11 +24,6 @@ namespace Game
             stateManager.AddState("SceneGraphScene", new SceneGraphState(stateManager));
             stateManager.AddState("ModelScene", new ModelState(stateManager));
             stateManager.AddState("SkyboxScene", new Skyboxstate(stateManager));
-        }
-
-        private void SetState(string stateToLoad)
-        {
-            stateManager.ChangeState(stateToLoad);
         }
 
         public override void UpdateFrame(float elapsedTime)

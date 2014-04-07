@@ -15,6 +15,7 @@ namespace KAOS
     /// </summary>
     public abstract class KAOSEngine : GameWindow, IDisposable
     {
+        protected StateManager stateManager = new StateManager();
 
         public static string AppName { get { return "KAOS-Engine"; } }
 
@@ -120,8 +121,28 @@ namespace KAOS
 
         private void HandleKeyDown(object sender, KeyboardKeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-                Exit();
+            switch (e.Key)
+            {
+                case Key.Escape:
+                    Exit();
+                    break;
+
+                case Key.Number0:
+                    stateManager.ChangeState("ModelScene");
+                    break;
+
+                case Key.Number1:
+                    stateManager.ChangeState("SceneGraphScene");
+                    break;
+
+                case Key.Number2:
+                    stateManager.ChangeState("SkyboxScene");
+                    break;
+
+                default:
+                    break;
+            }
+
             InputManager.keyList.Add(e.Key);
         }
 
@@ -134,6 +155,11 @@ namespace KAOS
                     InputManager.keyList.Remove(InputManager.keyList[count]);
                 }
             }
+        }
+
+        protected void SetState(string stateToLoad)
+        {
+            stateManager.ChangeState(stateToLoad);
         }
 
         public void ResetCursor()

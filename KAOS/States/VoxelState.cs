@@ -11,7 +11,6 @@ namespace KAOS.States
     {
         public override void Update(float elapsedTime, float aspect)
         {
-            ProcessAutomaticDelay();
             throw new NotImplementedException();
         }
 

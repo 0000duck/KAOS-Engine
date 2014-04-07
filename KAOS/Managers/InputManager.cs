@@ -52,7 +52,6 @@ namespace KAOS.Managers
                     case Key.F2:
                         Utilities.Renderer.ToggleWireframeOff();
                         break;
-
                     default:
                         break;
                 }

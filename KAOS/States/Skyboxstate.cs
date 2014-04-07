@@ -67,7 +67,6 @@ namespace KAOS.States
 
         public override void Update(float elapsedTime, float aspect)
         {
-            ProcessAutomaticDelay();
             Renderer.projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90.0f), aspect, 0.1f, 100.0f);
 
             Renderer.viewMatrix = Matrix4.Mult(Matrix4.Identity, Camera.GetViewMatrix());

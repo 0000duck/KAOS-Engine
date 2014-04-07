@@ -509,7 +509,6 @@ namespace KAOS.States
 
         public override void Update(float elapsedTime, float aspect)
         {
-            ProcessAutomaticDelay();
             m_angle += 25f * elapsedTime;
             if (m_angle > 360)
             {
