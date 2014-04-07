@@ -50,6 +50,7 @@ namespace KAOS.Managers
             if (string.IsNullOrEmpty(path))
                 throw new ArgumentException(path);
 
+            GL.ActiveTexture(TextureUnit.Texture0);
             GL.GenTextures(1, out textureGpuHandle);
             GL.BindTexture(TextureTarget.Texture1D, textureGpuHandle);
 

@@ -1,4 +1,6 @@
-﻿uniform sampler1D tex;
+﻿#version 120
+
+uniform sampler1D tex;
 uniform vec2 center;
 uniform float scale;
 uniform int iter;
@@ -19,6 +21,9 @@ void main() {
         z.x = x;
         z.y = y;
     }
-
-    gl_FragColor = texture1D(tex, (i == iter ? 0.0 : float(i)) / 100.0);
+	if (i == iter) {
+		gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+	} else {
+		gl_FragColor = vec4(1.0, 0.0, 0.0, 0.0);
+	}
 }

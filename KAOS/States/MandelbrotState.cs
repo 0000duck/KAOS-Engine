@@ -15,10 +15,12 @@ namespace KAOS.States
     {
         private float cx = 0.7f;
         private float cy = 0.0f;
-        private float scale = 2.2f;
+        private float scale = 20.2f;
         private int iter = 70;
         private float zoom_factor = 0.025f;
         private int prog;
+        private int texcoord_index;
+        private int tex;
 
         #region Contructors
 
@@ -35,8 +37,7 @@ namespace KAOS.States
         private void LoadPalette()
         {
             m_textureManager.LoadTexture1D("pal", "pal.bmp");
-            GL.BindTexture(TextureTarget.Texture1D, m_textureManager.Get("pal").ID);
-            GL.Enable(EnableCap.Texture1D);
+            //GL.Enable(EnableCap.Texture1D);
         }
 
         private void LoadShader()
@@ -44,13 +45,13 @@ namespace KAOS.States
             ShaderManager.LoadCustomProgram("mbrot", "mbrot-vs", "mbrot-fs");
 
             prog = ShaderManager.Get("mbrot").ID;
-
             Renderer.handle_centre = GL.GetUniformLocation(prog, "center");
             Renderer.handle_scale = GL.GetUniformLocation(prog, "scale");
             Renderer.handle_iter = GL.GetUniformLocation(prog, "iter");
 
             GL.Uniform1(Renderer.handle_iter, iter);
-            //GL.UseProgram(prog);
+            GL.Uniform2(Renderer.handle_centre, cx, cy);
+            GL.Uniform1(Renderer.handle_scale, scale);
         }
 
         #endregion
@@ -64,13 +65,14 @@ namespace KAOS.States
 
         public override void Render()
         {
+            GL.UseProgram(prog);
+
             GL.Uniform2(Renderer.handle_centre, cx, cy);
             GL.Uniform1(Renderer.handle_scale, scale);
 
-            GL.MatrixMode(MatrixMode.Modelview);
+            GL.MatrixMode(MatrixMode.Texture);
             GL.LoadIdentity();
 
-            GL.Color3(Color.Aqua);
             GL.Begin(PrimitiveType.Quads);
 
             GL.TexCoord2(0.0f, 0.0f); GL.Vertex2(-1.0f, -1.0f);

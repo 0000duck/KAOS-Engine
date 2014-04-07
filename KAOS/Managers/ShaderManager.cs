@@ -90,7 +90,7 @@ namespace KAOS.Managers
 
             int programHandle = GL.CreateProgram();
 
-            GL.AttachShader(programHandle, m_vertexShaderHandle);
+            //GL.AttachShader(programHandle, m_vertexShaderHandle);
             GL.AttachShader(programHandle, m_fragmentShaderHandle);
 
             GL.LinkProgram(programHandle);
@@ -114,14 +114,14 @@ namespace KAOS.Managers
             #endregion
 
             #region Registered Attributes
-            GL.GetProgram(programHandle, GetProgramParameterName.ActiveAttributes, out temp[0]);
-            Logger.WriteLine("Program registered " + temp[0] + " Attributes.");
+            GL.GetProgram(programHandle, GetProgramParameterName.ActiveUniforms, out temp[0]);
+            Logger.WriteLine("Program registered " + temp[0] + " Uniforms.");
 
             Logger.WriteLine("End of Shader build. GL Error: " + GL.GetError());
             #endregion
 
             // Delete the shaders as the program has them now
-            GL.DeleteShader(m_vertexShaderHandle);
+            //GL.DeleteShader(m_vertexShaderHandle);
             GL.DeleteShader(m_fragmentShaderHandle);
 
             return programHandle;
