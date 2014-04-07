@@ -16,14 +16,15 @@ namespace Game
         public override void Initialise()
         {
             SetupStates();
-            SetState("ModelScene");
+            SetState("FractalScene");
         }
 
         private void SetupStates()
         {
-            stateManager.AddState("SceneGraphScene", new SceneGraphState(stateManager));
-            stateManager.AddState("ModelScene", new ModelState(stateManager));
-            stateManager.AddState("SkyboxScene", new Skyboxstate(stateManager));
+            //stateManager.AddState("SceneGraphScene", new SceneGraphState(stateManager));
+            //stateManager.AddState("ModelScene", new ModelState(stateManager));
+            //stateManager.AddState("SkyboxScene", new Skyboxstate(stateManager));
+            stateManager.AddState("FractalScene", new MandelbrotState(stateManager));
         }
 
         public override void UpdateFrame(float elapsedTime)

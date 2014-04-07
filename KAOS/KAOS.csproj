@@ -145,6 +145,9 @@
     <None Include="Data\Shaders\assimp-fs.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Shaders\mbrot-fs.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Shaders\fractal-fs.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -188,6 +191,9 @@
     <Content Include="AssimpLicense.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Data\Shaders\mbrot-vs.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Data\Textures\skybox\neg_x.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
