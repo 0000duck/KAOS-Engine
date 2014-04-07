@@ -57,7 +57,7 @@ namespace KAOS.States
 
         public override void Render()
         {
-            //GL.UseProgram(prog);
+            GL.UseProgram(prog);
 
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
