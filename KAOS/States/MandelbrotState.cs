@@ -22,9 +22,9 @@ namespace KAOS.States
 
         public MandelbrotState(StateManager stateManager)
         {
-            m_bufferManager = new VertexBufferManager();
-            m_stateManager = stateManager;
-            m_textureManager = new TextureManager();
+            BufferManager = new VertexBufferManager();
+            StateManager = stateManager;
+            TextureManager = new TextureManager();
 
             LoadPalette();
             LoadShader();
@@ -32,17 +32,17 @@ namespace KAOS.States
 
         private void LoadPalette()
         {
-            m_textureManager.LoadTexture1D("pal", "pal.bmp");
+            TextureManager.LoadTexture1D("pal", "pal.bmp");
         }
 
         private void LoadShader()
         {
             ShaderManager.LoadCustomProgram("mbrot", "mbrot-vs", "mbrot-fs");
 
-            prog = ShaderManager.Get("mbrot").ID;
-            Renderer.handle_iResolution = GL.GetUniformLocation(prog, "iResolution");
+            prog = ShaderManager.Get("mbrot").Id;
+            Renderer.HandleResolution = GL.GetUniformLocation(prog, "iResolution");
 
-            GL.Uniform2(Renderer.handle_iResolution, iResolution.X, iResolution.Y);
+            GL.Uniform2(Renderer.HandleResolution, iResolution.X, iResolution.Y);
             
         }
 

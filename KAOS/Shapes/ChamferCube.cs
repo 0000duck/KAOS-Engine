@@ -111,7 +111,7 @@ namespace KAOS.Shapes
                                                  sphereSubDivs,
                                                  tempEdge,
                                                  false );
-                tempSphere.GetArraysforVBO( out TemporaryMode, out TemporaryVBO, out TemporaryIBO );
+                tempSphere.GetArraysforVbo( out TemporaryMode, out TemporaryVBO, out TemporaryIBO );
                 tempSphere.Dispose();
                 AllChunks.Add( new Chunk( ref TemporaryVBO, ref TemporaryIBO ) );
             }
@@ -201,7 +201,7 @@ namespace KAOS.Shapes
                                              tempHoseStart,
                                              tempHoseEnd,
                                              false );
-                tempHose.GetArraysforVBO( out TemporaryMode, out TemporaryVBO, out TemporaryIBO );
+                tempHose.GetArraysforVbo( out TemporaryMode, out TemporaryVBO, out TemporaryIBO );
                 tempHose.Dispose();
                 AllChunks.Add( new Chunk( ref TemporaryVBO, ref TemporaryIBO ) );
             }

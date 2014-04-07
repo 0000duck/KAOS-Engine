@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KAOS.Nodes
 {
-    public abstract class AWNode : ISceneNode
+    public abstract class Node : ISceneNode
     {
         public abstract void Render();
     }

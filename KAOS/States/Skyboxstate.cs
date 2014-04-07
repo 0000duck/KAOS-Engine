@@ -26,11 +26,11 @@ namespace KAOS.States
 
         public Skyboxstate(StateManager stateManager)
         {
-            m_bufferManager = new VertexBufferManager();
-            m_stateManager = stateManager;
-            m_textureManager = new TextureManager();
+            BufferManager = new VertexBufferManager();
+            StateManager = stateManager;
+            TextureManager = new TextureManager();
 
-            m_textureManager.LoadTexture1D("1d", "pal.bmp");
+            TextureManager.LoadTexture1D("1d", "pal.bmp");
 
             LoadCubeMap();
             QueryShaders();
@@ -42,43 +42,43 @@ namespace KAOS.States
 
         private void QueryShaders()
         {
-            Renderer.handle_viewMatrix = GL.GetUniformLocation(ShaderManager.Skybox.ID, "view_matrix");
+            Renderer.HandleViewMatrix = GL.GetUniformLocation(ShaderManager.Skybox.Id, "view_matrix");
 
-            Renderer.handle_projectionMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "proj_matrix");
-            Renderer.handle_modelMatrix = GL.GetUniformLocation(ShaderManager.Render.ID, "model_matrix");
-            Renderer.handle_viewMatrix2 = GL.GetUniformLocation(ShaderManager.Render.ID, "view_matrix");
+            Renderer.HandleProjectionMatrix = GL.GetUniformLocation(ShaderManager.Render.Id, "proj_matrix");
+            Renderer.HandleModelMatrix = GL.GetUniformLocation(ShaderManager.Render.Id, "model_matrix");
+            Renderer.HandleViewMatrix2 = GL.GetUniformLocation(ShaderManager.Render.Id, "view_matrix");
 
-            Renderer.handle_centre = GL.GetUniformLocation(ShaderManager.Render.ID, "center");
-            Renderer.handle_scale = GL.GetUniformLocation(ShaderManager.Render.ID, "scale");
-            Renderer.handle_iGlobalTime = GL.GetUniformLocation(ShaderManager.Render.ID, "iter");
+            Renderer.HandleCentre = GL.GetUniformLocation(ShaderManager.Render.Id, "center");
+            Renderer.HandleScale = GL.GetUniformLocation(ShaderManager.Render.Id, "scale");
+            Renderer.HandleGlobalTime = GL.GetUniformLocation(ShaderManager.Render.Id, "iter");
         }
 
         private void LoadCubeMap()
         {
-            m_textureManager.LoadSkyTexture("skybox1", skyboxFaces);
+            TextureManager.LoadSkyTexture("skybox1", skyboxFaces);
         }
 
         private void LoadTestObject()
         {
-            m_bufferManager.GenerateVertexBuffer("SkyCube", new Cube(0, 0, 0), ShaderManager.Skybox.ID);
-            m_bufferManager.GenerateVertexBuffer("MengerSponge", new MengerSponge(1.0, Shapes.MengerSponge.eSubdivisions.Two, true ), ShaderManager.Render.ID);
-            m_bufferManager.GenerateVertexBuffer("Sphere", new SlicedSphere(2.0f, Vector3d.Zero, SlicedSphere.eSubdivisions.Eight, new SlicedSphere.eDir[] { SlicedSphere.eDir.All }, false), ShaderManager.Render.ID); 
+            BufferManager.GenerateVertexBuffer("SkyCube", new Cube(0, 0, 0), ShaderManager.Skybox.Id);
+            BufferManager.GenerateVertexBuffer("MengerSponge", new MengerSponge(1.0, Shapes.MengerSponge.eSubdivisions.Two, true ), ShaderManager.Render.Id);
+            BufferManager.GenerateVertexBuffer("Sphere", new SlicedSphere(2.0f, Vector3d.Zero, SlicedSphere.eSubdivisions.Eight, new SlicedSphere.eDir[] { SlicedSphere.eDir.All }, false), ShaderManager.Render.Id); 
         }
 
         public override void Update(float elapsedTime, float aspect)
         {
-            Renderer.projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90.0f), aspect, 0.1f, 100.0f);
+            Renderer.ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90.0f), aspect, 0.1f, 100.0f);
 
-            Renderer.viewMatrix = Matrix4.Mult(Matrix4.Identity, Camera.GetViewMatrix());
-            Renderer.modelMatrix = Matrix4.CreateScale(2f);
+            Renderer.ViewMatrix = Matrix4.Mult(Matrix4.Identity, Camera.GetViewMatrix());
+            Renderer.ModelMatrix = Matrix4.CreateScale(2f);
 
-            Renderer.eyePosition = Camera.Position;
+            Renderer.EyePosition = Camera.Position;
         }
 
         public override void Render()
         {
-            Renderer.DrawSkyBox(m_textureManager, m_bufferManager.GetBuffer("SkyCube"));
-            Renderer.DrawObject(m_textureManager, m_bufferManager.GetBuffer("MengerSponge"));
+            Renderer.DrawSkyBox(TextureManager, BufferManager.GetBuffer("SkyCube"));
+            Renderer.DrawObject(TextureManager, BufferManager.GetBuffer("MengerSponge"));
         }
     }
 }

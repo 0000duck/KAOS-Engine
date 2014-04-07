@@ -8,12 +8,12 @@ namespace KAOS.Utilities
 {
     public struct Shader
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         public Shader(int id)
             : this()
         {
-            ID = id;
+            Id = id;
         }
     }
 }

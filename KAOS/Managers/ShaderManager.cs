@@ -11,59 +11,59 @@ namespace KAOS.Managers
     public static class ShaderManager
     {
         #region Class Fields
-        private static Dictionary<string, Shader> m_shaderStorage;
+        private static Dictionary<string, Shader> _shaders;
 
         // Handles
-        private static int m_vertexShaderHandle, m_fragmentShaderHandle, m_programHandle;
+        private static int vertexShaderHandle, _fragmentShaderHandle, _programHandle;
 
-        private static string defaultDataPath = "Data/Shaders/";
-        private static string m_vertexShaderFile = "skybox-vs";
-        private static string m_fragmentShaderFile = "skybox-fs";
+        private const string DefaultDataPath = "Data/Shaders/";
+        private static string _vertexShaderFile = "skybox-vs";
+        private static string _fragmentShaderFile = "skybox-fs";
         #endregion
 
         #region Default Loaders
         internal static void LoadDefaultSkyboxShader()
         {
-            if (m_shaderStorage == null)
-                m_shaderStorage = new Dictionary<string, Shader>();
-            m_programHandle = BuildProgram();
-            m_shaderStorage.Add("skybox", new Shader(m_programHandle));
+            if (_shaders == null)
+                _shaders = new Dictionary<string, Shader>();
+            _programHandle = BuildProgram();
+            _shaders.Add("skybox", new Shader(_programHandle));
         }
 
         internal static void LoadDefaultRenderShader()
         {
-            m_vertexShaderFile = "render-vs";
-            m_fragmentShaderFile = "render-fs";
-            if (m_shaderStorage == null)
-                m_shaderStorage = new Dictionary<string, Shader>();
-            m_programHandle = BuildProgram();
-            m_shaderStorage.Add("render", new Shader(m_programHandle));
+            _vertexShaderFile = "render-vs";
+            _fragmentShaderFile = "render-fs";
+            if (_shaders == null)
+                _shaders = new Dictionary<string, Shader>();
+            _programHandle = BuildProgram();
+            _shaders.Add("render", new Shader(_programHandle));
         }
 
         internal static void LoadDefaultAssimpShader()
         {
-            m_vertexShaderFile = "assimp-vs";
-            m_fragmentShaderFile = "assimp-fs";
-            if (m_shaderStorage == null)
-                m_shaderStorage = new Dictionary<string, Shader>();
-            m_programHandle = BuildProgram();
-            m_shaderStorage.Add("assimp", new Shader(m_programHandle));
+            _vertexShaderFile = "assimp-vs";
+            _fragmentShaderFile = "assimp-fs";
+            if (_shaders == null)
+                _shaders = new Dictionary<string, Shader>();
+            _programHandle = BuildProgram();
+            _shaders.Add("assimp", new Shader(_programHandle));
         }
         #endregion
 
         public static void LoadCustomProgram(string shaderID, string vertexShaderPath, string fragmentShaderPath)
         {
-            m_vertexShaderFile = vertexShaderPath;
-            m_fragmentShaderFile = fragmentShaderPath;
-            m_programHandle = BuildProgram();
+            _vertexShaderFile = vertexShaderPath;
+            _fragmentShaderFile = fragmentShaderPath;
+            _programHandle = BuildProgram();
 
-            m_shaderStorage.Add(shaderID, new Shader(m_programHandle));
+            _shaders.Add(shaderID, new Shader(_programHandle));
         }
 
         #region Shader and Program Contruction Methods
         internal static string LoadShader(string shaderSourcePath)
         {
-            using (StreamReader sr = new StreamReader(defaultDataPath + shaderSourcePath + ".glsl"))
+            using (StreamReader sr = new StreamReader(DefaultDataPath + shaderSourcePath + ".glsl"))
             {
                 return sr.ReadToEnd();
             }
@@ -85,13 +85,13 @@ namespace KAOS.Managers
 
         internal static int BuildProgram()
         {
-            m_vertexShaderHandle = BuildShader(m_vertexShaderFile, ShaderType.VertexShader);
-            m_fragmentShaderHandle = BuildShader(m_fragmentShaderFile, ShaderType.FragmentShader);
+            vertexShaderHandle = BuildShader(_vertexShaderFile, ShaderType.VertexShader);
+            _fragmentShaderHandle = BuildShader(_fragmentShaderFile, ShaderType.FragmentShader);
 
             int programHandle = GL.CreateProgram();
 
-            //GL.AttachShader(programHandle, m_vertexShaderHandle);
-            GL.AttachShader(programHandle, m_fragmentShaderHandle);
+            //GL.AttachShader(programHandle, vertexShaderHandle);
+            GL.AttachShader(programHandle, _fragmentShaderHandle);
 
             GL.LinkProgram(programHandle);
 
@@ -121,8 +121,8 @@ namespace KAOS.Managers
             #endregion
 
             // Delete the shaders as the program has them now
-            //GL.DeleteShader(m_vertexShaderHandle);
-            GL.DeleteShader(m_fragmentShaderHandle);
+            //GL.DeleteShader(vertexShaderHandle);
+            GL.DeleteShader(_fragmentShaderHandle);
 
             return programHandle;
         }
@@ -156,7 +156,7 @@ namespace KAOS.Managers
 
         public static Shader Get(string shaderID)
         {
-            return m_shaderStorage[shaderID];
+            return _shaders[shaderID];
         }
 
         #endregion

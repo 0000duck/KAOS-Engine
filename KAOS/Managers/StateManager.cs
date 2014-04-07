@@ -10,38 +10,38 @@ namespace KAOS.Managers
     /// </summary>
     public class StateManager
     {
-        private Dictionary<string, AbstractState> stateStore = new Dictionary<string, AbstractState>();
-        private AbstractState currentState = null;
+        private readonly Dictionary<string, AbstractState> _states = new Dictionary<string, AbstractState>();
+        private AbstractState _currentState = null;
 
         public void Update(float elapsedTime, float aspect)
         {
-            if (currentState == null)
+            if (_currentState == null)
                 return;
-            currentState.Update(elapsedTime, aspect);
+            _currentState.Update(elapsedTime, aspect);
         }
 
         public void Render()
         {
-            if (currentState == null)
+            if (_currentState == null)
                 return;
-            currentState.Render();
+            _currentState.Render();
         }
 
         public void AddState(string stateName, AbstractState state)
         {
             Debug.Assert( Exists(stateName) == false );
-            stateStore.Add(stateName, state);
+            _states.Add(stateName, state);
         }
 
         public void ChangeState(string stateName)
         {
             Debug.Assert( Exists(stateName) );
-            currentState = stateStore[stateName];
+            _currentState = _states[stateName];
         }
 
         public bool Exists(string stateName)
         {
-            return stateStore.ContainsKey(stateName);
+            return _states.ContainsKey(stateName);
         }
     }
 }

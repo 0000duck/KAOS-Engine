@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace KAOS.Nodes
 {
-    public class AWPolygon : AWNode
+    public class PolygonNode : Node
     {
         Vector3[] m_Verticies;
         Vector3 m_Normals, m_TexCoords;
 
-        public AWPolygon()
+        public PolygonNode()
         {
             m_Verticies = new Vector3[3];
             m_Normals = new Vector3();

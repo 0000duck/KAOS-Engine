@@ -156,13 +156,13 @@ namespace KAOS.States
         // MATRIX STUFF
         //
 
-        // Push and Pop for modelMatrix
+        // Push and Pop for ModelMatrix
 
         void pushMatrix()
         {
 
             //float* aux = (float*)malloc(sizeof(float) * 16);
-            //memcpy(aux, modelMatrix, sizeof(float) * 16);
+            //memcpy(aux, ModelMatrix, sizeof(float) * 16);
             //matrixStack.push_back(aux);
         }
 
@@ -170,7 +170,7 @@ namespace KAOS.States
         {
 
             //float* m = matrixStack[matrixStack.size() - 1];
-            //memcpy(modelMatrix, m, sizeof(float) * 16);
+            //memcpy(ModelMatrix, m, sizeof(float) * 16);
             //matrixStack.pop_back();
             //free(m);
         }
@@ -267,7 +267,7 @@ namespace KAOS.States
         // ----------------------------------------------------
         // Model Matrix 
         //
-        // Copies the modelMatrix to the uniform buffer
+        // Copies the ModelMatrix to the uniform buffer
 
 
         void setModelMatrix()
@@ -339,7 +339,7 @@ namespace KAOS.States
         // ----------------------------------------------------
         // View Matrix
         //
-        // Computes the viewMatrix and stores it in the uniform buffer
+        // Computes the ViewMatrix and stores it in the uniform buffer
         //
         // note: it assumes the camera is not tilted, 
         // i.e. a vertical up vector along the Y axis (remember gluLookAt?)
@@ -443,9 +443,9 @@ namespace KAOS.States
 
         public ModelState(StateManager stateManager)
         {
-            m_bufferManager = new VertexBufferManager();
-            m_stateManager = stateManager;
-            m_textureManager = new TextureManager();
+            BufferManager = new VertexBufferManager();
+            StateManager = stateManager;
+            TextureManager = new TextureManager();
             String fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
                 "Content\\Models\\Characters\\bunny\\reconstruction\\bun_zipper.ply");
 

@@ -13,18 +13,18 @@ namespace KAOS.Utilities
     {
         [System.Security.SuppressUnmanagedCodeSecurity]
         [System.Runtime.InteropServices.DllImport("kernel32")]
-        private static extern bool QueryPerformanceFrequency(ref long PerformanceFrequency);
+        private static extern bool QueryPerformanceFrequency(ref long performanceFrequency);
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [System.Runtime.InteropServices.DllImport("kernel32")]
-        private static extern bool QueryPerformanceCounter(ref long PerformanceCount);
+        private static extern bool QueryPerformanceCounter(ref long performanceCount);
 
-        long m_ticksPerSecond = 0;
-        long m_previouslyElapsedTime = 0;
+        private readonly long _ticksPerSecond = 0;
+        private const long PreviouslyElapsedTime = 0;
 
         public AnimationTimer()
         {
-            QueryPerformanceFrequency(ref m_ticksPerSecond);
+            QueryPerformanceFrequency(ref _ticksPerSecond);
             GetElapsedTime();
         }
 
@@ -33,7 +33,7 @@ namespace KAOS.Utilities
             long time = 0;
             QueryPerformanceCounter(ref time);
 
-            float elapsedTime = (float)(time - m_previouslyElapsedTime) / (float)m_ticksPerSecond;
+            float elapsedTime = (float)(time - PreviouslyElapsedTime) / (float)_ticksPerSecond;
 
             return elapsedTime;
         }

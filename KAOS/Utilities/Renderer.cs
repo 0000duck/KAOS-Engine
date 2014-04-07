@@ -17,12 +17,10 @@ namespace KAOS.Utilities
     public static class Renderer
     {
         #region Members
-        internal static Matrix4 projectionMatrix, modelMatrix, viewMatrix;
-        internal static Vector3 eyePosition;
-        internal static int
-            handle_projectionMatrix, handle_eyePosition, handle_viewMatrix,handle_centre, handle_scale, handle_modelMatrix, handle_viewMatrix2, 
-            
-            handle_iGlobalTime, handle_iResolution;
+        internal static Matrix4 ProjectionMatrix, ModelMatrix, ViewMatrix;
+        internal static Vector3 EyePosition;
+        internal static int HandleProjectionMatrix, HandleEyePosition, HandleViewMatrix, HandleModelMatrix, HandleViewMatrix2,
+            HandleCentre, HandleScale, HandleGlobalTime, HandleResolution;
         #endregion
 
         public static void DrawImmediateModeVertex(Vector3d position, Color4 color, Vector2 uvs)
@@ -34,14 +32,14 @@ namespace KAOS.Utilities
 
         public static void DrawSkyBox(TextureManager textureManager, VertexBuffer bufferObject)
         {
-            GL.UseProgram(ShaderManager.Skybox.ID);
+            GL.UseProgram(ShaderManager.Skybox.Id);
             GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.TextureCubeMap, textureManager.Get("skybox1").ID);
+            GL.BindTexture(TextureTarget.TextureCubeMap, textureManager.Get("skybox1").Id);
 
-            GL.BindVertexArray(bufferObject.VaoID);
+            GL.BindVertexArray(bufferObject.VaoId);
             GL.Disable(EnableCap.DepthTest);
 
-            GL.UniformMatrix4(handle_viewMatrix, false, ref viewMatrix);
+            GL.UniformMatrix4(HandleViewMatrix, false, ref ViewMatrix);
 
             GL.DrawElements(bufferObject.PrimitiveType, bufferObject.IndicesData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
@@ -50,13 +48,13 @@ namespace KAOS.Utilities
 
         public static void DrawObject(TextureManager textureManager, VertexBuffer bufferObject)
         {
-            GL.UseProgram(ShaderManager.Render.ID);
-            GL.BindVertexArray(bufferObject.VaoID);
+            GL.UseProgram(ShaderManager.Render.Id);
+            GL.BindVertexArray(bufferObject.VaoId);
 
 
-            GL.UniformMatrix4(handle_viewMatrix2, false, ref viewMatrix);
-            GL.UniformMatrix4(handle_modelMatrix, false, ref modelMatrix);
-            GL.UniformMatrix4(handle_projectionMatrix, false, ref projectionMatrix);
+            GL.UniformMatrix4(HandleViewMatrix2, false, ref ViewMatrix);
+            GL.UniformMatrix4(HandleModelMatrix, false, ref ModelMatrix);
+            GL.UniformMatrix4(HandleProjectionMatrix, false, ref ProjectionMatrix);
 
             //GL.BindTexture(TextureTarget.Texture1D, m_textureManager.Get("1d").ID);
 

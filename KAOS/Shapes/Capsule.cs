@@ -73,7 +73,7 @@ namespace KAOS.Shapes
                     break;
                 }
                 SlicedHose tempHose = new SlicedHose( tempSide, HoseSubDivs, radius, offset1, offset2, false );
-                tempHose.GetArraysforVBO( out TemporaryMode, out TemporaryVBO, out TemporaryIBO );
+                tempHose.GetArraysforVbo( out TemporaryMode, out TemporaryVBO, out TemporaryIBO );
                 tempHose.Dispose();
                 AllChunks.Add( new Chunk( ref TemporaryVBO, ref TemporaryIBO ) );
             }
@@ -87,7 +87,7 @@ namespace KAOS.Shapes
                                                           },
                                                        false );
 
-            front.GetArraysforVBO( out TemporaryMode, out TemporaryVBO, out TemporaryIBO );
+            front.GetArraysforVbo( out TemporaryMode, out TemporaryVBO, out TemporaryIBO );
             AllChunks.Add( new Chunk( ref TemporaryVBO, ref TemporaryIBO ) );
             front.Dispose();
 
@@ -98,7 +98,7 @@ namespace KAOS.Shapes
                                                           SlicedSphere.eDir.BackTopLeft,
                                                           SlicedSphere.eDir.BackBottomLeft },
                                                       false );
-            back.GetArraysforVBO( out TemporaryMode, out TemporaryVBO, out TemporaryIBO );
+            back.GetArraysforVbo( out TemporaryMode, out TemporaryVBO, out TemporaryIBO );
             AllChunks.Add( new Chunk( ref TemporaryVBO, ref TemporaryIBO ) );
             back.Dispose();
 

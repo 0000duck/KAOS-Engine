@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace KAOS.Nodes
 {
-    public class AWGroupNode : AWNode, ISceneNode, IGroupNode, IEnumerable<ISceneNode>
+    public class GroupNode : Node, ISceneNode, IGroupNode, IEnumerable<ISceneNode>
     {
         double m_angle, m_rx, m_ry, m_rz;
         double m_tx, m_ty, m_tz;
 
         private IList<ISceneNode> m_children = new List<ISceneNode>();
         
-        public AWGroupNode()
+        public GroupNode()
         {
             this.m_angle = 0;
             this.m_rx = 1;   //!!
@@ -47,7 +47,7 @@ namespace KAOS.Nodes
         {
             GL.PushMatrix();
             GL.Translate(m_tx, m_ty, m_tz);
-            if (m_angle != 0)
+            if (Math.Abs(m_angle) > 0.0)
             {
                 GL.Rotate(m_angle, m_rx, m_ry, m_rz);
             }

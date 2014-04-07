@@ -63,7 +63,7 @@ namespace KAOS.Shapes
 
         #region Convert to VBO
 
-        public void GetArraysforVBO(out PrimitiveType primitives, out VertexT2dN3dV3d[] vertices, out uint[] indices)
+        public void GetArraysforVbo(out PrimitiveType primitives, out VertexT2dN3dV3d[] vertices, out uint[] indices)
         {
             primitives = PrimitiveMode;
 
@@ -78,7 +78,7 @@ namespace KAOS.Shapes
             indices = IndexArray;
         }
 
-        public void GetArraysforVBO(out PrimitiveType primitives, out VertexT2fN3fV3f[] vertices, out uint[] indices)
+        public void GetArraysforVbo(out PrimitiveType primitives, out VertexT2fN3fV3f[] vertices, out uint[] indices)
         {
             primitives = PrimitiveMode;
 
@@ -93,7 +93,7 @@ namespace KAOS.Shapes
             indices = IndexArray;
         }
 
-        public void GetArraysforVBO(out PrimitiveType primitives, out VertexT2hN3hV3h[] vertices, out uint[] indices)
+        public void GetArraysforVbo(out PrimitiveType primitives, out VertexT2hN3hV3h[] vertices, out uint[] indices)
         {
             primitives = PrimitiveMode;
 

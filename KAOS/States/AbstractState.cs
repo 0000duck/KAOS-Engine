@@ -10,16 +10,16 @@ namespace KAOS.States
 {
     public abstract class AbstractState : IDisposable, IGameObject
     {
-        protected VertexBufferManager m_bufferManager;
-        protected StateManager m_stateManager;
-        protected TextureManager m_textureManager;
+        protected VertexBufferManager BufferManager;
+        protected StateManager StateManager;
+        protected TextureManager TextureManager;
 
         public abstract void Update(float elapsedTime, float aspect);
         public abstract void Render();
 
         public void Dispose()
         {
-            m_textureManager.Dispose();
+            TextureManager.Dispose();
         }
     }
 }

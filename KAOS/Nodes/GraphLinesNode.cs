@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KAOS.Nodes
 {
-    class AWGraphLines : AWNode
+    class GraphLinesNode : Node
     {
         private IList<ISceneNode> m_children = new List<ISceneNode>();
 

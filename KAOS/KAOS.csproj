@@ -70,8 +70,8 @@
     <Compile Include="Managers\ShaderManager.cs" />
     <Compile Include="Managers\StateManager.cs" />
     <Compile Include="Managers\TextureManager.cs" />
-    <Compile Include="Nodes\AWGraphLines.cs" />
-    <Compile Include="Nodes\AWPolygon.cs" />
+    <Compile Include="Nodes\GraphLinesNode.cs" />
+    <Compile Include="Nodes\PolygonNode.cs" />
     <Compile Include="Shapes\Capsule.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -118,7 +118,7 @@
     <Compile Include="Utilities\Camera.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Logger.cs" />
-    <Compile Include="Nodes\AWGroupNode.cs" />
+    <Compile Include="Nodes\GroupNode.cs" />
     <Compile Include="Interfaces\IGroupNode.cs" />
     <Compile Include="Interfaces\ISceneNode.cs" />
     <Compile Include="KAOSEngine.cs" />
@@ -129,7 +129,7 @@
     <Compile Include="Shapes\Helpers\TetrahedronFace.cs" />
     <Compile Include="Shapes\Helpers\VboShape.cs" />
     <Compile Include="Shapes\Old\Cube.cs" />
-    <Compile Include="Nodes\AWNode.cs" />
+    <Compile Include="Nodes\Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\AnimationTimer.cs" />
     <Compile Include="Utilities\Renderer.cs" />

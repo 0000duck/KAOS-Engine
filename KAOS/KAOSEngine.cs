@@ -143,16 +143,16 @@ namespace KAOS
                     break;
             }
 
-            InputManager.keyList.Add(e.Key);
+            InputManager.KeyList.Add(e.Key);
         }
 
         private void HandleKeyUp(object sender, KeyboardKeyEventArgs e)
         {
-            for (int count = 0; count < InputManager.keyList.Count; count++)
+            for (int count = 0; count < InputManager.KeyList.Count; count++)
             {
-                if (InputManager.keyList[count] == e.Key)
+                if (InputManager.KeyList[count] == e.Key)
                 {
-                    InputManager.keyList.Remove(InputManager.keyList[count]);
+                    InputManager.KeyList.Remove(InputManager.KeyList[count]);
                 }
             }
         }

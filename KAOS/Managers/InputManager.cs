@@ -9,14 +9,14 @@ namespace KAOS.Managers
     /// </summary>
     public static class InputManager
     {
-        internal static List<Key> keyList = new List<Key>();
+        internal static List<Key> KeyList = new List<Key>();
 
-        internal static MouseState current, previous;
-        internal static KeyboardState keyState;
+        private static MouseState _currentMouseState, _previousMouseState;
+        private static KeyboardState _keyboardState;
 
         internal static void PollKeyboard()
         {
-            foreach (Key key in InputManager.keyList)
+            foreach (var key in InputManager.KeyList)
             {
 
                 switch (key)
@@ -60,16 +60,16 @@ namespace KAOS.Managers
 
         internal static void PollMouse()
         {
-            current = Mouse.GetState();
-            if (current != previous)
+            _currentMouseState = Mouse.GetState();
+            if (_currentMouseState != _previousMouseState)
             {
                 // Mouse state has changed
-                int xdelta = current.X - previous.X;
-                int ydelta = current.Y - previous.Y;
-                int zdelta = current.Wheel - previous.Wheel;
+                int xdelta = _currentMouseState.X - _previousMouseState.X;
+                int ydelta = _currentMouseState.Y - _previousMouseState.Y;
+                int zdelta = _currentMouseState.Wheel - _previousMouseState.Wheel;
                 Utilities.Camera.AddRotation(xdelta, ydelta);
             }
-            previous = current;
+            _previousMouseState = _currentMouseState;
         }
     }
 }

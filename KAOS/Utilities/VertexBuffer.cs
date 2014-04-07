@@ -12,11 +12,11 @@ namespace KAOS.Utilities
     {
         #region Public Buffer Pointer IDs
 
-        public int VaoID { get; set; }
+        public int VaoId { get; set; }
 
-        public int VboID { get; set; }
+        public int VboId { get; set; }
 
-        public int IboID { get; set; }
+        public int IboId { get; set; }
 
         public PrimitiveType PrimitiveType { get; set; }
 
@@ -34,9 +34,9 @@ namespace KAOS.Utilities
             Vector3[] vPositionData, Vector3[] vNormalsData, Color4[] vColorData, PrimitiveType primitiveType, uint[] indicesData) :this()
         {
             #region Buffer Pointer IDs
-            VaoID = vaoId;
-            VboID = vboId;
-            IboID = iboId;
+            VaoId = vaoId;
+            VboId = vboId;
+            IboId = iboId;
             #endregion
             
             PositionData = vPositionData;

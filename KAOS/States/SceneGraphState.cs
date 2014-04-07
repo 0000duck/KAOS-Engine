@@ -13,8 +13,8 @@ namespace KAOS.States
 {
     public class SceneGraphState : AbstractState
     {
-        private AWNode m_sceneGraph;
-        private AWGroupNode m_hook1, m_hook2;
+        private Node m_sceneGraph;
+        private GroupNode m_hook1, m_hook2;
 
         private const float m_rotationspeed = 180.0f;
         private float m_spinangle;
@@ -22,18 +22,18 @@ namespace KAOS.States
 
         public SceneGraphState(StateManager stateManager)
         {
-            m_stateManager = stateManager;
+            StateManager = stateManager;
             CreateSceneGraph();
             GL.Enable(EnableCap.DepthTest);
         }
 
         private void CreateSceneGraph()
         {
-            AWPolygon poly1 = new AWPolygon();
-            AWPolygon poly2 = new AWPolygon();
-            AWPolygon poly3 = new AWPolygon();
-            AWPolygon poly4 = new AWPolygon();
-            AWGroupNode rt = new AWGroupNode();
+            PolygonNode poly1 = new PolygonNode();
+            PolygonNode poly2 = new PolygonNode();
+            PolygonNode poly3 = new PolygonNode();
+            PolygonNode poly4 = new PolygonNode();
+            GroupNode rt = new GroupNode();
 
             Vector3 a = new Vector3(.0f, .0f, 2.5f);
             Vector3 b = new Vector3(2.5f, .0f, -2.5f);
@@ -60,10 +60,10 @@ namespace KAOS.States
             poly4.AddVertex(1, c);
             poly4.AddVertex(2, a);
 
-            AWGroupNode root = new AWGroupNode();
-            AWGraphLines graph = new AWGraphLines();
-            AWGroupNode rt1 = new AWGroupNode();
-            AWGroupNode rt2 = new AWGroupNode();
+            GroupNode root = new GroupNode();
+            GraphLinesNode graph = new GraphLinesNode();
+            GroupNode rt1 = new GroupNode();
+            GroupNode rt2 = new GroupNode();
 
             root.AddChild(graph);
             root.AddChild(rt1);
