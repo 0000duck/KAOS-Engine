@@ -20,8 +20,9 @@ namespace KAOS.Utilities
         internal static Matrix4 projectionMatrix, modelMatrix, viewMatrix;
         internal static Vector3 eyePosition;
         internal static int
-            handle_projectionMatrix, handle_eyePosition, handle_viewMatrix,
-            handle_centre, handle_scale, handle_iter, handle_modelMatrix, handle_viewMatrix2;
+            handle_projectionMatrix, handle_eyePosition, handle_viewMatrix,handle_centre, handle_scale, handle_modelMatrix, handle_viewMatrix2, 
+            
+            handle_iGlobalTime, handle_iResolution;
         #endregion
 
         public static void DrawImmediateModeVertex(Vector3d position, Color4 color, Vector2 uvs)
@@ -56,9 +57,6 @@ namespace KAOS.Utilities
             GL.UniformMatrix4(handle_viewMatrix2, false, ref viewMatrix);
             GL.UniformMatrix4(handle_modelMatrix, false, ref modelMatrix);
             GL.UniformMatrix4(handle_projectionMatrix, false, ref projectionMatrix);
-            GL.Uniform1(Renderer.handle_iter, 70);
-            GL.Uniform2(Renderer.handle_centre, 0f, 0f);
-            GL.Uniform1(Renderer.handle_scale, 2.2);
 
             //GL.BindTexture(TextureTarget.Texture1D, m_textureManager.Get("1d").ID);
 

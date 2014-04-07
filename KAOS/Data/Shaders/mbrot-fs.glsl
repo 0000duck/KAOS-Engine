@@ -1,29 +1,41 @@
-﻿#version 120
+﻿
 
-uniform sampler1D tex;
-uniform vec2 center;
-uniform float scale;
-uniform int iter;
+uniform vec3      iResolution;           // viewport resolution (in pixels)
+uniform float     iGlobalTime;           // shader playback time (in seconds)
 
-void main() {
-    vec2 z, c;
+const int max_iterations = 255;
 
-    c.x = 1.3333 * (gl_TexCoord[0].x - 0.5) * scale - center.x;
-    c.y = (gl_TexCoord[0].y - 0.5) * scale - center.y;
+vec2 complex_square( vec2 v ) {
+	return vec2(
+		v.x * v.x - v.y * v.y,
+		v.x * v.y * 2.0
+	);
+}
 
-    int i;
-    z = c;
-    for(i=0; i<iter; i++) {
-        float x = (z.x * z.x - z.y * z.y) + c.x;
-        float y = (z.y * z.x + z.x * z.y) + c.y;
-
-        if((x * x + y * y) > 4.0) break;
-        z.x = x;
-        z.y = y;
-    }
-	if (i == iter) {
-		gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
-	} else {
-		gl_FragColor = vec4(1.0, 0.0, 0.0, 0.0);
+void main(void)
+{
+	vec2 uv = gl_FragCoord.xy - iResolution.xy * 0.5;
+	uv *= 2.5 / min( iResolution.x, iResolution.y );
+	
+#if 0 // Mandelbrot
+	vec2 c = uv;
+	vec2 v = vec2( 0.0 );
+	float scale = 0.06;
+#else // Julia
+	vec2 c = vec2( 0.285, 0.01 );
+	vec2 v = uv;
+	float scale = 0.01;
+#endif
+	
+	int count = max_iterations;
+	
+	for ( int i = 0 ; i < max_iterations; i++ ) {
+		v = c + complex_square( v );
+		if ( dot( v, v ) > 4.0 ) {
+			count = i;
+			break;
+		}
 	}
+	
+	gl_FragColor = vec4( float( count ) * scale );
 }

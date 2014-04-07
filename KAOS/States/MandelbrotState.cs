@@ -8,19 +8,15 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using KAOS.Utilities;
+using OpenTK;
 
 namespace KAOS.States
 {
     public class MandelbrotState : AbstractState
     {
-        private float cx = 0.7f;
-        private float cy = 0.0f;
-        private float scale = 20.2f;
-        private int iter = 70;
-        private float zoom_factor = 0.025f;
+        private Vector3 iResolution = new Vector3(1280, 720, 0);
+        private float iGlobalTime = 0.0f;
         private int prog;
-        private int texcoord_index;
-        private int tex;
 
         #region Contructors
 
@@ -37,7 +33,6 @@ namespace KAOS.States
         private void LoadPalette()
         {
             m_textureManager.LoadTexture1D("pal", "pal.bmp");
-            //GL.Enable(EnableCap.Texture1D);
         }
 
         private void LoadShader()
@@ -45,13 +40,10 @@ namespace KAOS.States
             ShaderManager.LoadCustomProgram("mbrot", "mbrot-vs", "mbrot-fs");
 
             prog = ShaderManager.Get("mbrot").ID;
-            Renderer.handle_centre = GL.GetUniformLocation(prog, "center");
-            Renderer.handle_scale = GL.GetUniformLocation(prog, "scale");
-            Renderer.handle_iter = GL.GetUniformLocation(prog, "iter");
+            Renderer.handle_iResolution = GL.GetUniformLocation(prog, "iResolution");
 
-            GL.Uniform1(Renderer.handle_iter, iter);
-            GL.Uniform2(Renderer.handle_centre, cx, cy);
-            GL.Uniform1(Renderer.handle_scale, scale);
+            GL.Uniform2(Renderer.handle_iResolution, iResolution.X, iResolution.Y);
+            
         }
 
         #endregion
@@ -65,12 +57,9 @@ namespace KAOS.States
 
         public override void Render()
         {
-            GL.UseProgram(prog);
+            //GL.UseProgram(prog);
 
-            GL.Uniform2(Renderer.handle_centre, cx, cy);
-            GL.Uniform1(Renderer.handle_scale, scale);
-
-            GL.MatrixMode(MatrixMode.Texture);
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
 
             GL.Begin(PrimitiveType.Quads);

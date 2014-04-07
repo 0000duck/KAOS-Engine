@@ -50,7 +50,7 @@ namespace KAOS.States
 
             Renderer.handle_centre = GL.GetUniformLocation(ShaderManager.Render.ID, "center");
             Renderer.handle_scale = GL.GetUniformLocation(ShaderManager.Render.ID, "scale");
-            Renderer.handle_iter = GL.GetUniformLocation(ShaderManager.Render.ID, "iter");
+            Renderer.handle_iGlobalTime = GL.GetUniformLocation(ShaderManager.Render.ID, "iter");
         }
 
         private void LoadCubeMap()
